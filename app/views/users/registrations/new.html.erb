@@ -1,0 +1,45 @@
+<main class="bg-indigo-100 h-screen flex flex-col justify-center items-center gap-10">  
+  <section class="flex flex-col items-center gap-1">
+    <h1 class="font-bold text-2xl text-blue-600 dark:text-sky-400">Mini-Market </h1>
+    <p class="text-blue-600 dark:text-sky-400">A <em class="font-bold">Someguy</em> production.</p>
+  </section>
+
+  <section class="flex flex-col items-center bg-white p-6 rounded-lg shadow-md w-96">
+    <h2 class="font-bold text-2xl mb-5">Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), 
+                 class: "flex flex-col w-full gap-4") do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <div class="flex flex-col gap-1">
+        <%= f.label "email address:", class: "font-semibold text-sm" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+                          class: "border rounded px-3 py-2 w-full text-sm font-medium mb-2" %>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <%= f.label "password:", class: "font-semibold text-sm" %>
+        <% if @minimum_password_length %>
+          <em class="text-xs text-gray-500">
+            (<%= @minimum_password_length %> characters minimum)
+          </em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password",
+                              class: "border rounded px-3 py-2 w-full text-sm font-medium mb-2" %>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <%= f.label "password_confirmation:", class: "font-semibold text-sm" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                              class: "border rounded px-3 py-2 w-full text-sm font-medium" %>
+      </div>
+
+      <div class="mt-4">
+        <%= f.submit "Sign up", 
+              class: "bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full hover:bg-blue-700" %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
+  </section>
+</main>
