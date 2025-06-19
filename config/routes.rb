@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   #
   devise_for :users
+
+  # Products
+  root "products#index"
+  resources :products
 end

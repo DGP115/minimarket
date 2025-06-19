@@ -1,0 +1,20 @@
+<%= form_with(model: @product, local: true) do |f| %>
+  <div>
+    <%= f.label :title, style: "display: block" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description, style: "display: block" %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :price, style: "display: block" %>
+    <%= f.text_field :price %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
