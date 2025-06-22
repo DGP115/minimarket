@@ -13,6 +13,6 @@ class User < ApplicationRecord
 
   def has_purchased?(product)
     # Check if the user has purchased the product
-    purchases.exists?(product_id: product.id)
+    self.purchases.exists?(product_id: product.id)
   end
 end
