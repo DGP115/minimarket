@@ -13,8 +13,14 @@ Rails.application.routes.draw do
   # root "posts#index"
   #
   devise_for :users
-
+  #
+  # Pages
+  get "about", to: "pages#about"
   # Products
   root "products#index"
-  resources :products
+  resources :products do
+    post "buy", on: :member  # This adds buy_product path
+  end
+  # Route for webhook from Stripe
+  post "/webhook", to: "products#webhook"
 end

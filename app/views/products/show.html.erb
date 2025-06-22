@@ -1,6 +1,20 @@
+<%= render partial: "products/product", locals: { product: @product } %>
+
+<% if current_user&.has_purchased?(@product) %>
+  <p>You have already purchased this product.</p>
+<% else %>
+  <%= form_with(model: @product, url: buy_product_path(@product), method: :post) do |f| %>
+    <!-- The turbo false is needed as Stripe api requires the processing of ProductsController#buy as HTML, not turbostream format -->
+    <%= f.submit "Buy now", data: { turbo: false } %>  
+  <% end %>
+<% end %>
+
 <div>
   <% if @product.seller == current_user %>
     <%= link_to "Edit this product", edit_product_path(@product), class: "underline" %>
+    <%= button_to "Delete this product", product_path(@product), 
+                  method: :delete, class: "underline", 
+                  data: { turbo_confirm: "Are you sure?" } %>
   <% end %>
+  <%= link_to "Back to Products", products_path, class: "underline" %>
 </div>
-<%= render partial: "products/product", locals: { product: @product } %>
