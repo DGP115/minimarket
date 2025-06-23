@@ -5,21 +5,26 @@
 <% end %>
 
 
-<div id="products" class="py-12 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+<div id="products" class="py-1 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
   <% @products.each do |product| %>
     <%= link_to product, 
-                class:"h-100 w-72 overflow-hidden rounded-lg shadow-lg mx-auto border border-palette-lighter" do %>
-      <div class="h-48 border-b-2 border-palette-lighter relative">
+                class:"h-100 w-60 overflow-hidden rounded-lg shadow-lg mx-auto border" do %>
+      <div class="h-48 border-b-2 relative">
         <div style="display: block; overflow: hidden; position: absolute; inset: 0px; box-sizing: border-box; margin: 0px;">
           <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "transform duration-500 ease-in-out hover:scale-110"  %>
         </div>
       </div>
       <div class="h-48 relative">
-        <div class="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">
+        <div class="font-primary text-black text-1xl pt-4 px-4 font-semibold">
           <%= product.title %>
         </div>
-        <div class="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter rounded-tl-sm triangle">
-          $<span class="text-lg"><%= product.price %></span>
+        <div class="font-primary text-grey-600 text-base pt-4 px-4">
+          <%= product.description.capitalize %>
+        </div>
+        <div class="font-primary font-medium text-base absolute bottom-0 right-0 mb-1 pl-8 pr-4 pb-1 pt-2 rounded-tl-sm">
+          $<span class="text-lg">
+            <%= number_with_precision(product.price, precision: 2) %>
+           </span>
         </div>
       </div>
     <% end %>

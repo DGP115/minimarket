@@ -23,7 +23,7 @@
     @apply px-6 py-3 text-lg;
   }
   .button:hover {
-    @apply brightness-125
+    @apply invert;
   }
 
   .product_card {
