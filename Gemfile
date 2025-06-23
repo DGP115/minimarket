@@ -64,7 +64,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-ruby", "~> 4.1"
+# gem "tailwindcss-ruby", "~> 4.1"
 gem "tailwindcss-rails", "~> 4.2"
 gem "devise", "~> 4.9", ">= 4.9.4"
 gem "stripe", "~> 15.2", ">= 15.2.1"

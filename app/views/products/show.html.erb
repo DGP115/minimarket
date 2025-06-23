@@ -11,10 +11,10 @@
 
 <div>
   <% if @product.seller == current_user %>
-    <%= link_to "Edit this product", edit_product_path(@product), class: "underline" %>
+    <%= link_to "Edit this product", edit_product_path(@product), class: "button button-sm bg-blue-400 text-amber-300 my-1" %>
     <%= button_to "Delete this product", product_path(@product), 
-                  method: :delete, class: "underline", 
+                  method: :delete, class: "button button-sm bg-red-600 text-amber-300 my-1", 
                   data: { turbo_confirm: "Are you sure?" } %>
   <% end %>
-  <%= link_to "Back to Products", products_path, class: "underline" %>
+  <%= link_to "Back to Products", products_path, class: "text-blue-800 font-semibold" %>
 </div>
