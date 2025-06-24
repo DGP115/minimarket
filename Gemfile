@@ -68,3 +68,4 @@ end
 gem "tailwindcss-rails", "~> 4.2"
 gem "devise", "~> 4.9", ">= 4.9.4"
 gem "stripe", "~> 15.2", ">= 15.2.1"
+gem "image_processing", "~> 1.2"

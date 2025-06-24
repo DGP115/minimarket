@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   # Products
   root "products#index"
   resources :products do
-    post "buy", on: :member  # This adds buy_product path
+    # This adds buy_product path
+    post "buy", on: :member
+    # This adds product_remove_image path
+    delete "remove_image/:id", to: "products#remove_image", as: :remove_image
   end
   # Route for webhook from Stripe
   post "/webhook", to: "products#webhook"

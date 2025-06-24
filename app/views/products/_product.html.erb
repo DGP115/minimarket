@@ -18,7 +18,7 @@
         <div class="flex space-x-1 w-full overflow-auto border-t" 
              style="scroll-behavior: smooth;">
           <% if product.images.attached? %>
-            <% product.images.each do |image| %>
+            <% product.images.each_with_index do |image, index| %>
               <button class="relative w-40 h-32 flex-shrink-0 rounded-sm ">
                 <div style="display: block; overflow: hidden; position: absolute; inset: 0px; 
                             box-sizing: border-box; margin: 0px;">

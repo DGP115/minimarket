@@ -109,6 +109,27 @@ class ProductsController < ApplicationController
     render json: { status: 200, message: "Webhook received" }
   end
 
+  def remove_image
+    @product = Product.find(params[:product_id])
+
+    begin
+      image_to_remove = ActiveStorage::Attachment.find(params[:id])
+      image_to_remove.purge
+        flash[:notice] = "Image removed successfully"
+        redirect_to edit_product_path(@product)
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      flash[:alert] = "Invalid image ID"
+      redirect_to edit_product_path(@product), status: :unprocessable_entity and return
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "Image not found"
+      redirect_to edit_product_path(@product), status: :not_found and return
+    rescue => e
+      Rails.logger.error "Failed to remove image: #{e.message}"
+      flash[:alert] = "Failed to remove image"
+      redirect_to edit_product_path(@product), status: :internal_server_error and return
+    end
+  end
+
   private
 
   def set_product
