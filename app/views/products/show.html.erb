@@ -1,28 +1,29 @@
 <%= render partial: "products/product", locals: { product: @product } %>
 
-<div class="grid grid-cols-8 gap-2 items-start">
-  <div class="col-start-2 row-start-1">
+<div class="grid grid-cols-8 gap-x-2 items-start">
+  <div class="col-start-1 col-span-2 flex flex-col ml-10 gap-2 w-full max-w-[8rem]">
     <%= form_with(model: @product, url: buy_product_path(@product), method: :post) do |f| %>
       <!-- The turbo false is needed as Stripe api requires the processing of ProductsController#buy as HTML, not turbostream format -->
-      <%= f.submit "Buy now", class: "button button-sm bg-indigo-500 text-amber-300",
-                    data: { turbo: false } %>  
+
+        <%= f.submit "Buy now", class: "w-full button button-sm bg-indigo-500 text-amber-300",
+                                data: { turbo: false } %>
+
     <% end %>
-  </div>
-  <div class="col-start-2 row-start-2">
-    <%= link_to(products_path, class: "button button-sm bg-slate-700 text-amber-300") do %>
+
+    <%= link_to(products_path, class: "w-full button button-sm bg-slate-700 text-amber-300 flex justify-center items-center") do %>
       <span>&#8617; Back</span>
     <% end %>
   </div>
 
   <% if @product.seller == current_user %>
-    <div class="col-start-3 row-start-1">  
-      <%= link_to "Edit this product", edit_product_path(@product), 
-                    class: "button button-sm bg-blue-400 text-amber-300 mb-1" %>
-    </div>
-    <div class="col-start-3 col-span-2 row-start-2">
+    <div class="border rounded-md p-2 col-start-3 col-span-2 ml-1 flex flex-col gap-2 w-full max-w-[12rem]">  
+      <%= button_to "Edit this product", edit_product_path(@product), method: :get,
+                    class: "button button-sm border bg-blue-400 text-amber-300 w-full" %>
+
+
         <%= button_to "Delete this product", product_path(@product), 
                       method: :delete, 
-                      class: "button button-sm bg-red-400 text-slate-700", 
+                      class: "button button-sm border bg-red-400 text-slate-700 w-full", 
                       data: { turbo_confirm: "Are you sure?" } %>
     </div>
   <% end %>

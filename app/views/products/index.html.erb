@@ -4,14 +4,19 @@
   </div>
 <% end %>
 
-
 <div id="products" class="py-1 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
   <% @products.each do |product| %>
     <%= link_to product, 
                 class:"h-100 w-60 overflow-hidden rounded-lg shadow-lg mx-auto border" do %>
       <div class="h-48 border-b-2 relative">
         <div style="display: block; overflow: hidden; position: absolute; inset: 0px; box-sizing: border-box; margin: 0px;">
-          <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "transform duration-500 ease-in-out hover:scale-110"  %>
+          <% if product.images.attached? %>
+            <%= image_tag product.images.first, 
+                          id: "displayed-image", 
+                          class: "transform duration-500 ease-in-out hover:scale-110" %>
+          <% else %>
+            <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "transform duration-500 ease-in-out hover:scale-110"  %>
+          <% end %>
         </div>
       </div>
       <div class="h-48 relative">
