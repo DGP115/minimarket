@@ -137,7 +137,7 @@ class ProductsController < ApplicationController
   end
 
   def whitelisted_params
-    params.expect(product: [ :title, :description, :price, images: [] ])
+    params.expect(product: [ :title, :description, :price, :primary_image, images: [] ])
   end
 
   def require_same_user

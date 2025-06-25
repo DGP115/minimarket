@@ -1,9 +1,10 @@
 <%= render partial: "products/product", locals: { product: @product } %>
 
-<div class="grid grid-cols-8 gap-x-2 items-start">
-  <div class="col-start-1 col-span-2 flex flex-col ml-10 gap-2 w-full max-w-[8rem]">
+<div class="grid grid-cols-9 gap-x-2 items-start">
+  <div class="col-start-1 col-span-1 flex flex-col ml-15 gap-1 w-full max-w-[8rem], min-w-[4rem]">
     <%= form_with(model: @product, url: buy_product_path(@product), method: :post) do |f| %>
-      <!-- The turbo false is needed as Stripe api requires the processing of ProductsController#buy as HTML, not turbostream format -->
+      <!-- The turbo false is needed as Stripe api requires the processing of ProductsController#buy as HTML, 
+           not turbostream format -->
 
         <%= f.submit "Buy now", class: "w-full button button-sm bg-indigo-500 text-amber-300",
                                 data: { turbo: false } %>
@@ -16,9 +17,9 @@
   </div>
 
   <% if @product.seller == current_user %>
-    <div class="border rounded-md p-2 col-start-3 col-span-2 ml-1 flex flex-col gap-2 w-full max-w-[12rem]">  
+    <div class="col-start-3 col-span-2 ml-1 flex flex-col gap-1 w-full max-w-[10rem]">  
       <%= button_to "Edit this product", edit_product_path(@product), method: :get,
-                    class: "button button-sm border bg-blue-400 text-amber-300 w-full" %>
+                    class: "button button-sm border border-color-black bg-blue-600 text-amber-300 w-full" %>
 
 
         <%= button_to "Delete this product", product_path(@product), 

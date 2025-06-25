@@ -6,5 +6,6 @@ class Product < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :buyers, through: :purchases, class_name: "User"
 
-  has_many_attached :images
+  has_one_attached :primary_image, dependent: :destroy
+  has_many_attached :images, dependent: :destroy
 end
