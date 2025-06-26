@@ -5,6 +5,8 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@import "../stylesheets/actiontext.css";
+
 
 @layer components {
   .button {

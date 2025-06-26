@@ -8,4 +8,6 @@ class Product < ApplicationRecord
 
   has_one_attached :primary_image, dependent: :destroy
   has_many_attached :images, dependent: :destroy
+
+  has_rich_text :description
 end

@@ -1,0 +1,14 @@
+<div class="flex flex-col justify-between h-full w-full md:w-1/2 max-w-md space-y-2">
+  <div class="font-sans">
+    <h1 class="leading-relaxed font-extrabold text-2xl py-1 sm:py-3">
+      <%= product.title %>
+    </h1>
+    <p class="font-sans font-normal text-base">
+      <%= product.description %>
+    </p>
+    <div class="text-xl font-medium py-4 px-1">
+      $<span class="text-2xl"><%= number_with_precision(product.price, precision: 2) %>
+      </span>
+    </div>
+  </div>
+</div>
