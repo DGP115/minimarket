@@ -3,15 +3,16 @@
   <!-- Left column: Buy and Back -->
   <div class="flex flex-col gap-2">
     <%= form_with(model: product, url: buy_product_path(product), method: :post) do |f| %>
-      <!-- The turbo false is needed as Stripe api requires the processing of ProductsController#buy as HTML, 
-            not turbostream format -->
+      <!-- The turbo false is needed as Stripe api requires the processing of 
+            ProductsController#buy as HTML, not turbostream format -->
 
       <%= f.submit "Buy now", class: "w-full button button-sm bg-indigo-500 text-amber-300",
                               data: { turbo: false } %>
 
     <% end %>
 
-    <%= link_to(products_path, class: "w-full button button-sm bg-slate-700 text-amber-300 flex justify-center items-center") do %>
+    <%= link_to(products_path, class: "w-full button button-sm bg-slate-700 text-amber-300 flex justify-center
+                                       items-center") do %>
       <span>&#8617; Back</span>
     <% end %>
 
