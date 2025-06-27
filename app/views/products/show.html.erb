@@ -1,5 +1,6 @@
 
-<div class="flex flex-col justify-center items-center md:flex-row md:items-start space-y-2 
+<div data-controller="gallery"
+     class="flex flex-col justify-center items-center md:flex-row md:items-start space-y-2 
             md:space-y-0 md:space-x-4 lg:space-x-4 max-w-6xl w-11/12 mx-auto">
 
   <!-- Left column:  Images and buttons -->
@@ -10,7 +11,7 @@
     <%= render partial: "products/show_buttons", locals: { product: @product } %>
   </div>
 
-   <!-- Right column:  Product Info --> 
+  <!-- Right column:  Product Info --> 
   <%= render partial: "products/show_info", locals: { product: @product } %>
 
 </div>

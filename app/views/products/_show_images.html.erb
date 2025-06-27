@@ -1,27 +1,32 @@
 <div>
   <div class="relative h-96">
-    <div style="display: block; overflow: hidden; position: absolute; inset: 0px;">
-          
-      <% if product.primary_image.attached? %>
-        <%= image_tag product.primary_image, id: "primary-image", 
-            class: "transform duration-500 ease-in-out hover:scale-110", 
-            style:"position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;
-                  padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%" %>
-      <% else %>
-        <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "thumbnail" %>
-      <% end %>
-    </div>
+
+      <div style="display: block; overflow: hidden; position: absolute; inset: 0px;">
+            
+        <% if product.primary_image.attached? %>
+          <%= image_tag product.primary_image,  
+              class: "transform duration-500 ease-in-out hover:scale-110", 
+              style:"position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;
+                    padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%",
+              data: { "gallery-target": "thumbnail_enlarge" }   %>
+        <% else %>
+          <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "thumbnail" %>
+        <% end %>
+
+      </div>
+
   </div>
   <%# Thumbnail strip %>
   <div class="relative flex border-t">
     <div class="flex space-x-1 w-full overflow-auto border-t" 
-        style="scroll-behavior: smooth;">
+         style="scroll-behavior: smooth;">
       <% if product.images.attached? %>
         <% product.images.each do |image| %>
           <button class="relative w-40 h-40 flex-shrink-0 rounded-sm ">
             <div style="display: block; overflow: hidden; position: absolute; inset: 0px; 
                         box-sizing: border-box; margin: 0px;">
-              <%= image_tag image, class: "thumbnail" %>
+              <%= image_tag image, class: "thumbnail cursor-zoom-in", 
+                                   data: { action: "click->gallery#thumbnail_enlarge" } %>
             </div>
           </button>
         <% end %>
