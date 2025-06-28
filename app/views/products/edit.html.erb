@@ -1,5 +1,13 @@
-<h2>Edit Product Page</h2>
+<%= turbo_frame_tag @product do %>
+  <h2 class="font-bold">Product Edit</h2>
 
-<%= render "shared/error_msgs", obj: @product %>
+  <%= render "shared/error_msgs", obj: @product %>
 
-<%= render "products/form" %>
+  <%= render "products/form" %>
+  <div class="col self-center mt-2">
+    <%# The turbo_frame: "_top" lets the back action take user to top of page %>
+    <%= link_to(product_path(@product), data: { turbo_frame: "_top" }, class: "button button-sm bg-slate-700 text-amber-300 px-6 py-2") do %>
+      <span>&#8617; Back</span>
+    <% end %>
+  </div>
+<% end %>

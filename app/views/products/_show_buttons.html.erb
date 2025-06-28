@@ -1,35 +1,38 @@
-<div class="grid grid-cols-2 gap-2 p-2 mt-4">
+<div class="gap-1">
 
-  <!-- Left column: Buy and Back -->
-  <div class="flex flex-col gap-2">
-    <%= form_with(model: product, url: buy_product_path(product), method: :post) do |f| %>
-      <!-- The turbo false is needed as Stripe api requires the processing of 
-            ProductsController#buy as HTML, not turbostream format -->
+  <h1 class="leading-relaxed font-extrabold text-2xl place-items-center py-1 sm:py-3">
+    <%= product.title %>
+  </h1>
 
-      <%= f.submit "Buy now", class: "w-full button button-sm bg-indigo-500 text-amber-300",
-                              data: { turbo: false } %>
-
-    <% end %>
-
-    <%= link_to(products_path, class: "w-full button button-sm bg-slate-700 text-amber-300 flex justify-center
-                                       items-center") do %>
-      <span>&#8617; Back</span>
-    <% end %>
-
+  <div class="text-xl font-medium ml-20 py-2 px-1">
+    $<span class="text-2xl"><%= number_with_precision(product.price, precision: 2) %>
+      </span>
   </div>
 
-  <!-- Right column: Edit and Delete -->
-  <% if product.seller == current_user %>
-    <div class="flex flex-col gap-2">
-      <%= button_to "Edit this product", edit_product_path(product), method: :get,
-                    class: "button button-sm border border-color-black bg-blue-600 text-amber-300 w-full" %>
+  <%= form_with(model: product, url: buy_product_path(product), method: :post) do |f| %>
 
+    <%= f.label "Quantity:", class: "display-inline text-sm font-bold text-indigo-700" %>
+    <%= f.number_field :quantity, in: 1..100, step: 1, value: 1, 
+                        class: "ml-2 border text-center display-inline text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
 
-      <%= button_to "Delete this product", product_path(product), 
-                    method: :delete, 
-                    class: "button button-sm border bg-red-500 text-slate-800 w-full", 
-                    data: { turbo_confirm: "Are you sure?" } %>
-    </div>
+      <!-- The turbo false is needed as Stripe api requires the processing of 
+            ProductsController#buy as HTML, not turbostream format -->
+      <%= f.submit "Buy now", class: "display-inline button button-sm bg-indigo-500 text-amber-300",
+                              data: { turbo: false } %>
+
   <% end %>
 
 </div>
+
+<% if product.seller == current_user %>
+  <div class="flex flex-col gap-2 self-center mt-8 shadow-lg py-4 px-10 bg-gray-100">
+    <p class="text-slate-700">Seller-only options:</p>
+    <%= button_to "Edit this product", edit_product_path(product), method: :get,
+                  class: "button button-sm border border-color-black bg-blue-600 text-amber-300" %>
+
+    <%= button_to "Delete this product", product_path(product), 
+                  method: :delete, 
+                  class: "button button-sm border bg-red-500 text-slate-800", 
+                  data: { turbo_confirm: "Are you sure?" } %>
+  </div>
+<% end %>
