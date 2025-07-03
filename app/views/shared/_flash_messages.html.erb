@@ -1,0 +1,21 @@
+<div id="flash_messages">
+  <% flash.each do |msg_type, message| %>
+    <%# data-controller:  identifies teh stimulus controller involved %>
+    <%# data-dismiss-target:  identifies the dom_id of whatever is to be dismissed %>
+    <div data-controller ="dismiss" 
+        data-dismiss-target="dismissthis" 
+        class="flex w-fit align-middle px-4 border rounded-md border-slate-700 shadow-md mb-1 relative 
+                <%= flash_message_display_class(msg_type) %>">
+
+      <div id="dismiss-this">
+        <%= message %>
+      </div>
+    
+      <button data-action="click->dismiss#close" 
+              class="ml-2 cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-110">
+        &#x1F5D1;
+      </button>
+
+    </div>
+  <% end %>
+</div>

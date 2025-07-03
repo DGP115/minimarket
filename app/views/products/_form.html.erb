@@ -8,11 +8,13 @@
       </div>
     </div>
   
+    <%# NOTE: Addition of trix-editor class to work-around a clash between Tailwind preflight reset %>
+    <%#       and classes required by the trix-editor.  Needed to get bullets to work %>
     <div class="sm:col-span-6">
       <%= f.label :description, class: "block text-sm font-semibold text-gray-700" %>
       <div class="mt-1">
         <%= f.rich_textarea :description, 
-                         class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md" %>
+                         class: "trix-editor shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md" %>
       </div>
     </div>
 

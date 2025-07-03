@@ -4,6 +4,9 @@
 
 import { application } from "controllers/application"
 
+import DismissController from "controllers/dismiss_controller"
+application.register("dismiss", DismissController)
+
 import GalleryController from "controllers/gallery_controller"
 application.register("gallery", GalleryController)
 

@@ -4,6 +4,7 @@
   <%= render "shared/error_msgs", obj: @product %>
 
   <%= render "products/form" %>
+  
   <div class="col self-center mt-2">
     <%# The turbo_frame: "_top" lets the back action take user to top of page %>
     <%= link_to(product_path(@product), data: { turbo_frame: "_top" }, class: "button button-sm bg-slate-700 text-amber-300 px-6 py-2") do %>

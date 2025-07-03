@@ -23,37 +23,16 @@
   </head>
 
   <body class="mx-auto px-10 max-w-7xl">
-    <header class="border-b sticky top-0 z-20 bg-white">
-      <div class="flex items-center justify-between mx-auto max-w-6xl pb-2 pt-4 md:pt-6">
-        <a class="cursor-pointer" href="/">
-          <h1 class="flex no-underline">
-            <span class="text-xl font-primary font-bold tracking-tight pt-1">Minishop</span>
-          </h1>
-        </a>
-        <div>
-          <% if user_signed_in? %>
-            <%= current_user.email %>
-            <%= link_to "Sign out", destroy_user_session_path, 
-                        class: "button button-sm bg-slate-700 text-amber-300",
-                        data: { turbo_method: :delete } %>
-          <% else %>
-            <%= link_to "Sign up", new_user_registration_path, 
-                        class: "button button-sm bg-lime-800 text-amber-300" %>
-            <%= link_to "Sign in", new_user_session_path,
-                        class: "button button-sm bg-blue-700 text-amber-300" %>
-          <% end %>
-        </div>
-      </div>
-    </header>
-    <main>
-      <div class="mx-auto max-w-6xl py-12">
-        <div class="">
-          <!--Flash messages  as required by devise -->
-          <p style="notice"><%= notice %></p>
-          <p style="alert"><%= alert %></p>
-        </div>
-        <%= yield %>
-      </div>
-    </main>
+
+    <%= render "layouts/navbar" %>
+
+    <div class="mx-auto max-w-6xl py-12">
+
+      <%= render "shared/flash_messages" %>
+
+      <%= yield %>
+      
+    </div>
+
   </body>
 </html>
