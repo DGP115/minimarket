@@ -1,5 +1,6 @@
 /* @import "tailwindcss"; 
 */
+
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
@@ -24,9 +25,11 @@
   .button-lg {
     @apply px-6 py-3 text-lg;
   }
+  /*
   .button:hover {
     @apply invert;
   }
+    */
 
   .product_card {
     @apply h-100 w-72 overflow-hidden rounded-lg shadow-lg mx-auto border;
@@ -38,35 +41,35 @@
         This is a reset/workaround I found on the Internet.
 */
 @layer base {
-  trix-editor {
+  .trix-content {
     @apply w-full;
   }
   
-  trix-editor h1 {
+  .trix-content h1 {
     font-size: 1.25rem !important;
     line-height: 1.25rem !important;
     @apply leading-5 font-semibold mb-4;
   }
   
-  trix-editor a:not(.no-underline) {
+  .trix-content a:not(.no-underline) {
     @apply underline;
   }
   
-  trix-editor a:visited {
+  .trix-content a:visited {
     color: green;
   } 
   
-  trix-editor ul {
+  .trix-content ul {
     list-style-type: disc;
     padding-left: 1rem;
   }
   
-  trix-editor ol {
+  .trix-content ol {
     list-style-type: decimal;
     padding-left: 1rem;
   }
   
-  trix-editor pre {
+  .trix-content pre {
     display: inline-block;
     width: 100%;
     vertical-align: top;
@@ -78,7 +81,7 @@
     overflow-x: auto;
   }
   
-  trix-editor blockquote {
+  .trix-content blockquote {
     border: 0 solid #ccc;
     border-left-width: 0px;
     border-left-width: 0.3em;

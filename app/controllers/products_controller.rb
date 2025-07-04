@@ -11,6 +11,10 @@ class ProductsController < ApplicationController
   end
 
   def show
+    # Will need product reviews
+    @reviews = @product.reviews.order(created_at: :desc)
+    # Be ready with a new review object
+    @new_review = @product.reviews.new(user_id: current_user&.id)
   end
 
   def new

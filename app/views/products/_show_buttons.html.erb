@@ -28,11 +28,12 @@
   <div class="flex flex-col gap-2 self-center mt-8 shadow-lg py-4 px-10 bg-gray-100">
     <p class="text-slate-700">Seller-only options:</p>
     <%= button_to "Edit this product", edit_product_path(product), method: :get,
-                  class: "button button-sm border border-color-black bg-blue-600 text-amber-300" %>
+                  class: "button button-sm border border-color-black bg-blue-600 text-amber-300 
+                  hover:bg-gray-500" %>
 
     <%= button_to "Delete this product", product_path(product), 
                   method: :delete, 
-                  class: "button button-sm border bg-red-500 text-slate-800", 
+                  class: "button button-sm border bg-red-500 text-slate-800 hover:bg-yellow-300", 
                   data: { turbo_confirm: "Are you sure?" } %>
   </div>
 <% end %>

@@ -7,6 +7,8 @@ class User < ApplicationRecord
   # When a user-as-seller is deleted, so are their products
   has_many :products, foreign_key: :seller_id, dependent: :destroy
 
+  has_many :reviews, dependent: :destroy
+
   # i.e. A user, as a buyer, has many purchases.
   # When a user-as-buyer is deleted, so are their purchases
   has_many :purchases, foreign_key: :buyer_id, dependent: :destroy
