@@ -47,6 +47,10 @@
     </div>
   <% end %>
 
+  <%# Since we are broadcasting refreshes of product reviews (See review model), %>
+  <%# this turbo_stream_from identifies where the "listening will take place %>
+  <%= turbo_stream_from @product %>
+
   <%# This turbo_frame_tag is a marker to enable turbo to prepend new reviews here %>
   <%= turbo_frame_tag "reviews" do %>
     <%# Recall the below is Rails magic that loops through @reviews and calls partial "reviews/reviews" %>
