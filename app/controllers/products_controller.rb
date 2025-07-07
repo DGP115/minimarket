@@ -65,23 +65,32 @@ class ProductsController < ApplicationController
   end
 
   def buy
-    session = Stripe::Checkout::Session.create({
-      client_reference_id: @product.id,
-      line_items: [ {
-        price: "price_1Rc7NeQtzLVdfZ1smDaUW7tj",
-        quantity: 1
-      } ],
-      customer_email: current_user&.email,
-      mode: "payment",
-      success_url: product_url(@product),
-      cancel_url: product_url(@product)
-    })
-    redirect_to session.url, status: 303, allow_other_host: true
+    debugger
+    quantity = params[:product][:quantity].to_i
+    if quantity > 0
+      session = Stripe::Checkout::Session.create({
+        client_reference_id: @product.id,
+        line_items: [ {
+          price: "price_1Rc7NeQtzLVdfZ1smDaUW7tj",
+          quantity: quantity,
+          ammount_subtotal: @product.price * quantity
+        } ],
+        customer_email: current_user&.email,
+        mode: "payment",
+        success_url: product_url(@product),
+        cancel_url: product_url(@product)
+      })
+      redirect_to session.url, status: 303, allow_other_host: true
+    else
+      # If quantity is greater than 0, redirect to the product page with an error message
+      flash[:alert] = "Quantity must be greater than 0"
+      redirect_to product_path(@product), status: :unprocessable_entity
+    end
   end
 
   def webhook
     # This method is called by Stripe when a webhook event occurs.
-    # It verifies the event (to ensure it ocmes from Stripe) and then processes it accordingly.
+    # It verifies the event (to ensure it comes from Stripe) and then processes it accordingly.
     # The event is nil if verification fails.
     # Note:  "payload" is the full record of data provided by Stripe regarding the transcation
 

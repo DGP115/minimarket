@@ -5,7 +5,7 @@ module ApplicationHelper
     when "notice"
       "talic text-lime-700 bg-lime-100"
     when "alert"
-      "font-semibold text-red-600"
+      "font-semibold text-red-600 bg-yellow-500"
     when "error"
       "bg-yellow-100 text-yellow-800"
     else
