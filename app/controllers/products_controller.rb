@@ -23,6 +23,8 @@ class ProductsController < ApplicationController
 
   def create
     @product = current_user.products.new(whitelisted_params)
+    create_product_in_stripe
+
     if @product.save
       flash[:notice] = "Product #{@product.title} successfully created"
       redirect_to product_path(@product)
@@ -65,15 +67,15 @@ class ProductsController < ApplicationController
   end
 
   def buy
-    debugger
     quantity = params[:product][:quantity].to_i
     if quantity > 0
+      stripe_product = Stripe::Product.retrieve(@product.stripe_id)
+      stripe_price = stripe_product.default_price
       session = Stripe::Checkout::Session.create({
         client_reference_id: @product.id,
         line_items: [ {
-          price: "price_1Rc7NeQtzLVdfZ1smDaUW7tj",
-          quantity: quantity,
-          ammount_subtotal: @product.price * quantity
+          price: stripe_price,
+          quantity: quantity
         } ],
         customer_email: current_user&.email,
         mode: "payment",
@@ -157,6 +159,33 @@ class ProductsController < ApplicationController
     if @product.seller_id != current_user.id
       flash[:alert] = "You can only alter your own products"
       redirect_to @product
+    end
+  end
+
+  def create_product_in_stripe
+    begin
+      # Create a product in Stripe to "match" the app product
+      stripe_product = Stripe::Product.create({
+        name: @product.title,
+        type: "good",
+        active: true
+      })
+
+      # Create a Stripe price object for the product (in Stripe)
+      stripe_price = Stripe::Price.create({
+        unit_amount: (@product.price * 100).to_i, # Convert to cents
+        currency: "cad",
+        billing_scheme: "per_unit",
+        product: stripe_product.id
+      })
+
+      # Set the default_price of the new Stripe product to the new Stripe price
+      Stripe::Product.update(stripe_product.id, { default_price: stripe_price.id })
+
+      # Update the app product object with its Stripe product ID
+      @product.stripe_id = stripe_product.id
+    rescue Stripe::StripeError => e
+      flash[:alert] = "Error updating product: #{e.message}"
     end
   end
 end
