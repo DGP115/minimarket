@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, only: %i[ new create edit update destroy buy]
   before_action :require_same_user, only: %i[ edit update destroy ]
 
+  # See https://guides.rubyonrails.org/action_controller_advanced_topics.html#authenticity-token-and-request-forgery-protection
   protect_from_forgery except: :webhook
 
   def index
@@ -191,6 +192,7 @@ class ProductsController < ApplicationController
 
       # Update the app product object with its Stripe product ID
       @product.stripe_id = stripe_product.id
+
     rescue Stripe::StripeError => e
       flash[:alert] = "Error updating product: #{e.message}"
     end
