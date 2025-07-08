@@ -42,6 +42,12 @@ class ProductsController < ApplicationController
   end
 
   def update
+    if product_price_changed?
+      # Update stripe price object(s)
+      if !update_stripe_price
+        render "edit", status: :unprocessable_entity and return
+      end
+    end
     if @product.update(whitelisted_params)
       flash[:notice] = "Product #{@product.title} updated successfully"
       redirect_to product_path(@product)
@@ -221,6 +227,44 @@ class ProductsController < ApplicationController
       end
     rescue Stripe::StripeError => e
       Rails.logger.error "Failed to archive product in Stripe: #{e.message}"
+    end
+  end
+
+  def product_price_changed?
+    params[:product][:price].to_f != @product.price.to_f
+  end
+
+  def update_stripe_price
+    begin
+      if @product.stripe_id.present?
+        # 1.  Get the default_price of the stripe product object
+        stripe_product = Stripe::Product.retrieve(@product.stripe_id)
+        default_price_id = stripe_product.default_price
+
+        # 2.  Disassociate the old default_price object from the product
+        Stripe::Product.update(stripe_product.id, { default_price: "" })
+
+        # 3. Deactivate the old price object
+        Stripe::Price.update(default_price_id, { active: false })
+
+        # 4. Create a new price object
+        stripe_price = Stripe::Price.create({
+          unit_amount: (params[:product][:price].to_i * 100), # Convert to cents
+          currency: "cad",
+          billing_scheme: "per_unit",
+          product: stripe_product.id
+        })
+
+        # 5 Set the default_price of the Stripe product to the new Stripe price
+        Stripe::Product.update(stripe_product.id, { default_price: stripe_price.id })
+
+        true  # return true
+      else
+        false
+        Rails.logger.warn "Product #{@product.id} has no Stripe ID, skipping price update."
+      end
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to change price in Stripe: #{e.message}"
     end
   end
 end
