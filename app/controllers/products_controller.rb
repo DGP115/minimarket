@@ -54,9 +54,14 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    if @product.destroy
+    # Archive the Stripe variant of this product (product and price objects)
+    stripe_archive_status = archive_stripe_product
+
+    if @product.destroy && stripe_archive_status
+
       flash[:notice] = "Product #{@product.title} deleted"
       redirect_to products_path
+
     else
       # Error trapping
       #   Re-render the "edit" product page.
@@ -91,18 +96,20 @@ class ProductsController < ApplicationController
   end
 
   def webhook
-    # This method is called by Stripe when a webhook event occurs.
+    # This method is called by Stripe when an event occurs.
+    # In development, a seaprate lsitengin process must be run to listen for webhooks
+    # e.g.  $ stripe listen --forward-to localhost:3000/webhook
     # It verifies the event (to ensure it comes from Stripe) and then processes it accordingly.
     # The event is nil if verification fails.
-    # Note:  "payload" is the full record of data provided by Stripe regarding the transcation
+    # Note:  "payload" is the full record of data provided by Stripe regarding the transaction
 
     event = nil
     begin
       payload = request.body.read
-      sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
+      signature_header = request.env["HTTP_STRIPE_SIGNATURE"]
       event = Stripe::Webhook.construct_event(
               payload,
-              sig_header,
+              signature_header,
               Rails.application.credentials.dig(:stripe, :webhook_endpoint_secret))
     rescue JSON::ParserError => e
       # Invalid payload
@@ -186,6 +193,32 @@ class ProductsController < ApplicationController
       @product.stripe_id = stripe_product.id
     rescue Stripe::StripeError => e
       flash[:alert] = "Error updating product: #{e.message}"
+    end
+  end
+
+  def archive_stripe_product
+    begin
+      if @product.stripe_id.present?
+        # 1. Set the default price of the stripe product to null
+        Stripe::Product.update(@product.stripe_id, { default_price: "" })
+
+        # 2. List all prices for this product
+        prices = Stripe::Price.list(product: @product.stripe_id)
+
+        # 3. Deactivate each assocated price
+        prices.each do |price|
+          Stripe::Price.update(price.id, { active: false })
+        end
+
+        # 4. Deactivate the stripe product itself
+        Stripe::Product.update(@product.stripe_id, { active: false })
+        true  # return true
+      else
+        false
+        Rails.logger.warn "Product #{@product.id} has no Stripe ID, skipping archiving."
+      end
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to archive product in Stripe: #{e.message}"
     end
   end
 end
