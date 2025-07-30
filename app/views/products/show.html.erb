@@ -26,8 +26,8 @@
   </div>
 
   <!-- Bottom: Two columns merged: Product description -->
-  <% if @product.description.blank? %>
-  <% else %>
+  <% if !@product.description.blank? %>
+
     <div class="w-9/12 border-2 border-double border-indigo-300 p-2 
                 font-sans font-normal text-base mt-6 ml-10">
 
@@ -43,7 +43,18 @@
     <h2 class="text-2xl font-bold">Reviews </h2>
   <% end %>
 
-  <% if user_signed_in? && current_user.id != @product.seller_id %>
+  <!--If user has already reviewed this product, have them edit their review versus creating
+      an additional one -->
+  <% if user_signed_in? && @product.reviews.where(user_id: current_user.id).any? %>
+    <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
+      <p class="pl-2 text-base">Edit your review </p>
+      <div class="">
+        <%= render partial: "reviews/form", locals: { review: @product.reviews.where(user_id: current_user.id).first } %>
+      </div>
+    </div>
+  <% elsif user_signed_in? && current_user.id != @product.seller_id %>
+    <!-- If the user is signed in, this is not their own product, and they have not already reviewed this product, 
+         show the review form -->
     <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
       <p class="pl-2 text-base">Write a review </p>
       <div class="">
@@ -53,12 +64,12 @@
   <% end %>
 
   <%# Since we are broadcasting refreshes of product reviews (See review model), %>
-  <%# this turbo_stream_from identifies where the "listening will take place %>
+  <%# this turbo_stream_from identifies where the "listening" will take place %>
   <%= turbo_stream_from @product %>
 
   <%# This turbo_frame_tag is a marker to enable turbo to prepend new reviews here %>
   <%= turbo_frame_tag "reviews" do %>
-    <%# Recall the below is Rails magic that loops through @reviews and calls partial "reviews/reviews" %>
+    <%# Recall the below is Rails magic that loops through @reviews and calls partial "reviews/review" %>
     <%= render @reviews %>
   <% end %>
 

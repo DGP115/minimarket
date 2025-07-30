@@ -53,7 +53,7 @@ class Product < ApplicationRecord
     begin
       if self.stripe_id.present?
         stripe_product = Stripe::Product.retrieve(self.stripe_id)
-        # So far the only app-product attributes synched with stripe are title and price.
+        # So far the only app-product attributes synced with stripe are title and price.
         # 1.  Update title
         Stripe::Product.update(stripe_product.id, { name: self.title })
 
@@ -93,16 +93,18 @@ class Product < ApplicationRecord
     end
   end
 
+  # Stripe suggests archiving products instead of deleting them.
   def archive_product_in_stripe
     begin
       if self.stripe_id.present?
-        # 1. Set the default price of the stripe product to null
+        # 1. Disassocate the stripe product obhect and its price object.
+        #    Set the default price of the stripe product to null
         Stripe::Product.update(self.stripe_id, { default_price: "" })
 
         # 2. List all prices for this product
         prices = Stripe::Price.list(product: self.stripe_id)
 
-        # 3. Deactivate each assocated price
+        # 3. Deactivate each associated price
         prices.each do |price|
           Stripe::Price.update(price.id, { active: false })
         end

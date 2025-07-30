@@ -49,7 +49,8 @@ class ReviewsController < ApplicationController
   def update
     if @review.update(review_params)
       flash[:notice] = "Review was successfully updated."
-      redirect_to product_path(@product)
+      # Normally would have an instance of @product, but for reviews have a product_id in params
+      redirect_to product_path(params[:review][:product_id])
     else
       # Error trapping
       #   Re-render the "new" product page.
