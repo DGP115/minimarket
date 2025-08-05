@@ -13,6 +13,8 @@ class User < ApplicationRecord
   # When a user-as-buyer is deleted, so are their purchases
   has_many :purchases, foreign_key: :buyer_id, dependent: :destroy
 
+  enum :role, %i[ user admin ], default: :user
+
   def has_purchased?(product)
     # Check if the user has purchased the product
     self.purchases.exists?(product_id: product.id)

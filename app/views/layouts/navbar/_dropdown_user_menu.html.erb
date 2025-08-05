@@ -1,0 +1,70 @@
+<div data-controller="dropdown" 
+     class="relative inline-block text-left w-full sm:w-auto sm:max-w-xs">
+  <% if user_signed_in? %>
+    <!-- 1 Dropdown trigger button -->
+    <!-- 1.1  Trigger button container -->
+    <button type="button" 
+            data-action="click->dropdown#toggle"
+            class="inline-flex items-center justify-between w-full max-w-full 
+                   box-border rounded-md border border-gray-300 shadow-sm 
+                   px-4 py-2 bg-white text-sm font-medium text-gray-700
+                   hover:bg-gray-50 focus:outline-none">
+      <!-- 1.2  "Person" icon" -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
+           stroke="currentColor" class="size-6 mr-2">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </svg>
+
+      <!-- 1.3  First inital of user's email address -->
+      <%= current_user.email.first.upcase + "..." %>
+
+      <!-- 1.4  Downward pointing arrow -->
+      <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 9l-7 7-7-7" />
+      </svg>
+
+    </button>
+
+    <!-- 2 Dropdown Menu -->
+    <!-- 2.1 Dropdown Menu container -->
+    <div data-dropdown-target="menu"
+         class="hidden opacity-0 scale-95 
+                transition ease-out duration-200 origin-top
+                absolute left-0 right-0 top-full mt-2 w-32 
+                px-4 sm:left-auto sm:right-0 sm:w-48 sm:px-0
+                rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 
+                justify-items-center">
+      <!-- 2.1 Dropdown Menu links -->
+      <div class="space-y-2" role="menu">
+        <%= link_to "Profile", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
+                                    role: "menuitem" %>
+        <%= link_to "Settings", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
+                                     role: "menuitem" %>
+        <div class="border-t border-gray-200"></div>
+        <% if current_user.admin? %>
+          <%= link_to "Product Categories", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
+                                                 role: "menuitem" %>
+        <% end %>
+        <div class="border-t border-gray-200"></div>
+        <%= link_to "Sign out", destroy_user_session_path,
+                    class: "block px-4 py-2 text-sm text-gray-950 hover:bg-gray-300",
+                    data: { turbo_method: :delete } %>
+      </div>
+    </div>
+          
+  <% else %>
+    <div class="space-y-1 transition ease-out duration-200 
+                origin-top-right absolute right-0 top-full mt-1 w-24 
+                rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 
+                justify-items-center">
+      <%= link_to "Sign up", new_user_registration_path, 
+                  class: "block x-1 text-sm text-gray-950 hover:bg-gray-300 text-center" %>
+      <%= link_to "Sign in", new_user_session_path,
+                  class: "block px-1 text-sm text-gray-950 hover:bg-gray-300 text-center" %>
+    </div>
+  <% end %>
+</div>
+
