@@ -45,8 +45,9 @@
                                      role: "menuitem" %>
         <div class="border-t border-gray-200"></div>
         <% if current_user.admin? %>
-          <%= link_to "Product Categories", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
-                                                 role: "menuitem" %>
+          <%= link_to "Product Categories", product_categories_path, 
+                      class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
+                      role: "menuitem" %>
         <% end %>
         <div class="border-t border-gray-200"></div>
         <%= link_to "Sign out", destroy_user_session_path,

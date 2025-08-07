@@ -27,4 +27,7 @@ Rails.application.routes.draw do
   end
   # Route for webhook from Stripe
   post "/webhook", to: "products#webhook"
+  #
+  ## Product Categories
+  resources :product_categories
 end

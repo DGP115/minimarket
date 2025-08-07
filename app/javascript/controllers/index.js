@@ -21,3 +21,6 @@ application.register("hello", HelloController)
 
 import mobilenavController from "controllers/mobilenav_controller"
 application.register("mobilenav", mobilenavController)
+
+import treeController from "controllers/tree_controller"
+application.register("tree", treeController)

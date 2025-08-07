@@ -1,0 +1,50 @@
+<%# Because recursion is used within the partial to display sub-categories, the partial  %>
+<%# loops through a local variable.  Otherwise an endless loop results  %>
+
+<%# Tree Structure %>
+<% product_categories.each do |category, nested_categories| %>
+  <li class="ml-4 mt-1 data-category-id=<%= category.id %>">
+    <div class="flex items-center space-x-1">
+      <% if nested_categories.present? %>
+        <button type="button"
+                data-action="click->tree#toggle"
+                data-tree-target="toggle"
+                aria-expanded="false"
+                class="text-sm text-gray-500 hover:text-gray-800 focus:outline-none">
+          ▶
+        </button>
+      <% else %>
+        <span class="inline-block w-4"></span> <!-- spacer for alignment -->
+      <% end %>
+      
+      <span class="text-base font-normal"><%= category.name %></span>
+      <span class="text-base font-light"><%= category.description %></span>
+
+      <% if category.children_count > 0 %>
+        <span class="text-base font-light text-gray-600">
+          [<%= category.children_count %>]
+        </span>
+      <% end %>
+
+      <% if category.products.count > 0 %>
+        <span class="text-base font-light text-gray-600">
+          {<%= category.products.count %>} Products
+        </span>
+        <%= link_to "View Products", product_category_path(category), 
+                  class: "text-base font-light text-blue-500 hover:underline" %>
+      <% end %>
+      
+    </div>
+
+    <% if nested_categories.present? %>
+      <ul data-tree-target="children" 
+          class="hidden 
+                 ml-4 border-l border-gray-300 pl-2">
+
+        <%= render partial: "product_categories/product_category", 
+                   locals: { product_categories: nested_categories } %>
+                   
+      </ul>
+    <% end %>
+  </li>
+<% end %>

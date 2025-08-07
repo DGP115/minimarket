@@ -1,0 +1,30 @@
+<h2 class="text-xl font-bold">Product Categories </h2>
+<% if @product_categories.any? %>
+
+  <%= render partial: "product_categories/product_root_categories" %>
+
+  <turbo-frame id="category_tree">
+    <div data-controller="tree">
+      <!-- Show All / Collapse All Button -->
+      <div class="mb-2">
+        <button type="button"
+                data-action="click->tree#toggleAll"
+                class="text-sm text-blue-600 hover:underline focus:outline-none">
+          Show All Subcategories
+        </button>
+      </div>
+
+      <ul class="text-sm font-medium text-gray-800">
+        <%# Pass instance variable to partial as a local. %>
+        <%# Because recursion is used within the partial to display sub-categories, %>
+        <%# the partial loops through a local variable. %>
+        <%# Otherwise an endless loop results  %>
+        <%= render partial: "product_categories/product_category", 
+                   locals: { product_categories: @product_categories } %>
+      </ul>
+
+    </div>
+  </turbo-frame>
+<% else %>
+  <p class="text-gray-500">No product categories available.</p>
+<% end %>

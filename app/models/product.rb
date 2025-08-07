@@ -6,6 +6,7 @@ class Product < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :buyers, through: :purchases, class_name: "User"
   has_many :reviews, dependent: :destroy
+  belongs_to :product_category, optional: true
 
   has_one_attached :primary_image, dependent: :destroy
   has_many_attached :images, dependent: :destroy
@@ -85,8 +86,8 @@ class Product < ApplicationRecord
           true  # return true
         end
       else
-        false
         Rails.logger.warn "Product #{self.title} has no Stripe ID, skipping price update."
+        false
       end
     rescue Stripe::StripeError => e
       Rails.logger.error "Failed to update Stripe for product: #{self.title}: #{e.message}"
@@ -113,8 +114,8 @@ class Product < ApplicationRecord
         Stripe::Product.update(self.stripe_id, { active: false })
         true  # return true
       else
-        false
         Rails.logger.warn "Product #{self.id} has no Stripe ID, skipping archiving."
+        false
       end
     rescue Stripe::StripeError => e
       Rails.logger.error "Failed to archive product #{self.title} in Stripe: #{e.message}"

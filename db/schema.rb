@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_010445) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_06_233425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,6 +52,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_010445) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "ancestry", null: false, collation: "C"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ancestry_depth", default: 0
+    t.integer "children_count", default: 0, null: false
+    t.integer "orderindex", default: 1
+    t.index ["ancestry"], name: "index_product_categories_on_ancestry"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.decimal "price", precision: 6, scale: 2, default: "0.0"
@@ -59,6 +71,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_010445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stripe_id", default: "", null: false
+    t.integer "product_category_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["seller_id"], name: "index_products_on_seller_id"
     t.index ["stripe_id"], name: "index_products_on_stripe_id", unique: true
   end

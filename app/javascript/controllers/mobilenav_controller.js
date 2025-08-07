@@ -1,3 +1,5 @@
+//  Toggles the display of the navbar for mobile screen sizes, also adding the "hamburger" menu button
+
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {

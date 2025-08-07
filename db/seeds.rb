@@ -1,9 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+# This file dynamically loads and runs a seed file located at db/seeds/<environment>.rb
 #
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+load(Rails.root.join("db", "seeds", "#{Rails.env.downcase}", "#{Rails.env.downcase}.rb"))
