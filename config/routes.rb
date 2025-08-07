@@ -29,5 +29,9 @@ Rails.application.routes.draw do
   post "/webhook", to: "products#webhook"
   #
   ## Product Categories
-  resources :product_categories
+  resources :product_categories do
+    member do
+      get :root
+    end
+  end
 end

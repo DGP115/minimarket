@@ -3,7 +3,13 @@ class ProductCategoriesController < ApplicationController
 
   def index
     @root_categories = ProductCategory.roots.order(orderindex: :asc)
-    @product_categories = ProductCategory.all.arrange(order: :name)
+  end
+
+  def root
+    @root_category = ProductCategory.find(params[:id])
+    @product_categories = @root_category.subtree.arrange(order: :name)
+    render partial: "product_categories/category_tree",
+           locals: { root: @root_category, product_categories: @product_categories }
   end
 
   def show
