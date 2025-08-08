@@ -12,8 +12,8 @@
     <ul class="text-sm font-medium text-gray-800">
       <%# Pass instance variable to partial as a local. %>
       <%# Because recursion is used within the partial to display sub-categories, %>
-      <%# the partial loops through a local variable. %>
-      <%# Otherwise an endless loop results  %>
+      <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
+      <%# Otherwise an endless loop results because @product_categories doesn't change  %>
       <%= render partial: "product_categories/product_category", 
                 locals: { product_categories: product_categories } %>
     </ul>
