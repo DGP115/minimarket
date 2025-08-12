@@ -1,5 +1,5 @@
 # Clear existing categories if needed
-ProductCategory.delete_all # ⚠️ Only if you want to reset the hierarchy
+# ProductCategory.delete_all # ⚠️ Only if you want to reset the hierarchy
 # ProductCategory.destroy_all also works, but delete_all skips callbacks
 
 # Helper method to create categories recursively
@@ -23,18 +23,18 @@ gifts    = create_category(name: "Gifts", orderindex: 6)
 adhesives = create_category(name: "Adhesives", parent: tools)
 carving   = create_category(name: "Carving", parent: tools)
 chisels   = create_category(name: "Chisels", parent: tools)
-drilling  = create_category(name: "Drilling", parent:tools)
+drilling  = create_category(name: "Drilling", parent: tools)
 electrical = create_category(name: "Electrical", parent: tools)
-fasteners  = create_category(name: "Fasteners", parent:tools)
+fasteners  = create_category(name: "Fasteners", parent: tools)
 saws       = create_category(name: "Saws", parent: tools)
 
 # Drilling subcategories
-drill_bits  = create_category(name: "Drill Bits", parent: drilling)
 create_category(name: "Drill Sets", parent: drilling)
 create_category(name: "Drill Accessories", parent: drilling)
 
 # Drill Bits sub-subcategories
-create_category(name:"Twist & Brad Points", parent: drill_bits)
+drill_bits  = create_category(name: "Drill Bits", parent: drilling)
+create_category(name: "Twist & Brad Points", parent: drill_bits)
 create_category(name: "Plug Cutters", parent: drill_bits)
 create_category(name: "Countersink/bores", parent: drill_bits)
 
@@ -46,7 +46,13 @@ create_category(name: "Reciprocating Saws", parent: saws)
 create_category(name: "Table Saws", parent: saws)
 
 # Hand Saws sub-subcategories
-hand_saws = create_category(name:"Hand Saws", parent: saws)
-create_category(name:"Back Saws", parent: hand_saws)
-create_category(name:"Panel Saws", parent: hand_saws)
-create_category(name:"Tenon Saws", parent: hand_saws)
+hand_saws = create_category(name: "Hand Saws", parent: saws)
+create_category(name: "Back Saws", parent: hand_saws)
+create_category(name: "Panel Saws", parent: hand_saws)
+create_category(name: "Tenon Saws", parent: hand_saws)
+
+# Hardware subcategories
+create_category(name: "Hinges", parent: hardware)
+create_category(name: "Locks", parent: hardware)
+create_category(name: "Nails", parent: hardware)
+create_category(name: "Screws", parent: hardware)

@@ -17,21 +17,21 @@
         <span class="inline-block w-3"></span> <!-- spacer for alignment (accounting for ▶-->
       <% end %>
       
-      <span class="text-base font-normal"><%= category.name %></span>
-      <span class="text-base font-light"><%= category.description %></span>
+      <span class="text-sm font-normal"><%= category.name %></span>
+      <span class="text-sm font-light"><%= category.description %></span>
 
       <% if category.children_count > 0 %>
-        <span class="text-base font-light text-gray-600">
+        <span class="text-sm font-light text-gray-600">
           [<%= category.children_count %>]
         </span>
       <% end %>
 
       <% if category.products.count > 0 %>
-        <span class="text-base font-light text-gray-600">
+        <span class="text-sm font-light text-gray-600">
           {<%= category.products.count %>} Products
         </span>
         <%= link_to "View Products", product_category_path(category), 
-                  class: "text-base font-light text-blue-500 hover:underline" %>
+                  class: "text-sm font-light text-blue-500 hover:underline" %>
       <% end %>
       
     </div>
