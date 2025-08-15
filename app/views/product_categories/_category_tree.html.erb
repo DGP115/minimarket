@@ -9,7 +9,9 @@
       </button>
     </div>
 
-    <ul class="text-sm font-medium text-gray-800">
+    <%# Render the product sub-categories in a grid layout %>
+    <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6
+               text-sm font-medium text-gray-800">
       <%# Pass instance variable to partial as a local. %>
       <%# Because recursion is used within the partial to display sub-categories, %>
       <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
@@ -17,9 +19,6 @@
       <%= render partial: "product_categories/product_category", 
                 locals: { product_categories: product_categories } %>
     </ul>
-
+  
   </div>
-
-  <turbo-frame id="product_list" class="mt-6"></turbo-frame>
-
 </turbo-frame>

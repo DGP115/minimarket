@@ -1,4 +1,4 @@
-<h2 class="text-xl font-bold">Product Categories </h2>
+<h2 class="text-lg font-semibold mb-2">Product Categories </h2>
 
 <% if @root_categories.any? %>
   <div class="grid grid-cols-6 gap-4">
@@ -11,12 +11,15 @@
     <% end %>
   </div>
 
+
   <!--The _category_tree will be the included here, based on user's selection of root category -->
   <!-- 1. A route is defined for the root method [See routes.rb] -->
   <!-- 2. This turboframe was identified in the root link above [data: { turbo_frame: "category_tree" }] -->
   <!-- 3. The root method in the product_categories controller renders partial _category_tree -->
   <!-- 4. The code in partial: category_tree is wrapped in turboframe id= "category_tree" -->
   <turbo-frame id="category_tree" class="mt-6"></turbo-frame>
+
+  <turbo-frame id="product_list" class="mt-6"></turbo-frame>
 
 <% else %>
   <p class="text-gray-500">No product categories available.</p>
