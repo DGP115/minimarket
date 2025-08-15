@@ -7,14 +7,21 @@ class ProductCategoriesController < ApplicationController
 
   def root
     @root_category = ProductCategory.find(params[:id])
-    @product_categories = @root_category.subtree.arrange(order: :name)
+    @product_categories = @root_category.descendants.arrange(order: :name)
     render partial: "product_categories/category_tree",
            locals: { root: @root_category, product_categories: @product_categories }
   end
 
   def show
     @product_category = ProductCategory.find(params[:id])
+    @products = @product_category.products.order(:name)
+    @product_categories = @product_category.subtree.arrange(order: :name)
+    render partial: "product_categories/product_list",
+           locals: { product_category: @product_category,
+                     products: @products,
+                     product_categories: @product_categories }
   end
+
   def new
     @product_category = ProductCategory.new
   end

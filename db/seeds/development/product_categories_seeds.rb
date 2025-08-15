@@ -27,6 +27,8 @@ drilling  = create_category(name: "Drilling", parent: tools)
 electrical = create_category(name: "Electrical", parent: tools)
 fasteners  = create_category(name: "Fasteners", parent: tools)
 saws       = create_category(name: "Saws", parent: tools)
+routing    = create_category(name: "Routing", parent: tools)
+turning   = create_category(name: "Turning", parent: tools)
 
 # Drilling subcategories
 create_category(name: "Drill Sets", parent: drilling)

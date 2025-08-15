@@ -14,10 +14,14 @@
           ▶
         </button>
       <% else %>
-        <span class="inline-block w-3"></span> <!-- spacer for alignment (accounting for ▶-->
+        <span class="inline-block w-5"></span> <!-- spacer for alignment (accounting for ▶-->
       <% end %>
       
-      <span class="text-sm font-normal"><%= category.name %></span>
+      <div><%= link_to category.name, product_category_path(category),
+                       data: { turbo_frame: "product_list" }, 
+                       class: "text-sm font-normal 
+                               cursor-pointer rounded-md hover:bg-blue-200" %>
+      </div>
       <span class="text-sm font-light"><%= category.description %></span>
 
       <% if category.children_count > 0 %>
@@ -28,10 +32,11 @@
 
       <% if category.products.count > 0 %>
         <span class="text-sm font-light text-gray-600">
-          {<%= category.products.count %>} Products
+          {<%= category.products.count %>}
         </span>
-        <%= link_to "View Products", product_category_path(category), 
-                  class: "text-sm font-light text-blue-500 hover:underline" %>
+        <%= link_to "View Product".pluralize(category.products.count), 
+                     product_category_path(category), 
+                     class: "text-sm font-light text-blue-500 hover:underline" %>
       <% end %>
       
     </div>
@@ -48,3 +53,4 @@
     <% end %>
   </li>
 <% end %>
+
