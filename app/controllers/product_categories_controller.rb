@@ -14,7 +14,7 @@ class ProductCategoriesController < ApplicationController
 
   def show
     @product_category = ProductCategory.find(params[:id])
-    @products = @product_category.products.order(:name)
+    @products = @product_category.products.order(:title)
     @product_categories = @product_category.descendants.arrange(order: :name)
     render partial: "product_categories/product_list",
            locals: { product_category: @product_category,

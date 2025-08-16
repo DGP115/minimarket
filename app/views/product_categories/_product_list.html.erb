@@ -1,5 +1,22 @@
-<turbo-frame id="product_list">
-  <h2 class="text-xl font-bold"><%= @product_category.name %></h2>
-</turbo-frame>  
+<turbo-frame id="categorytree_productlist_toggle">
+  <h2 class="text-xl font-bold mt-1"><%= @product_category.name %></h2>
+  
+  <%# Render the sub-categories in a grid layout %>
+  <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2
+              text-sm font-medium text-gray-800">
+    <%# Pass instance variable to partial as a local. %>
+    <%# Because recursion is used within the partial to display sub-categories, %>
+    <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
+    <%# Otherwise an endless loop results because @product_categories doesn't change  %>
+    <% if @product_categories.any? %>
+      <%= render partial: "product_categories/product_category", 
+                 locals: { product_categories: @product_categories } %>
+    <% end %>
+  </ul>
+
+  <% if @products.any? %>
+    <%= render partial: "products/index" %>
+  <% end %>
+</turbo-frame>
 
 

@@ -1,25 +1,27 @@
-<h2 class="text-lg font-semibold mb-2">Product Categories </h2>
+<h2 class="text-lg font-semibold mb-2">Product Categories: </h2>
 
 <% if @root_categories.any? %>
-  <div class="grid grid-cols-6 gap-4">
+  <div class="grid grid-cols-6 gap-x-4 py-0
+              border-t-1
+              border-b-1 border-indigo-500">
     <% @root_categories.each do |root| %>
       <div>
         <%= link_to root.name, root_product_category_path(root), 
-                               data: { turbo_frame: "category_tree" },
+                               data: { turbo_frame: "categorytree_productlist_toggle" },
                                class: "text-blue-600 hover:underline text-sm" %>
       </div>
     <% end %>
   </div>
 
 
-  <!--The _category_tree will be the included here, based on user's selection of root category -->
-  <!-- 1. A route is defined for the root method [See routes.rb] -->
-  <!-- 2. This turboframe was identified in the root link above [data: { turbo_frame: "category_tree" }] -->
+  <!--The category_tree or porduct_list partials will be included here, based on user's selection. -->
+  <!-- 1.  Selection of root category (above) points to here-->
+  <!-- 2. A route is defined for the root method [See routes.rb] -->
   <!-- 3. The root method in the product_categories controller renders partial _category_tree -->
-  <!-- 4. The code in partial: category_tree is wrapped in turboframe id= "category_tree" -->
-  <turbo-frame id="category_tree" class="mt-6"></turbo-frame>
-
-  <turbo-frame id="product_list" class="mt-6"></turbo-frame>
+  <!-- 4. The code in partial: category_tree is wrapped in turboframe id= "categorytree_productlist_toggle" -->
+  <!-- 5. The code in product_list partial is also wrapped in same turboframe. -->
+  
+  <turbo-frame id="categorytree_productlist_toggle" class="mt-1"></turbo-frame>
 
 <% else %>
   <p class="text-gray-500">No product categories available.</p>

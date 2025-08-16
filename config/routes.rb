@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # Pages
   get "about", to: "pages#about"
   # Products
-  root "products#index"
+  root "product_categories#index"
   resources :products do
     # This adds buy_product path
     post "buy", on: :member

@@ -21,7 +21,7 @@
       
       <div><%= link_to category.name,
                        product_category_path(category),
-                       data: { turbo_frame: "product_list" },
+                       data: { turbo_frame: "categorytree_productlist_toggle" },
                        class: "text-sm font-normal 
                                cursor-pointer rounded-md hover:bg-blue-200" %>
       </div>
@@ -38,7 +38,8 @@
           {<%= category.products.count %>}
         </span>
         <%= link_to "View Product".pluralize(category.products.count), 
-                    product_category_path(category), 
+                    product_category_path(category),
+                    data: { turbo_frame: "categorytree_productlist_toggle" },
                     class: "text-sm font-light text-blue-500 hover:underline" %>
       <% end %>
       
@@ -47,7 +48,7 @@
     <% if nested_categories.present? %>
       <ul data-tree-target="children" 
           class="hidden 
-                 ml-4 border-l border-gray-300 pl-2">
+                 ml-4 border-l border-gray-300 pl-1">
 
         <%= render partial: "product_categories/product_category", 
                    locals: { product_categories: nested_categories } %>
