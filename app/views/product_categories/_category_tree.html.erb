@@ -1,24 +1,34 @@
 <turbo-frame id="categorytree_productlist_toggle">
-  <div data-controller="tree">
-    <!-- Show All / Collapse All Button -->
-    <div class="mb-2 mt-2">
-      <button type="button"
-              data-action="click->tree#toggleAll"
-              class="text-sm text-blue-600 hover:underline focus:outline-none">
-        Show All Subcategories
-      </button>
-    </div>
-
-    <%# Render the product sub-categories in a grid layout %>
-    <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2
-               text-sm font-medium text-gray-800">
-      <%# Pass instance variable to partial as a local. %>
-      <%# Because recursion is used within the partial to display sub-categories, %>
-      <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
-      <%# Otherwise an endless loop results because @product_categories doesn't change  %>
-      <%= render partial: "product_categories/product_category", 
-                 locals: { product_categories: product_categories } %>
-    </ul>
-  
+  <div class="mt-2">
+    <%= link_to root.name, tree_left_product_category_path(root), class: "text-lg font-semibold" %>
   </div>
+
+  <% if product_categories.any? %>
+    <div data-controller="tree">
+      <!-- Show All / Collapse All Button -->
+      <div class="mb-2 mt-2">
+        <button type="button"
+                data-action="click->tree#toggleAll"
+                class="text-sm text-blue-600 hover:underline focus:outline-none">
+          Show All Subcategories
+        </button>
+      </div>
+
+      <%# Render the product sub-categories in a grid layout %>
+      <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2
+                text-sm font-medium text-gray-800">
+        <%# Pass instance variable to partial as a local. %>
+        <%# Because recursion is used within the partial to display sub-categories, %>
+        <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
+        <%# Otherwise an endless loop results because @product_categories doesn't change  %>
+        <%= render partial: "product_categories/product_category", 
+                  locals: { product_categories: product_categories } %>
+      </ul>
+    
+    </div>
+  <% end %>
+
+  <% if root.products.any? %>
+    <%= render partial: "products/index", locals: { products: root.products, product_category: root } %>
+  <% end %>
 </turbo-frame>

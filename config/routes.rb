@@ -11,14 +11,13 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "product_categories#index"
   #
   devise_for :users
   #
   # Pages
   get "about", to: "pages#about"
   # Products
-  root "product_categories#index"
   resources :products do
     # This adds buy_product path
     post "buy", on: :member
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
   resources :product_categories do
     member do
       get :root
+      get :tree_left
     end
   end
 end

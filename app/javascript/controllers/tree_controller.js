@@ -4,9 +4,11 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["children", "toggle"]
+  //  Passed in argument to determine if tree should be initially expanded
+  static values = { initExpanded: Boolean } 
 
   connect() {
-    this.expanded = false  // collaprse tree by default
+    this.expanded = false  // collapse tree by default
 
     // Restore expanded state from localStorage
     this.toggleTargets.forEach(toggleBtn => {
@@ -15,6 +17,11 @@ export default class extends Controller {
         this.expandNode(toggleBtn)
       }
     })
+  
+    // If value passed in says to start expanded and nothing in localStorage overrides it:
+    if (this.initExpandedValue && this.toggleTargets.length > 0) {
+      this.toggleAll({ currentTarget: this.findToggleAllButton() })
+    }
   }
 
   toggle(event) {
@@ -75,6 +82,10 @@ export default class extends Controller {
       btn.textContent = "▼"
       btn.setAttribute("aria-expanded", true)
     }
+  }
+
+  findToggleAllButton() {
+    return this.element.querySelector("[data-action~='tree#toggleAll']")
   }
 
 }
