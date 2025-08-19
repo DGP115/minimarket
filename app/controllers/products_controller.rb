@@ -20,6 +20,12 @@ class ProductsController < ApplicationController
 
   def new
     @product = current_user.products.new
+    if !params[:product_category_id].nil?
+      @product.product_category_id = params[:product_category_id]
+    else
+      flash[:alert] = "Can't create a product without specifying a category"
+      render "new", status: :unprocessable_entity
+    end
   end
 
   def create
@@ -156,7 +162,7 @@ class ProductsController < ApplicationController
   end
 
   def whitelisted_params
-    params.expect(product: [ :title, :description, :price, :primary_image, images: [] ])
+    params.expect(product: [ :title, :description, :price, :product_category_id, :primary_image, images: [] ])
   end
 
   def require_same_user

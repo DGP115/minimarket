@@ -15,7 +15,7 @@
   </ul>
 
   <% if @products.any? %>
-    <%= render partial: "products/index" %>
+    <%= render partial: "products/index", locals: { products: @products, product_category: @product_category } %>
   <% end %>
 </turbo-frame>
 
