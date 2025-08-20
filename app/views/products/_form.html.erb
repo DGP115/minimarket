@@ -1,14 +1,12 @@
 <%= form_with(model: @product, local: true) do |f| %>
 
-  <%# first argument is the label to be provided in params, value: is the value to be provided %>
-  <%= f.hidden_field "product_category_id", value: @product.product_category_id %>
-
   <div class="mt-4 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
     <div class="sm:col-span-6">
       <%= f.label :title, class: "block text-sm font-semibold text-gray-700" %>
       <div class="mt-1">
         <%= f.text_field :title, label: false, 
-                          class: "border shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md" %>
+                          class: "border shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full 
+                                  border-gray-300 rounded-md" %>
       </div>
     </div>
   
@@ -19,7 +17,8 @@
       <%= f.label :description, class: "block text-sm font-semibold text-gray-700" %>
       <div class="mt-1">
         <%= f.rich_textarea :description, 
-                         class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md trix-content" %>
+                            class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 
+                                    rounded-md trix-content" %>
       </div>
     </div>
 
@@ -29,30 +28,75 @@
         <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
           $
         </span>
-        <%= f.text_field :price, 
-                          class: "focus:ring-blue-500 focus:border-blue-500 block w-full rounded-none rounded-r-md border-1 border-gray-300 text-center" %>
+        <%= f.text_field :price,
+                          value: number_with_precision(@product.price || 0, precision: 2, 
+                                                        strip_insignificant_zeros: false),
+                          class: "focus:ring-blue-500 focus:border-blue-500 block w-full rounded-none rounded-r-md 
+                                  border-1 border-gray-300 text-center" %>
       </div>
     </div>
 
-    <%# Allow 1 Primary image attachment %>
-    <div class="sm:col-span-6 block border rounded-md border-gray-300 w-fit p-2 justify-items-center">
-      <%= f.label "Primary image:", multiple: false, class: "block text-sm font-bold text-indigo-700" %>
-      <% if @product.primary_image.attached? %>
-        <div class = "grid grid-cols-1 justify-items-center">
+    <%# Allow 1 Primary image attachment (2/3 width of form) and category dropdown (1/3 width of form) side by side %>
+    <div class="sm:col-span-6 grid grid-cols-12 sm:grid-cols-12 gap-4 items-start">
 
-          <%= image_tag @product.primary_image.variant(resize_to_limit: [200,200]), class: "rounded-lg shadow-md" %>
+      <%# Primary image attachment %>
+      <div class="sm:col-span-8 border rounded-md border-gray-300 p-2">
+        <%= f.label "Primary image:", multiple: false, class: "block text-sm font-bold text-indigo-700" %>
+        <% if @product.primary_image.attached? %>
+          <div class = "grid grid-cols-1 justify-items-center">
 
+            <%= image_tag @product.primary_image.variant(resize_to_limit: [400,400]), class: "rounded-lg shadow-md" %>
+
+          </div>
+        <% end %>
+        
+        <div class="mt-1">
+          <%= f.file_field :primary_image, multiple: false,
+                            class: "block border rounded-md w-full text-sm text-gray-500
+                                    file:mr-4 file:py-1 file:px-4
+                                    file:rounded-md file:border-1
+                                    file:text-sm file:font-semibold
+                                    file:bg-indigo-100 file:text-indigo-700
+                                    hover:file:bg-indigo-50" %>
         </div>
-      <% end %>
-       
-      <div class="mt-1">
-        <%= f.file_field :primary_image, multiple: false,
-                          class: "block border rounded-md w-fit text-sm text-gray-500
-                                  file:mr-4 file:py-1 file:px-4
-                                  file:rounded-md file:border-1
-                                  file:text-sm file:font-semibold
-                                  file:bg-indigo-100 file:text-indigo-700
-                                  hover:file:bg-indigo-50" %>
+      </div>
+
+      <%# Category dropdown section %>
+      <div class="sm:col-span-4 border rounded-md border-gray-300 p-2">
+
+        <%= f.label :product_category_id, "Category:", class: "block text-sm font-bold text-indigo-700" %>
+
+        <div data-controller="dropdown" class="relative w-full">
+          <!-- Dropdown trigger button -->
+          <button type="button"
+                  data-action="click->dropdown#toggle"
+                  class="cursor-pointer border rounded-md px-3 py-1 text-left w-full">
+            <span>
+              <%# Show selected category or "Select Category"" %>
+              <%= @product.product_category&.name || "Select Category" %>
+            </span>
+          </button>
+
+          <!-- Dropdown menu -->
+          <ul data-dropdown-target="menu" 
+              class="hidden absolute mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto z-10">
+
+            <% category_tree_reformat(@product_categories).each do |(label, id, depth)| %>
+              <li data-action="click->dropdown#select"
+                  data-id="<%= id %>"
+                  data-label="<%= label %>"
+                  class="cursor-pointer hover:bg-gray-100 <%= "pl-#{depth * 4}" %>">
+                <%= label %>
+              </li>
+            <% end %>
+          </ul>
+
+          <!-- Hidden field for product_category selected, for form submission -->
+          <%= f.hidden_field :product_category_id,
+                           id: "product_category_id",
+                        value: @product.product_category_id,
+                         data: { dropdown_target: "hidden" } %>
+        </div>
       </div>
     </div>
 

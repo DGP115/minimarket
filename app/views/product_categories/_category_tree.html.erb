@@ -22,7 +22,7 @@
         <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
         <%# Otherwise an endless loop results because @product_categories doesn't change  %>
         <%= render partial: "product_categories/product_category", 
-                  locals: { product_categories: product_categories } %>
+                   locals: { product_categories: product_categories } %>
       </ul>
     
     </div>

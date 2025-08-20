@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy buy ]
+
   # authenticate_user is provided by Devise
   before_action :authenticate_user!, only: %i[ new create edit update destroy buy]
   before_action :require_same_user, only: %i[ edit update destroy ]
@@ -22,6 +23,7 @@ class ProductsController < ApplicationController
     @product = current_user.products.new
     if !params[:product_category_id].nil?
       @product.product_category_id = params[:product_category_id]
+      set_product_category_tree
     else
       flash[:alert] = "Can't create a product without specifying a category"
       render "new", status: :unprocessable_entity
@@ -44,6 +46,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    set_product_category_tree
   end
 
   def update
@@ -159,6 +162,11 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def set_product_category_tree
+    root = @product.product_category.root
+    @product_categories = root.descendants.arrange(order: :name)
   end
 
   def whitelisted_params

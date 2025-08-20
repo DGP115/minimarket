@@ -6,29 +6,31 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="dropdown"
 export default class extends Controller {
-  static targets = ["menu"]
+  static targets = ["menu", "hidden"]
 
   connect() {
     console.log("Dropdown controller connected")
     this.handleClickOutside = this.handleClickOutside.bind(this)
   }
 
+  // Toggle menu opened/closed
   toggle(event) {
     event.stopPropagation()
     if (this.menuTarget.classList.contains("hidden")) {
       this.open()
-    }
-    else {
+    } else {
       this.close()
     }
   }
 
+  // Open the menu
   open() {
     this.menuTarget.classList.remove("hidden", "opacity-0", "scale-95")
     this.menuTarget.classList.add("opacity-100", "scale-100")
     document.addEventListener("click", this.handleClickOutside)
   }
 
+  // Close the menu
   close() {
     this.menuTarget.classList.add("opacity-0", "scale-95")
     this.menuTarget.classList.remove("opacity-100", "scale-100")
@@ -39,9 +41,30 @@ export default class extends Controller {
     document.removeEventListener("click", this.handleClickOutside)
   }
 
+  // Close menu when clicking outside
   handleClickOutside(event) {
     if (!this.element.contains(event.target)) {
       this.close()
     }
+  }
+
+  // ===== Optional selection behavior for form dropdowns =====
+  select(event) {
+    event.preventDefault()
+    const item = event.currentTarget
+    const id = item.dataset.id
+    const label = item.dataset.label
+
+    // Update hidden input if present
+    if (this.hasHiddenTarget) {
+      this.hiddenTarget.value = id
+    }
+
+    // Update button label
+    const button = this.element.querySelector("button span") || this.element.querySelector("button")
+    if (button) button.textContent = label
+
+    // Close the menu
+    this.close()
   }
 }
