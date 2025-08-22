@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     member do
       get :root
       get :tree_left
+      get :add_child
     end
   end
 end

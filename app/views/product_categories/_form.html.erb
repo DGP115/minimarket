@@ -1,0 +1,29 @@
+<%= form_with(model: @product_category, local: true) do |f| %>
+  <div class="grid grid-cols-1 mb-4 md:w-1/2">
+    <div class="w-full row-start-1 md:col-span-2 block 
+                border rounded-md border-gray-300 
+                p-2 font-semibold">
+      Parent Category:
+      <span class="ml-2 text-base font-bold text-indigo-700"><%= @parent_category.name %></span>
+    </div>
+
+    <%= f.hidden_field :parent_id, value: @parent_category.id %>
+
+    <div class="w-full row-start-2 block 
+                border rounded-md border-gray-300 p-2">
+      <h2 class="text-base font-semibold">New Child Category:</h2>
+      <%= f.label :name, class: "block text-sm font-semibold text-indigo-700" %>
+      <%= f.text_field :name, class: "w-full mt-1 px-2 block border border-gray-300 rounded-md shadow-sm 
+                                      focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+
+      <%= f.label :description, class: "mt-1 block text-sm font-semibold text-indigo-700" %>
+      <%= f.text_area :description, class: "w-full mt-1 px-2 block border border-gray-300 rounded-md shadow-sm 
+                                            focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+    </div>
+
+    <div class="row-start-3 mt-2">
+      <%= f.submit "Create Product Category", class: "button button-sm bg-blue-500 text-yellow-400 
+                                                      hover:scale-110 hover:invert" %>
+    </div>
+  </div>
+<% end %>

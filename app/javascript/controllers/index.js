@@ -7,6 +7,9 @@
 
 import { application } from "controllers/application"
 
+import ContextMenuController from "controllers/context_menu_controller"
+application.register("context-menu", ContextMenuController)
+
 import DismissController from "controllers/dismiss_controller"
 application.register("dismiss", DismissController)
 

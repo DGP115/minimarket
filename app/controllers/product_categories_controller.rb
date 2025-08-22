@@ -48,7 +48,7 @@ class ProductCategoriesController < ApplicationController
     @product_category = ProductCategory.new(product_category_params)
     if @product_category.save
       redirect_to @product_category
-      flash[:notice] = "Product category #{product_category.name} was successfully created."
+      flash[:notice] = "Product category #{@product_category.name} was successfully created."
     else
       render "new", status: :unprocessable_entity
     end
@@ -60,10 +60,16 @@ class ProductCategoriesController < ApplicationController
   def update
     if @product_category.update(product_category_params)
       redirect_to @product_category
-      flash[:notice] = "Product category #{product_category.name} was successfully updated."
+      flash[:notice] = "Product category #{@product_category.name} was successfully updated."
     else
       render "edit", status: :unprocessable_entity
     end
+  end
+
+  def add_child
+    @parent_category = ProductCategory.find(params[:id])
+    @product_category = ProductCategory.new(parent: @parent_category)
+    render "new"
   end
 
   def destroy
