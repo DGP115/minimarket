@@ -8,4 +8,8 @@ class ProductCategory < ApplicationRecord
   # When a product category is destroyed, any products it contains will have their
   # category association nullified.
   has_many :products, dependent: :nullify
+
+  def has_grandchildren?
+    children.where("children_count > 0").exists?
+  end
 end

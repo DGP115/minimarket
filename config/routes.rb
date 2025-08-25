@@ -22,7 +22,10 @@ Rails.application.routes.draw do
     # This adds buy_product path
     post "buy", on: :member
     # This adds product_remove_image path
-    delete "remove_image/:id", to: "products#remove_image", as: :remove_image
+    # delete "remove_image/:id", to: "products#remove_image", as: :remove_image
+    member do
+      get "remove_image/:attachment_id", to: "products#remove_image", as: :remove_image
+    end
   end
   # Route for webhook from Stripe
   post "/webhook", to: "products#webhook"

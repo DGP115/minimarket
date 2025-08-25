@@ -138,10 +138,11 @@ class ProductsController < ApplicationController
   end
 
   def remove_image
-    @product = Product.find(params[:product_id])
+    @product = Product.find(params[:id])
 
     begin
-      image_to_remove = ActiveStorage::Attachment.find(params[:id])
+      # image_to_remove = ActiveStorage::Attachment.find(params[:id])
+      image_to_remove = @product.images.find(params[:attachment_id])
       image_to_remove.purge
         flash[:notice] = "Image removed successfully"
         redirect_to edit_product_path(@product)

@@ -30,7 +30,7 @@
   </div>
 
 
-  <% if !@product_category.description.nil? %>
+  <% if !@product_category.description.nil? &&  !@product_category.description.blank? %>
     <div class="w-full max-w-2/3 mt-2 ml-10 p-2 text-base font-light border rounded-md">
       <%= @product_category.description %>
     </div>
@@ -47,7 +47,7 @@
       
       <%= render partial: "product_categories/category_tree", 
                  locals: { product_categories: @product_categories, 
-                           root: @product_category.parent } %>
+                           product_category: @product_category} %>
       
     </ul>
   <% end %>

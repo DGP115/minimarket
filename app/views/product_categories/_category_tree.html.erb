@@ -3,13 +3,15 @@
   <% if product_categories.any? %>
     <div data-controller="tree">
       <!-- Show All / Collapse All Button -->
-      <div class="mb-2 mt-2">
-        <button type="button"
-                data-action="click->tree#toggleAll"
-                class="text-sm text-blue-600 hover:underline focus:outline-none">
-          Show All Subcategories
-        </button>
-      </div>
+      <% if product_category.has_grandchildren? %>
+        <div class="mb-2 mt-2">
+          <button type="button"
+                  data-action="click->tree#toggleAll"
+                  class="text-sm text-blue-600 hover:underline focus:outline-none">
+            Show All Subcategories
+          </button>
+        </div>
+      <% end %>
 
       <%# Render the product sub-categories in a grid layout %>
       <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2
@@ -25,7 +27,8 @@
     </div>
   <% end %>
 
-  <% if !root.nil? && root.products.any? %>
-    <%= render partial: "products/index", locals: { products: root.products, product_category: root } %>
+  <% if !product_category.nil? && product_category.products.any? %>
+    <%= render partial: "products/index", locals: { products: product_category.products, 
+                                                    product_category: product_category } %>
   <% end %>
 </turbo-frame>
