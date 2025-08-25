@@ -4,10 +4,10 @@
                 border rounded-md border-gray-300 
                 p-2 font-semibold">
       Parent Category:
-      <span class="ml-2 text-base font-bold text-indigo-700"><%= @parent_category.name %></span>
+      <span class="ml-2 text-base font-bold text-indigo-700"><%= @product_category.parent.name %></span>
     </div>
 
-    <%= f.hidden_field :parent_id, value: @parent_category.id %>
+    <%= f.hidden_field :parent_id, value: @product_category.parent.id %>
 
     <div class="w-full row-start-2 block 
                 border rounded-md border-gray-300 p-2">
@@ -22,8 +22,8 @@
     </div>
 
     <div class="row-start-3 mt-2">
-      <%= f.submit "Create Product Category", class: "button button-sm bg-blue-500 text-yellow-400 
-                                                      hover:scale-110 hover:invert" %>
+      <%= f.submit class: "button button-sm bg-blue-500 text-yellow-400 
+                           hover:scale-110 hover:invert" %>
     </div>
   </div>
 <% end %>

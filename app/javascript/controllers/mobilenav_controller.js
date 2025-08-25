@@ -6,7 +6,7 @@ export default class extends Controller {
   static targets = ["menu"]
 
   connect() {
-  console.log("mobilenav controller connected")
+    console.log("mobilenav controller connected")
   }
 
   toggle() {

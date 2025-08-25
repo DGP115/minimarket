@@ -34,10 +34,6 @@ class ProductCategoriesController < ApplicationController
     @product_category = ProductCategory.find(params[:id])
     @products = @product_category.products.order(:title)
     @product_categories = @product_category.descendants.arrange(order: :name)
-    render partial: "product_categories/product_list",
-           locals: { product_category: @product_category,
-                     products: @products,
-                     product_categories: @product_categories }
   end
 
   def new
@@ -46,6 +42,7 @@ class ProductCategoriesController < ApplicationController
 
   def create
     @product_category = ProductCategory.new(product_category_params)
+
     if @product_category.save
       redirect_to @product_category
       flash[:notice] = "Product category #{@product_category.name} was successfully created."

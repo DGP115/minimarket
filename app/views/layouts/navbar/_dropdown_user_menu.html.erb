@@ -43,8 +43,9 @@
                                     role: "menuitem" %>
         <%= link_to "Settings", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
                                      role: "menuitem" %>
-        <div class="border-t border-gray-200"></div>
+        
         <% if current_user.admin? %>
+          <div class="border-t border-gray-200"></div>
           <%= link_to "Product Categories", product_categories_path, 
                       class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
                       role: "menuitem" %>
@@ -57,15 +58,16 @@
     </div>
           
   <% else %>
-    <div class="absolute -top-4 -left-0 md:-left-10
-                transition ease-out duration-200 
-                mt-1 mb-1 w-24 pb-1
-                rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 
+    <div class="-top-4 -left-0 md:-left-10
+                w-24 pb-1
+                rounded-md shadow-lg bg-indigo-200 ring-1 ring-black ring-opacity-5 z-10 
                 justify-items-center">
       <%= link_to "Sign up", new_user_registration_path, 
-                  class: "block px-1 text-sm text-gray-950 hover:bg-gray-300 text-center" %>
+                  class: "block px-2 text-sm text-center text-gray-950 
+                          hover:bg-emerald-300 hover:rounded-md" %>
       <%= link_to "Sign in", new_user_session_path,
-                  class: "block px-1 text-sm text-gray-950 hover:bg-gray-300 text-center" %>
+                  class: "block px-2 text-sm text-center text-gray-950 
+                          hover:bg-emerald-300 hover:rounded-md" %>
     </div>
   <% end %>
 </div>

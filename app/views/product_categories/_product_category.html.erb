@@ -19,10 +19,12 @@
         <span class="inline-block w-5"></span> <!-- spacer for alignment (accounting for ▶-->
       <% end %>
       
+      
       <!--Product Category context menu -->
       <!--Note: meaning of data-action phrase: -->
       <!--      contextmenu is the DOM event name for the browser's right-click event -->
       <!--       So, we ae telling it to launch hte context-menu controller's contextmeny method-->
+
       <div data-controller="context-menu"
             data-action="contextmenu->context-menu#contextmenu" 
             class="hover:bg-gray-50 cursor-pointer">
@@ -32,10 +34,11 @@
                     data: { turbo_frame: "categorytree_productlist_toggle" },
                     class: "text-sm font-normal 
                             cursor-pointer rounded-md hover:bg-blue-200" %>
-
-        <%= render partial: "shared/category_context_menu", locals: { record: category } %>
-
+        <% if current_user.admin? %>
+          <%= render partial: "shared/category_context_menu", locals: { record: category } %>
+        <% end %>
       </div>
+     
 
       <% if category.children_count > 0 %>
         <span class="text-sm font-light text-gray-600">

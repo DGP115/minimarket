@@ -8,6 +8,7 @@ export default class extends Controller {
   static values = { initExpanded: Boolean } 
 
   connect() {
+    console.log("tree_controller connected")
     this.expanded = false  // collapse tree by default
 
     // Restore expanded state from localStorage
@@ -25,6 +26,7 @@ export default class extends Controller {
   }
 
   toggle(event) {
+    console.log("tree_controller toggle event")
     const toggleBtn = event.currentTarget
     const id = toggleBtn.dataset.id
     const li = toggleBtn.closest("li")

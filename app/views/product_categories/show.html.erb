@@ -1,0 +1,60 @@
+<turbo-frame id="categorytree_productlist_toggle">
+  <div class="mt-2">
+    <%#  Display breadcrumbs of the category hierarchy for the current product_category %>
+    <% @product_category.ancestors.each do |ancestor| %>
+      <%= link_to ancestor.name, product_category_path(ancestor), 
+                                 class: "hover:underline text-blue-600" %> 
+      <span class="mx-1"> › </span>
+    <% end %>
+  </div>
+
+  
+  <div class="relative inline-block"
+      data-controller="context-menu">  <!-- Attach context-menu controller to parent div -->
+    <!--Product Category context menu -->
+    <!--Note: meaning of data-action phrase: -->
+    <!--      contextmenu is the DOM event name for the browser's right-click event -->
+    <!--       So, we ae telling it to launch the context-menu controller's contextmeny method-->
+    <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
+    <!--       the menu is active only when hovering on the link text vs th ewhile div -->
+    <%= link_to @product_category.name,
+                product_category_path(@product_category),
+                data: { turbo_frame: "categorytree_productlist_toggle",
+                        action: "contextmenu->context-menu#contextmenu"},
+                class: "text-lg font-semibold 
+                        cursor-pointer rounded-md hover:bg-blue-200
+                        px-2 py-1" %> <!-- Makes the hover area slightly larger than link -->
+    <% if current_user.admin? %>
+      <%= render partial: "shared/category_context_menu", locals: { record: @product_category } %>
+    <% end %>
+  </div>
+
+
+  <% if !@product_category.description.nil? %>
+    <div class="w-full max-w-2/3 mt-2 ml-10 p-2 text-base font-light border rounded-md">
+      <%= @product_category.description %>
+    </div>
+  <% end %>
+
+  <% if @product_categories.any? %>
+    <%# Render the sub-categories in a grid layout %>
+    <ul>
+      <%# Pass instance variable to partial as a local. %>
+      <%# Because recursion is used within the partial to display sub-categories, %>
+      <%# the partial loops through a local variable, which is reset during the 
+      <%# hierarchical recursion. %>
+      <%# Otherwise an endless loop results because @product_categories doesn't change  %>
+      
+      <%= render partial: "product_categories/category_tree", 
+                 locals: { product_categories: @product_categories, 
+                           root: @product_category.parent } %>
+      
+    </ul>
+  <% end %>
+
+  <% if @products.any? %>
+    <%= render partial: "products/index", locals: { products: @products, product_category: @product_category } %>
+  <% end %>
+</turbo-frame>
+
+

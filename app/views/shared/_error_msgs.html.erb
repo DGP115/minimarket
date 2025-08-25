@@ -1,15 +1,16 @@
 <% if obj.errors.any? %>
-  <div style="color: red">
-    <h3>
+  <div class="my-2 w-fit px-4 py-2 border rounded-md border-red-400 bg-yellow-200 shadow-md">
+    <h3 class="font-semibold text-red-700 mb-2">
       <%= pluralize(obj.errors.count, "error") %> prohibited this 
-      <%= obj.class.name.downcase %> from being saved.
+      <%= obj.class.name.downcase %> from being saved:
     </h3>
 
-    <ul>
+    <ol class="list-decimal list-inside text-red-600 space-y-1">
       <% obj.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-    </ul>
+    </ol>
 
   </div>
 <% end %>
+

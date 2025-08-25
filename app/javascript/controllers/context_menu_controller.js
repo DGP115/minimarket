@@ -24,8 +24,15 @@ export default class extends Controller {
     })
 
     // Position the menu at the cursor's location
-    this.menuTarget.style.top = `${event.clientY}px`
-    this.menuTarget.style.left = `${event.clientX}px`
+    // this.menuTarget.style.top = `${event.clientY}px`
+    // this.menuTarget.style.left = `${event.clientX}px`
+
+    // Position the menu just below the link
+      // Get the bounding box of the clicked element (the link)
+    const rect = event.currentTarget.getBoundingClientRect()
+    this.menuTarget.style.position = "absolute"
+    this.menuTarget.style.top = `${rect.bottom + window.scrollY}px`
+    this.menuTarget.style.left = `${rect.left + window.scrollX}px`
 
     //Unhide the menu
     this.menuTarget.classList.remove("hidden")
