@@ -38,7 +38,6 @@
           <%= render partial: "shared/category_context_menu", locals: { record: category } %>
         <% end %>
       </div>
-     
 
       <% if category.children_count > 0 %>
         <span class="text-sm font-light text-gray-600">
@@ -51,9 +50,9 @@
           {<%= category.products.count %>}
         </span>
       <% end %>
-     
-    </div>
+      
 
+    </div>
     <% if nested_categories.present? %>
       <ul data-tree-target="children" 
           class="hidden 

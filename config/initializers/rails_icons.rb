@@ -1,6 +1,6 @@
 RailsIcons.configure do |config|
   config.default_library = "phosphor"
-  # config.default_variant = "" # Set a default variant for all libraries
+  config.default_variant = "regular" # Set a default variant for all libraries
 
   # Override Phosphor defaults
   # config.libraries.phosphor.default_variant = "" # Set a default variant for Phosphor
