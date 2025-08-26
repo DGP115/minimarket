@@ -10,7 +10,8 @@
 
   
   <div class="relative inline-block"
-      data-controller="context-menu">  <!-- Attach context-menu controller to parent div -->
+      data-controller="context-menu"
+      data-action="contextmenu->context-menu#contextmenu">  <!-- Attach context-menu controller to parent div -->
     <!--Product Category context menu -->
     <!--Note: meaning of data-action phrase: -->
     <!--      contextmenu is the DOM event name for the browser's right-click event -->
@@ -19,8 +20,7 @@
     <!--       the menu is active only when hovering on the link text vs th ewhile div -->
     <%= link_to @product_category.name,
                 product_category_path(@product_category),
-                data: { turbo_frame: "categorytree_productlist_toggle",
-                        action: "contextmenu->context-menu#contextmenu"},
+                data: { turbo_frame: "categorytree_productlist_toggle"},
                 class: "text-lg font-semibold 
                         cursor-pointer rounded-md hover:bg-blue-200
                         px-2 py-1" %> <!-- Makes the hover area slightly larger than link -->

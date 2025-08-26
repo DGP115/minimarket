@@ -1,13 +1,11 @@
 <turbo-frame id="categorytree_productlist_toggle">
 
-  <div class="ml-12 self-center mt-4 mb-4">
+  <div class="ml-6 self-center mt-4 mb-4">
     <%= link_to(product_category_path(@product.product_category_id), 
-                class: "button button-sm bg-slate-700 text-amber-300 px-6 py-2") do %>
-      <span>&#8617; Product List</span>
+                class: "px-1 py-1") do %>
+      <span>&#8617;<%= @product.product_category.name %></span>
     <% end %> 
   </div>
-
-  <h2 class="text-xl font-bold mt-1 ml-12"><%= @product.product_category.name %></h2>
 
   <%= turbo_frame_tag @product do %>
 
