@@ -1,55 +1,59 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["menu"]
+  static targets = ["menu", "anchor"] // anchor is optional
 
   connect() {
     console.log("context-menu connected")
-    this.boundHide = this.hide.bind(this)
-    document.addEventListener("click", this.boundHide)
-  }
-
-  disconnect() {
-    document.removeEventListener("click", this.boundHide)
-  }
-
-  contextmenu(event) {
-    event.preventDefault()  // Prevent the browser's default context menu
-
-    console.log("right-click detected")
-
-    // Close any other open menus
-    document.querySelectorAll("[data-context-menu-target='menu']").forEach(m => {
-      m.classList.add("hidden")
-    })
-
-    // Position the menu at the cursor's location
-    // this.menuTarget.style.top = `${event.clientY}px`
-    // this.menuTarget.style.left = `${event.clientX}px`
-
-    // Position the menu just below the link
-      // Get the bounding box of the clicked element (the link)
-    const rect = event.currentTarget.getBoundingClientRect()
-    this.menuTarget.style.position = "absolute"
-    this.menuTarget.style.top = `${rect.bottom + window.scrollY}px`
-    this.menuTarget.style.left = `${rect.left + window.scrollX}px`
-
-    //Unhide the menu
-    this.menuTarget.classList.remove("hidden")
-
-    // Close on click outside
-    document.addEventListener("click", this.closeMenu)
+    // ensure we can hide on outside click
+    this.onOutsideClick = this.onOutsideClick.bind(this)
 
   }
 
-  closeMenu = () => {
-    this.menuTarget.classList.add("hidden")
-    document.removeEventListener("click", this.closeMenu)
-  }
+  // Bind this in markup: data-action="contextmenu->context-menu#open"
+  open(event) {
+    // Prevent the browser's default context menu
+    event.preventDefault()
 
-  hide() {
-    if (!this.menuTarget.classList.contains("hidden")) {
-      this.menuTarget.classList.add("hidden")
+    // Close other menus
+    document.querySelectorAll("[data-context-menu-target='menu']")
+      .forEach(m => m.classList.add("hidden"))
+
+    const anchor = this.hasAnchorTarget ? this.anchorTarget : this.element
+    const rect = anchor.getBoundingClientRect()
+    const menu = this.menuTarget
+
+    // Use viewport coords to avoid parent positioning issues
+    menu.style.position = "fixed"
+    menu.style.top = `${rect.bottom}px`
+    menu.style.left = `${rect.left + 10}px`
+
+    // Show it, then clamp to viewport
+    menu.classList.remove("hidden")
+
+    const vw = window.innerWidth
+    const vh = window.innerHeight
+    const mr = menu.getBoundingClientRect()
+    const pad = 8
+
+    if (mr.right > vw) {
+      menu.style.left = `${Math.max(pad, vw - mr.width - pad)}px`
     }
+    if (mr.bottom > vh) {
+      menu.style.top = `${Math.max(pad, vh - mr.height - pad)}px`
+    }
+
+    // Close on outside click / scroll / resize
+    window.addEventListener("click", this.onOutsideClick, { once: true })
+    window.addEventListener("scroll", this.hide, { once: true })
+    window.addEventListener("resize", this.hide, { once: true })
+  }
+
+  onOutsideClick(e) {
+    if (!this.menuTarget.contains(e.target)) this.hide()
+  }
+
+  hide = () => {
+    this.menuTarget.classList.add("hidden")
   }
 }
