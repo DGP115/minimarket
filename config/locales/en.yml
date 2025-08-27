@@ -26,6 +26,10 @@
 #     en:
 #       "yes": yup
 #       enabled: "ON"
-
+# 
+# DGP:  Note: Using internationalization to ensure Product Category is titlzed in form.submit labels
 en:
   hello: "Hello world"
+  activerecord:
+    models:
+      product_category: "Product Category"

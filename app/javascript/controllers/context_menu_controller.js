@@ -26,7 +26,7 @@ export default class extends Controller {
     // Use viewport coords to avoid parent positioning issues
     menu.style.position = "fixed"
     menu.style.top = `${rect.bottom}px`
-    menu.style.left = `${rect.left + 10}px`
+    menu.style.left = `${rect.left + 20}px`
 
     // Show it, then clamp to viewport
     menu.classList.remove("hidden")

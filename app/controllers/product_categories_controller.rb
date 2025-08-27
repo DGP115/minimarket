@@ -5,13 +5,6 @@ class ProductCategoriesController < ApplicationController
     @root_categories = ProductCategory.roots.order(orderindex: :asc)
   end
 
-  def root
-    @product_category = ProductCategory.find(params[:id])
-    @product_categories = @product_category.descendants.arrange(order: :name)
-    render partial: "product_categories/category_tree",
-           locals: { product_category: @product_category, product_categories: @product_categories }
-  end
-
   def tree_left
     @active_category = ProductCategory.find(params[:id])
     @parent_category = @active_category.parent

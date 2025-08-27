@@ -33,7 +33,6 @@ Rails.application.routes.draw do
   ## Product Categories
   resources :product_categories do
     member do
-      get :root
       get :tree_left
       get :add_child
     end

@@ -1,18 +1,18 @@
 <div data-context-menu-target="menu"
-     class="hidden w-24 bg-white border rounded shadow-md z-50">
+     class="hidden w-24 bg-indigo-50 border rounded shadow-md z-50">
 
-  <ul class="divide-y divide-gray-200">
+  <ul class="divide-y divide-gray-400">
     <li>
       <%= link_to "Add Child", add_child_product_category_path(record), 
-                  class: "my-2 px-2 py-1 text-xs font-normal hover:bg-gray-200 hover:rounded-md" %>
+                  class: "my-2 px-2 py-1 text-xs font-normal hover:bg-blue-200 hover:rounded-md" %>
     </li>
     <li>
       <%= link_to "Add Product", new_product_path(product_category_id: record.id), 
-                  class: "my-2 px-2 py-1 text-xs font-normal hover:bg-gray-200 hover:rounded-md" %>
+                  class: "my-2 px-2 py-1 text-xs font-normal hover:bg-blue-200 hover:rounded-md" %>
     </li>
     <li>
       <%= link_to "Edit", edit_product_category_path(record), 
-                  class: "my-2 px-2 py-1 text-xs font-normal hover:bg-gray-200 hover:rounded-md" %>
+                  class: "my-2 pl-2 pr-6 py-1 text-xs font-normal hover:bg-blue-200 hover:rounded-md" %>
     </li>
   </ul>
   

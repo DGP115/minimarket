@@ -6,7 +6,7 @@
               border-b-1 border-indigo-500">
     <% @root_categories.each do |root| %>
       <div>
-        <%= link_to root.name, root_product_category_path(root), 
+        <%= link_to root.name, product_category_path(root), 
                                data: { turbo_frame: "categorytree_productlist_toggle" },
                                class: "text-blue-600 hover:underline text-sm" %>
       </div>
