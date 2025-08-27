@@ -8,27 +8,32 @@
     <% end %>
   </div>
 
-  
-  <div class="inline-block"
-       data-controller="context-menu"
-       data-action="contextmenu->context-menu#open">  <!-- Attach context-menu controller to parent div -->
-    <!--Product Category context menu -->
-    <!--Note: meaning of data-action phrase: -->
-    <!--      contextmenu is the DOM event name for the browser's right-click event -->
-    <!--       So, we ae telling it to launch the context-menu controller's contextmeny method-->
-    <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
-    <!--       the menu is active only when hovering on the link text vs th ewhile div -->
-    <%= link_to @product_category.name,
-                product_category_path(@product_category),
-                data: { turbo_frame: "categorytree_productlist_toggle",
-                        context_menu_target: "anchor" },
-                class: "text-lg font-semibold 
-                        cursor-pointer rounded-md hover:bg-blue-200
-                        px-2 py-1" %> <!-- Makes the hover area slightly larger than link -->
-    <% if current_user.admin? %>
-      <%= render partial: "shared/category_context_menu", locals: { record: @product_category } %>
-    <% end %>
-  </div>
+  <% if user_signed_in? && current_user.admin? %>
+    <div class="inline-block"
+        data-controller="context-menu"
+        data-action="contextmenu->context-menu#open"
+        data-context-menu-target="anchor">  <!-- Attach context-menu controller to parent div -->
+      <!--Product Category context menu -->
+      <!--Note: meaning of data-action phrase: -->
+      <!--      contextmenu is the DOM event name for the browser's right-click event -->
+      <!--       So, we ae telling it to launch the context-menu controller's contextmeny method-->
+      <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
+      <!--       the menu is active only when hovering on the link text vs th ewhile div -->
+        <div class="text-lg font-semibold 
+                    rounded-md hover:bg-blue-200 cursor-pointer
+                    px-2 py-1"> 
+          <%= @product_category.name %>
+        </div>
+
+        <%= render partial: "shared/category_context_menu", locals: { record: @product_category } %>
+
+    </div>
+  <% else %>
+    <%# Don't show cursor change or context menu for non-admin users %>
+    <div class="text-lg font-semibold rounded-md px-2 py-1"> 
+      <%= @product_category.name %>
+    </div>
+  <% end %>
 
 
   <% if !@product_category.description.nil? &&  !@product_category.description.blank? %>

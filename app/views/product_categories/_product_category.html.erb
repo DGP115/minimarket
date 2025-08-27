@@ -35,7 +35,7 @@
                             context_menu_target: "anchor" },
                     class: "text-sm font-normal 
                             cursor-pointer rounded-md hover:bg-blue-200" %>
-        <% if current_user.admin? %>
+        <% if user_signed_in? && current_user.admin? %>
           <%= render partial: "shared/category_context_menu", locals: { record: category } %>
         <% end %>
       </div>

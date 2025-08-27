@@ -18,6 +18,9 @@ module.exports = {
           dark: '#4C1D95',
         },
       },
+      cursor: {
+        'context-menu': 'context-menu',
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
