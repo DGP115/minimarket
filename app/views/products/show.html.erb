@@ -47,8 +47,8 @@
     <% end %>
 
     <!--If user has already reviewed this product, have them edit their review versus creating
-        an additional one -->
-    <% if user_signed_in? && @product.reviews.where(user_id: current_user.id).any? %>
+        an additional one.  Also, don't allow seller to leave a review -->
+    <% if user_signed_in? && current_user.id != @product.seller_id && @product.reviews.where(user_id: current_user.id).any? %>
       <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
         <p class="pl-2 text-base">Edit your review </p>
         <div class="">

@@ -2,13 +2,20 @@
 <div class="relative h-96 mt-2 overflow-hidden">
 
   <% if product.primary_image.attached? %>
-    <%= image_tag product.primary_image,  
-        class: "w-full h-full object-contain transform duration-500 ease-in-out hover:scale-110", 
+    <%= image_tag product.primary_image.variant(resize_to_limit: [800, 800]), loading: "lazy",
+        class: "w-full max-w-2xl mx-auto rounded-xl shadow-lg object-contain", 
 
-        data: { "gallery-target": "thumbnail_enlarge" }   %>
+        data: { "gallery-target": "thumbnailEnlarge" }   %>
   <% else %>
     <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "thumbnail" %>
   <% end %>
+
+    <!-- Reset button -->
+  <button type="button"
+          data-action="click->gallery#reset"
+          class="absolute top-2 right-2 bg-white/80 px-3 py-1 rounded-md shadow text-sm hover:bg-white">
+    Reset
+  </button>
 
 </div>
 
@@ -20,10 +27,9 @@
       <% product.images.each do |image| %>
         <button class="relative w-40 h-40 flex-shrink-0 rounded-sm overflow-hidden">
 
-          <%= image_tag image, 
-                        class: "w-full h-full object-contain cursor-zoom-in transform duration-300 
-                                ease-in-out hover:scale-105 border", 
-                        data: { action: "click->gallery#thumbnail_enlarge" } %>
+          <%= image_tag image.variant(resize_to_limit: [150, 150]), loading: "lazy", 
+                        class: "w-24 h-24 object-cover rounded-lg shadow hover:opacity-80 transition cursor-pointer", 
+                        data: { action: "click->gallery#thumbnailEnlarge" } %>
 
         </button>
       <% end %>

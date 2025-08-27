@@ -10,7 +10,7 @@
   <% products.each do |product| %>
     <%= link_to product,
                 data: { turbo_frame: "categorytree_productlist_toggle" },
-                class: "h-120 w-72 overflow-hidden rounded-lg shadow-lg mx-auto border" do %>
+                class: "h-120 w-72 overflow-hidden rounded-lg mx-auto border shadow-lg/50" do %>
       <div class="h-48 border-b-2 relative">
         <div style="display: block; overflow: hidden; position: absolute; inset: 0px;
                     box-sizing: border-box; margin: 0px;">

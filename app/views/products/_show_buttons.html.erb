@@ -16,8 +16,9 @@
                         class: "ml-2 border text-center display-inline text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
 
       <!-- The turbo false is needed as Stripe api requires the processing of 
-            ProductsController#buy as HTML, not turbostream format -->
-      <%= f.submit "Buy now", class: "display-inline button button-sm bg-indigo-500 text-amber-300",
+          ProductsController#buy as HTML, not turbostream format -->
+      <%= f.submit "Buy now", class: "display-inline button button-sm bg-indigo-500 text-amber-300
+                                      hover:scale-110 hover:invert",
                               data: { turbo: false } %>
 
   <% end %>

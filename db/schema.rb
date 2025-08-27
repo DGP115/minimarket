@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_06_233425) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_27_162932) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_06_233425) do
     t.integer "ancestry_depth", default: 0
     t.integer "children_count", default: 0, null: false
     t.integer "orderindex", default: 1
+    t.integer "products_count", default: 0, null: false
     t.index ["ancestry"], name: "index_product_categories_on_ancestry"
   end
 

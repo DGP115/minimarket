@@ -25,7 +25,7 @@ class ProductCategoriesController < ApplicationController
 
   def show
     @product_category = ProductCategory.find(params[:id])
-    @products = @product_category.products.order(:title)
+    @products = @product_category.products.order(:title).includes([ :rich_text_description ]).with_attached_images.limit(10)
     @product_categories = @product_category.descendants.arrange(order: :name)
   end
 

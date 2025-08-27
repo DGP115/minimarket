@@ -8,13 +8,9 @@ class ProductsController < ApplicationController
   # See https://guides.rubyonrails.org/action_controller_advanced_topics.html#authenticity-token-and-request-forgery-protection
   protect_from_forgery except: :webhook
 
-  def index
-    @products = Product.all
-  end
-
   def show
     # Will need product reviews
-    @reviews = @product.reviews.order(created_at: :desc)
+    @reviews = @product.reviews.order(created_at: :desc).includes([ :user ])
     # Be ready with a new review object
     @new_review = @product.reviews.new(user_id: current_user&.id)
   end
@@ -162,6 +158,7 @@ class ProductsController < ApplicationController
   private
 
   def set_product
+    # @product = Product.includes(product_category: {}).with_attached_images.limit(10).find(params[:id])
     @product = Product.find(params[:id])
   end
 
