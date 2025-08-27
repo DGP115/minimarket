@@ -39,8 +39,9 @@
                 justify-items-center">
       <!-- 2.1 Dropdown Menu links -->
       <div class="space-y-2" role="menu">
-        <%= link_to "Profile", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
-                                    role: "menuitem" %>
+        <%= link_to "Profile", edit_user_registration_path(current_user), 
+                               class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
+                               role: "menuitem" %>
         <%= link_to "Settings", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
                                      role: "menuitem" %>
         
