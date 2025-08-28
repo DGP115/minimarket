@@ -72,4 +72,3 @@ gem "stripe", "~> 15.2", ">= 15.2.1"
 gem "image_processing", "~> 1.2"
 gem "ruby-vips", "~> 2.2", ">= 2.2.5"
 gem "ancestry"   # To support hierarchical product categories
-gem "rails_icons"

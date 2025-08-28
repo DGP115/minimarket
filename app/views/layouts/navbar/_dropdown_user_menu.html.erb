@@ -8,18 +8,19 @@
             class="inline-flex items-center justify-between 
                    w-full max-w-full px-4 py-2
                    box-border rounded-md border border-gray-500 shadow-sm bg-indigo-100 
-                   text-sm font-medium text-gray-700 hover:bg-sky-100 focus:outline-solid">
-      <!-- 1.2  "Person" icon" -->
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
-           stroke="currentColor" class="size-6 mr-2">
-        <path stroke-linecap="round" 
-              stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-      </svg>
+                   text-gray-700 hover:bg-sky-100 focus:outline-solid">
 
-      <!-- 1.3  First inital of user's email address -->
-      <%= current_user.email.first.upcase + "..." %>
+      <!-- 1.2  User's profile image -->
+      <div class="group block flex-shrink-0">
+        <div class="flex items-center text-xs font-normal text-gray-700 group-hover:text-gray-900">
+          <%= current_user.name %>
+          <div>
+            <%= render partial: "shared/user_profileimage", locals: { user: current_user } %>
+          </div>
+        </div>
+      </div>
 
-      <!-- 1.4  Downward pointing arrow -->
+      <!-- 1.3  Downward pointing arrow -->
       <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -39,7 +40,7 @@
                 justify-items-center">
       <!-- 2.1 Dropdown Menu links -->
       <div class="space-y-2" role="menu">
-        <%= link_to "Profile", edit_user_registration_path(current_user), 
+        <%= link_to "Profile", edit_user_profile_path(current_user), 
                                class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 
                                role: "menuitem" %>
         <%= link_to "Settings", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", 

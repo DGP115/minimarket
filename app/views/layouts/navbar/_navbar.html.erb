@@ -9,6 +9,7 @@
                     class:"text-xl font-sans font-semibold tracking-tight pt-1" %>
       </div>
       <!-- Right side of navbar -->
+
       <!-- This div grows to take up all available space between logo and right edge -->
       <div class="ml-auto mr-4 items-center space-x-6">
         <%= link_to "About", about_path, 
@@ -16,11 +17,19 @@
                            hover:text-indigo-700" %>
       </div>
 
-      <!--The navbar adapts between desktops and mobile screen sizes.  
-          Dropdowns for both are included and a combination of Tailwind classes and stimulus controllers
+      <!--The rightmost side of the navbar adapts between desktop and mobile screen sizes.  
+          Dropdowns for both are included here and a combination of Tailwind classes and stimulus controllers
           toggle to hide/unhide the appropriate dropdown menus -->
           
-      <!-- Mobile Menu Wrapper -->
+      <!-- Desktop dropdown -->
+      <div class="hidden sm:flex sm:items-center">
+        <!-- User Menu -->
+        <div class="hidden sm:flex sm:items-center sm:space-x-6">
+          <%= render "layouts/navbar/dropdown_user_menu" %>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Dropdown Wrapper -->
       <div data-controller="mobilenav" class="relative sm:hidden">
         <!-- Hamburger Button (mobile only, fixed position in header row) -->
         <div class="flex justify-end">
@@ -51,13 +60,6 @@
         </div>  
       </div>
 
-      <!-- Desktop nav -->
-      <div class="hidden sm:flex sm:items-center">
-        <!-- User Menu -->
-        <div class="hidden sm:flex sm:items-center sm:space-x-6">
-          <%= render "layouts/navbar/dropdown_user_menu" %>
-        </div>
-      </div>
     </div>
 
   </div>

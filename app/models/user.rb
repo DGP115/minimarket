@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :reviews, dependent: :destroy
 
+  has_one_attached :profile_image, dependent: :destroy
+
   # i.e. A user, as a buyer, has many purchases.
   # When a user-as-buyer is deleted, so are their purchases
   has_many :purchases, foreign_key: :buyer_id, dependent: :destroy

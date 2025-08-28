@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   root "product_categories#index"
   #
   devise_for :users
+  get "users/:id/profile", to: "users#profile_edit", as: :edit_user_profile
+  patch "users/:id/profile", to: "users#profile_update", as: :update_user_profile
+
   #
   # Pages
   get "about", to: "pages#about"
