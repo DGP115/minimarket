@@ -91,7 +91,7 @@ class ProductsController < ApplicationController
       })
       redirect_to session.url, status: 303, allow_other_host: true
     else
-      # If quantity is greater than 0, redirect to the product page with an error message
+      # If quantity is not greater than 0, redirect to the product page with an error message
       flash[:alert] = "Quantity must be greater than 0"
       redirect_to product_path(@product), status: :unprocessable_entity
     end
@@ -99,7 +99,7 @@ class ProductsController < ApplicationController
 
   def webhook
     # This method is called by Stripe when an event occurs.
-    # In development, a seaprate lsitengin process must be run to listen for webhooks
+    # In development, a separate listening process must be run to listen for webhooks
     # e.g.  $ stripe listen --forward-to localhost:3000/webhook
     # It verifies the event (to ensure it comes from Stripe) and then processes it accordingly.
     # The event is nil if verification fails.
@@ -164,6 +164,8 @@ class ProductsController < ApplicationController
 
   def set_product_category_tree
     root = @product.product_category.root
+    #  Need ALL product categories [under this root] to populate the dropdown that allows the user 
+    #  to reassign the product's category
     @product_categories = root.descendants.arrange(order: :name)
   end
 

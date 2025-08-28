@@ -1,5 +1,6 @@
 <% if user.profile_image.attached? %>
-  <%= image_tag user.profile_image, class: "inline-block h-9 w-9 rounded-full", alt: user.name %>
+  <!-- 1.2  Image configured by user -->
+  <%= image_tag user.profile_image, class: "inline-block h-8 w-8 rounded-full", alt: user.name %>
 <% else %>
   <!-- 1.2  "Person" icon" -->
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
