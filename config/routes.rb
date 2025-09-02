@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :reviews
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,7 +10,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "product_categories#index"
+  root "pages#home"
   #
   devise_for :users
   get "users/:id/profile", to: "users#profile_edit", as: :edit_user_profile
@@ -40,4 +39,9 @@ Rails.application.routes.draw do
       get :add_child
     end
   end
+
+  resources :orders
+  resources :cart_items
+  resource :cart, only: %i[ show edit destroy ]
+  resources :reviews
 end

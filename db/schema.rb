@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_27_203953) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_01_142245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,6 +52,45 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_203953) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "cart_items", force: :cascade do |t|
+    t.bigint "cart_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity", default: 0, null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "lineitems", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "buyer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity", default: 1, null: false
+    t.bigint "order_id"
+    t.index ["buyer_id"], name: "index_lineitems_on_buyer_id"
+    t.index ["order_id"], name: "index_lineitems_on_order_id"
+    t.index ["product_id"], name: "index_lineitems_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "status", default: 0, null: false
+    t.decimal "total_amount", precision: 10, scale: 2, default: "0.0"
+    t.datetime "status_changed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "product_categories", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -76,16 +115,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_203953) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["seller_id"], name: "index_products_on_seller_id"
     t.index ["stripe_id"], name: "index_products_on_stripe_id", unique: true
-  end
-
-  create_table "purchases", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "buyer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "quantity", default: 1, null: false
-    t.index ["buyer_id"], name: "index_purchases_on_buyer_id"
-    t.index ["product_id"], name: "index_purchases_on_product_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -114,8 +143,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_203953) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "products"
+  add_foreign_key "carts", "users"
+  add_foreign_key "lineitems", "orders"
+  add_foreign_key "lineitems", "users", column: "buyer_id"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "users", column: "seller_id"
-  add_foreign_key "purchases", "users", column: "buyer_id"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end

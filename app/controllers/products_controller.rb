@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy buy ]
 
-  # authenticate_user is provided by Devise
+  # authenticate_user! is provided by Devise
   before_action :authenticate_user!, only: %i[ new create edit update destroy buy]
+
   before_action :require_same_user, only: %i[ edit update destroy ]
 
   # See https://guides.rubyonrails.org/action_controller_advanced_topics.html#authenticity-token-and-request-forgery-protection
@@ -126,7 +127,7 @@ class ProductsController < ApplicationController
         customer_email = event.data.object.customer_email
         product_id = event.data.object.client_reference_id # Because we set it to that in the buy method
         customer = User.find_by(email: customer_email)
-        purchase = customer.purchases.create(product_id: product_id)
+        lineitem = customer.lineitems.create(product_id: product_id)
     end
 
     # Return a 200 OK response to acknowledge with Stripe receipt of the event
@@ -164,7 +165,7 @@ class ProductsController < ApplicationController
 
   def set_product_category_tree
     root = @product.product_category.root
-    #  Need ALL product categories [under this root] to populate the dropdown that allows the user 
+    #  Need ALL product categories [under this root] to populate the dropdown that allows the user
     #  to reassign the product's category
     @product_categories = root.descendants.arrange(order: :name)
   end

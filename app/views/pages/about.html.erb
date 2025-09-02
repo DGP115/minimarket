@@ -1,8 +1,21 @@
-<p>About</p>
+<div class="mt-4 ml-10 flex flex-col w-1/2
+            px-4 py-2 border rounded-md shadow-md/50">
+  <div class="text-lg text-bold text-center mt-2 mb-4">
+    This is the MiniMarket About page
+  </div>
+  <div class="mt-4 font-sans text-base/6">
+    The MiniMarket was written by this old guy as part of a course.<br>
+    <%= avatar_for_name('David Peloso', size:('200x200')) %>
+  </div>
 
-<%= icon "folder", variant: "regular" %>
-<%= icon "tote", variant: "regular" %>
-	
-&#9654;
-&#x25B6;
-&#9660;	&#x25BC;
+  <div class="mt-4 font-sans text-base">
+    He is the founder of: <span class="italic text-indigo-600">&copy;Some Guy&trade;</span>
+    <span class="non-italic text-indigo-600"> S/W Productions</span>
+  </div>
+
+  <div class="mt-4 font-sans text-base">
+    MiniMarket is a web application for hosting users' online stores.<br>
+    It is written in Ruby on Rails.
+  </div>
+
+</div>

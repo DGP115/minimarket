@@ -1,0 +1,23 @@
+<div id="<%= dom_id @cart %>" class="w-full sm:w-auto my-5 space-y-5">
+
+  <% if !current_user.cart.nil? && current_user.cart.cart_items.exists? %>
+    <div class="grid grid-cols-[auto_1fr_auto_auto] gap-2 font-semibold text-base">
+      <!-- Header Row -->
+      <div class="px-2 py-2">Item</div>
+      <div class="px-2 py-2">Description</div>
+      <div class="px-2 py-2">Quantity</div>
+      <div class="px-2 py-2">Price</div>
+
+      <!-- Data Rows -->
+      <% current_user.cart.cart_items.each_with_index do |item, index| %>
+        <div class="px-2 py-2 text-center font-normal"><%= index + 1 %></div>
+        <div class="px-2 py-2 font-normal"><%= item.product.title %></div>
+        <div class="px-2 py-2 text-center font-normal"><%= item.quantity %></div>
+        <div class="py-2 text-right font-normal">
+          $<%= number_with_precision(item.product.price, precision: 2) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>

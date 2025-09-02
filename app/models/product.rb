@@ -3,8 +3,8 @@ class Product < ApplicationRecord
   # the product model is associated with [normally, it would be inferred in the 'belongs_to']
   belongs_to :seller, class_name: "User"
 
-  has_many :purchases, dependent: :destroy
-  has_many :buyers, through: :purchases, class_name: "User"
+  has_many :lineitems, dependent: :destroy
+  has_many :buyers, through: :lineitems, class_name: "User"
   has_many :reviews, dependent: :destroy
   belongs_to :product_category, optional: true, counter_cache: true
 
@@ -17,6 +17,10 @@ class Product < ApplicationRecord
   after_create :create_product_in_stripe
   after_update :update_product_in_stripe
   after_destroy :archive_product_in_stripe
+
+  # To support shopping cart model
+  has_many :cart_items
+  has_many :carts, through: :cart_items
 
   private
 

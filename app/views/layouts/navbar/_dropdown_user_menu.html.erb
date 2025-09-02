@@ -57,20 +57,7 @@
                     class: "block px-4 py-2 text-sm text-gray-950 hover:bg-gray-300",
                     data: { turbo_method: :delete } %>
       </div>
-    </div>
-          
-  <% else %>
-    <div class="-top-4 -left-0 md:-left-10
-                w-24 pb-1
-                rounded-md shadow-lg bg-indigo-200 ring-1 ring-black ring-opacity-5 z-10 
-                justify-items-center">
-      <%= link_to "Sign up", new_user_registration_path, 
-                  class: "block px-2 text-sm text-center text-gray-950 
-                          hover:bg-emerald-300 hover:rounded-md" %>
-      <%= link_to "Sign in", new_user_session_path,
-                  class: "block px-2 text-sm text-center text-gray-950 
-                          hover:bg-emerald-300 hover:rounded-md" %>
-    </div>
+    </div>   
   <% end %>
 </div>
 

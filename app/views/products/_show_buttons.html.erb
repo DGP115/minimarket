@@ -9,19 +9,19 @@
       </span>
   </div>
 
-  <%= form_with(model: product, url: buy_product_path(product), method: :post) do |f| %>
 
-    <%= f.label "Quantity:", class: "display-inline text-sm font-bold text-indigo-700" %>
-    <%= f.number_field :quantity, in: 1..100, step: 1, value: 1, 
-                        class: "ml-2 border text-center display-inline text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
+    <%= form_with( url: cart_items_path(product_id: product.id), method: :post) do |f| %> 
 
-      <!-- The turbo false is needed as Stripe api requires the processing of 
-          ProductsController#buy as HTML, not turbostream format -->
-      <%= f.submit "Buy now", class: "display-inline button button-sm bg-indigo-500 text-amber-300
-                                      hover:scale-110 hover:invert",
-                              data: { turbo: false } %>
+      <%= f.label "Quantity:", class: "display-inline text-sm font-bold text-indigo-700" %>
+      <%= f.number_field :quantity, in: 1..100, step: 1, value: 1, 
+                          class: "ml-2 border text-center display-inline 
+                                  text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
 
-  <% end %>
+      <%= f.submit "Add to cart", class: "display-inline button button-sm bg-indigo-500 text-amber-300
+                                          hover:scale-110 hover:invert" %>
+
+    <% end %>
+
 
 </div>
 
@@ -30,7 +30,7 @@
     <p class="text-slate-700">Seller-only options:</p>
     <%= button_to "Edit this product", edit_product_path(product), method: :get,
                   class: "button button-sm border border-color-black bg-blue-600 text-amber-300 
-                  hover:bg-gray-500" %>
+                          hover:bg-gray-500" %>
 
     <%= button_to "Delete this product", product_path(product), 
                   method: :delete, 

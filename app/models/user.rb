@@ -11,14 +11,17 @@ class User < ApplicationRecord
 
   has_one_attached :profile_image, dependent: :destroy
 
-  # i.e. A user, as a buyer, has many purchases.
-  # When a user-as-buyer is deleted, so are their purchases
-  has_many :purchases, foreign_key: :buyer_id, dependent: :destroy
+  # i.e. A user, as a buyer, has many lineitems.
+  # When a user-as-buyer is deleted, so are their lineitems <<-- NOTE: Not sure this is right.
+  has_many :lineitems, foreign_key: :buyer_id, dependent: :destroy
+
+  has_one :cart
+  has_many :orders
 
   enum :role, %i[ user admin ], default: :user
 
   def has_purchased?(product)
     # Check if the user has purchased the product
-    self.purchases.exists?(product_id: product.id)
+    self.lineitems.exists?(product_id: product.id)
   end
 end

@@ -1,0 +1,26 @@
+<div class="md:w-3/5 w-full"> 
+  <%= render "shared/flash_messages", obj: @cart%>
+
+  <h1 class="font-semibold text-2xl">
+		<%= current_user.name.titlecase %>:  Your cart's contents:
+  </h1>
+
+  <%= render @cart %>
+
+	<!-- Button container -->
+	<div class="flex justify-end space-x-2 mt-4">
+		<%= link_to "Edit", edit_cart_path(@cart), 
+								class: "inline-block font-normal cursor-pointer sm:w-auto
+									text-center border rounded-md px-4 py-1 ml-4 mr-2
+									bg-gray-100 hover:scale-110 hover:bg-gray-400
+									transition duration-200 ease-in-out" %>
+
+		<%= button_to "Delete", @cart, method: :delete, 
+									form_class: "inline-block m-0", 
+									class: "inline-block font-normal cursor-pointer sm:w-auto
+									rounded-md px-2 py-1 bg-red-300 border
+									hover:bg-red-600 hover:scale-110 
+									transition duration-200 ease-in-out", 
+									data: { turbo_confirm: "Are you sure?" } %>
+	</div>
+</div>
