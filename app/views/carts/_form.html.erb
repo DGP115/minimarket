@@ -1,4 +1,9 @@
-<%= form_with(model: cart, class: "contents") do |form| %>
+<%= form_with(model: @cart) do |f| %>
+
+
+  <%= f.number_field :quantity, in: 0..100, step: 1, value: 1,
+        class: "mt-2 text-center block border text-sm font-normal text-indigo-700 bg-green-100" %>
+
 
 
 <% end %>

@@ -18,7 +18,8 @@
                                   text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
 
       <%= f.submit "Add to cart", class: "display-inline button button-sm bg-indigo-500 text-amber-300
-                                          hover:scale-110 hover:invert" %>
+                                          hover:scale-110 hover:invert",
+                                  data: { turbo: false }%>
 
     <% end %>
 
