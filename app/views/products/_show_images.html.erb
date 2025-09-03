@@ -1,9 +1,10 @@
 <!-- Primary image -->
-<div class="relative h-96 mt-2 flex overflow-hidden justify-center bg-white">
+<div class="relative h-96 mt-2 flex overflow-hidden justify-center 
+          bg-white border-r border-stone-400">
 
   <% if product.primary_image.attached? %>
     <%= image_tag product.primary_image.variant(resize_to_limit: [800, 800]), loading: "lazy",
-        class: "max-h-full max-w-full object-contain rounded-xl shadow-lg", 
+        class: "max-h-full max-w-full object-contai rounded-xl shadow-lg", 
 
         data: { "gallery-target": "thumbnailEnlarge" }   %>
   <% else %>
@@ -13,7 +14,8 @@
     <!-- Reset button -->
   <button type="button"
           data-action="click->gallery#reset"
-          class="absolute top-2 right-2 bg-white/80 px-3 py-1 rounded-md shadow text-sm hover:bg-white">
+          class="absolute top-2 right-1 bg-white/80 px-3 border border-stone-400 
+                 py-1 rounded-md shadow text-sm hover:bg-slate-300">
     Reset
   </button>
 

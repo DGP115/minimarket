@@ -33,8 +33,10 @@
     <!-- Bottom: Two columns merged: Product description -->
     <% if !@product.description.blank? %>
 
-      <div class="w-9/12 border-2 border-double border-indigo-300 p-2 
-                  font-sans font-normal text-base mt-6 ml-10">
+      <div class="w-9/12 mt-2 ml-10 p-2
+                  font-sans font-normal text-base
+                  border rounded-md border-indigo-600
+                  shadow-lg">
 
         <%= @product.description %>
 
