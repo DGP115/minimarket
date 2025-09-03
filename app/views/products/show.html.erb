@@ -1,5 +1,6 @@
 <turbo-frame id="categorytree_productlist_toggle">
 
+  <!-- Category / product navigation -->
   <div class="ml-6 self-center mt-4 mb-4">
     <%= link_to(product_category_path(@product.product_category_id), 
                 class: "px-1 py-1") do %>
@@ -13,6 +14,7 @@
           the setting on that dom_id -->
     <%= turbo_stream.update target="flash_messages", partial: "shared/flash_messages" %>
 
+    <!-- Product main content -->
     <div class="flex flex-col justify-center items-center md:flex-row md:items-start space-y-2 
                 md:space-y-0 md:space-x-4 lg:space-x-4 max-w-6xl w-11/12 mx-auto mt-3">
 
@@ -40,41 +42,52 @@
     <% end %>
   <% end %>
 
+
   <!-- Reviews -->
-  <div id="reviews-container" class="my-3, py-10 pl-4">
-    <% if !@product.reviews[0].body.nil? %>
-      <h2 class="text-2xl font-bold">Reviews </h2>
+  <div id="reviews-container" class="my-3 py-6 pl-4">
+
+    <% if @reviews.any? %>
+      <h2 class="text-xl font-sans font-semibold">Reviews:</h2>
     <% end %>
 
     <!--If user has already reviewed this product, have them edit their review versus creating
         an additional one.  Also, don't allow seller to leave a review -->
-    <% if user_signed_in? && current_user.id != @product.seller_id && @product.reviews.where(user_id: current_user.id).any? %>
-      <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
-        <p class="pl-2 text-base">Edit your review </p>
-        <div class="">
-          <%= render partial: "reviews/form", locals: { review: @product.reviews.where(user_id: current_user.id).first } %>
+    <% if user_signed_in? && current_user.id != @product.seller_id %>
+      <% if @current_user_review != nil %>
+        <!-- User has already reviewed so have them edit their existing review -->
+        
+        <div class="flex justify-start ml-4">
+          <div class="w-1/2 max-w-lg px-2 pt-1 my-2 border border-gray-500 rounded-md bg-indigo-100">
+            <p class="pl-2 text-base">Edit your review: </p>
+
+              <%= render partial: "reviews/form", 
+                        locals: { review: @current_user_review } %>
+
+          </div>
         </div>
-      </div>
-    <% elsif user_signed_in? && current_user.id != @product.seller_id %>
-      <!-- If the user is signed in, this is not their own product, and they have not already reviewed this product, 
-          show the review form -->
-      <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
-        <p class="pl-2 text-base">Write a review </p>
-        <div class="">
-          <%= render partial: "reviews/form", locals: { review: @new_review } %>
+
+      <% else %>
+        <!-- Show the review form to create a review-->
+        <div class="px-2 pt-1 my-2 border border-gray-500 rounded-md bg-neutral-100">
+          <p class="pl-2 text-base">Write a review </p>
+          <div>
+            <%= turbo_frame_tag dom_id(@new_review || Review.new) do %>
+              <%= render partial: "reviews/form", locals: { review: @new_review } %>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
 
     <%# Since we are broadcasting refreshes of product reviews (See review model), %>
-    <%# this turbo_stream_from identifies where the "listening" will take place %>
+    <%# this turbo_stream_from identifies the Turbo subscription for real-time updates --> %>
     <%= turbo_stream_from @product %>
 
     <%# This turbo_frame_tag is a marker to enable turbo to prepend new reviews here %>
     <%= turbo_frame_tag "reviews" do %>
-      <%# Recall the below is Rails magic that loops through @reviews and calls partial "reviews/review" %>
-      <%= render @reviews %>
+      <%= render partial: "reviews/review", collection: @reviews, as: :review %>
     <% end %>
 
   </div>
 </turbo-frame>
+

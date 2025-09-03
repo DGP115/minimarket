@@ -16,8 +16,8 @@
 
   <!--The category_tree or product_list partials will be included here, based on user's selection. -->
   <!-- 1. Selection of root category (above) points to here-->
-  <!-- 2. A route is defined for the root method [See routes.rb] -->
-  <!-- 3. The root method in the product_categories controller renders partial _category_tree -->
+  <!-- 2. That selection invokes that product_category's Show page [via product_category_path(root)] -->
+  <!-- 3. That show page calls partial category_tree -->
   <!-- 4. The code in partial category_tree is wrapped in turboframe id= "categorytree_productlist_toggle" -->
   <!-- 5. The code in product_list partial is also wrapped in the same turboframe. id -->
   

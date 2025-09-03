@@ -11,7 +11,13 @@ class ProductsController < ApplicationController
 
   def show
     # Will need product reviews
-    @reviews = @product.reviews.order(created_at: :desc).includes([ :user ])
+    @reviews = @product.reviews.includes([ :user ]).order(created_at: :desc)
+    # Preload current_user's review if they have one
+    if user_signed_in?
+      @current_user_review = @reviews.find { |r| r.user_id == current_user.id }
+    else
+      @current_user_review = nil
+    end
     # Be ready with a new review object
     @new_review = @product.reviews.new(user_id: current_user&.id)
   end

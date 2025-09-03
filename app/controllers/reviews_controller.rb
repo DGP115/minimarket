@@ -24,12 +24,12 @@ class ReviewsController < ApplicationController
           flash[:notice] = "Review was successfully created."
           redirect_to product_path(@review.product)
         end
-        format.turbo_stream do
-          # In the case of a turbo_stream, we tell turbo to:
-          #   - prepend the new review
-          #   - to the "reviews" section of the dom
-          render turbo_stream: turbo_stream.prepend("reviews", @review)
-        end
+        # format.turbo_stream do
+        #   # In the case of a turbo_stream, we tell turbo to:
+        #   #   - prepend the new review
+        #   #   - to the "reviews" section of the dom
+        #   render turbo_stream: turbo_stream.prepend("reviews", @review)
+        # end
       else
         # Error trapping
         #   Re-render the "new" product page.
