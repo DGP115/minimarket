@@ -6,11 +6,11 @@
 
   <div class="text-xl font-medium ml-20 py-2 px-1">
     $<span class="text-2xl"><%= number_with_precision(product.price, precision: 2) %>
-      </span>
+     </span>
   </div>
 
 
-    <%= form_with( url: cart_items_path(product_id: product.id), method: :post) do |f| %> 
+    <%= form_with(url: cart_items_path(product_id: product.id), method: :post) do |f| %> 
 
       <%= f.label "Quantity:", class: "display-inline text-sm font-bold text-indigo-700" %>
       <%= f.number_field :quantity, in: 1..100, step: 1, value: 1, 
