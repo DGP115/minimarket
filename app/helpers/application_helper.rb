@@ -28,4 +28,10 @@ module ApplicationHelper
     robot_url = "https://robohash.org/#{hash}.png/bgset_any?size=#{size}"
     image_tag(robot_url, alt: name, class: "rounded-circle shadow")
   end
+
+  def render_icon(name, classes: nil)
+    # Allow passing in classes to style the icon or use "" as default
+    classes ||= ""
+    render partial: "icons/#{name}_icon", locals: { classes: classes }
+  end
 end

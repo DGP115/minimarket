@@ -1,11 +1,11 @@
 <div class="md:w-3/5 w-full"> 
   <%= render "shared/flash_messages", obj: @cart%>
 
-  <h1 class="font-semibold text-base">
+  <h1 class="font-semibold text-base mb-4">
 		<%= current_user.name.titlecase %>:  Your cart's contents:
   </h1>
 
-  <%= render @cart %>
+	<%= render partial: "carts/cart_table", locals: { cart: @cart, editable: false } %>
 
 	<!-- Button container -->
 	<div class="flex justify-end space-x-2 mt-4">
@@ -22,5 +22,5 @@
 									hover:bg-red-600 hover:scale-110 
 									transition duration-200 ease-in-out", 
 									data: { turbo_confirm: "Are you sure?" } %>
-	</div>
+
 </div>

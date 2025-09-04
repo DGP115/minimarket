@@ -1,0 +1,19 @@
+<div id="cart-totals" class="contents">
+  <div></div> <!-- Empty cell under Item -->
+
+  <div class="px-4 font-semibold text-right">Totals:</div>
+
+  <div class="px-4 text-center font-semibold">
+    <%= cart.cart_items.sum(&:quantity) %>
+  </div>
+
+  <div class="px-2"></div> <!-- Empty cell under Price (unit price doesn’t total) -->
+
+  <div class="px-2 text-right font-semibold">
+    <%= number_to_currency(
+          current_user.cart.cart_items.sum { |item| item.product.price * item.quantity.to_i },
+          precision: 2,
+          unit: "$",
+          delimiter: ",") %>
+  </div>
+</div>
