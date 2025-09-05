@@ -7,4 +7,14 @@
 
   <%= render partial: "carts/cart_table", locals: { cart: @cart, editable: true } %>
 
+  <div class="text-right">
+    <%= button_to "Update & Close",
+                 cart_path,
+                 method: :patch, 
+                 class: "inline-block font-normal cursor-pointer sm:w-auto
+                         text-center border rounded-md px-2 py-1
+                         bg-gray-100 hover:scale-110 hover:bg-gray-400
+                         transition duration-200 ease-in-out" %>
+  </div>
+
 </div>

@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   # Route for webhook from Stripe
   post "/webhook", to: "products#webhook"
   #
-  ## Product Categories
+  # Product Categories
   resources :product_categories do
     member do
       get :tree_left
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   resources :orders
   resources :cart_items
-  resource :cart, only: %i[ show edit destroy ]
+  # Note singular here since there will only ever be one cart per user session
+  resource :cart, only: %i[ show edit update destroy ]
   resources :reviews
 end
