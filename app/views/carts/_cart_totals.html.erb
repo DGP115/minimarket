@@ -2,8 +2,13 @@
   <div class="px-2 text-center"></div>
   <div class="px-4 text-right">Totals:</div>
 
-  <!-- Total of quantity(s) -->
-  <div id="cart-total-quantity" class="px-2 text-center font-semibold">
+  <!-- Total of quantity(s).  Margin changes in edit mode to make room for spinner buttons -->
+  <% if editable %>
+    <% aligner = "mr-1 pr-4" %>
+  <% else %>
+    <% aligner = "pr-0" %>
+  <% end %>
+  <div id="cart-total-quantity" class="<%=aligner%> text-center font-semibold border-t border-b">
     <%= cart.cart_items.sum(&:quantity) %>
   </div>
 
@@ -12,7 +17,7 @@
 
   <!-- Total of purchase(s) -->
   <div id="cart-total-price"
-       class="px-2 text-right font-normal">
+       class="px-2 text-right font-semibold border-t border-b">
     <%= number_to_currency(
           cart.cart_items.sum { |item| item.product.price * item.quantity.to_i },
           precision: 2,

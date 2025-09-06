@@ -23,11 +23,15 @@
     <% end %>
 
     <div class="text-right mt-4 flex justify-end space-x-2">
-      <%= button_tag "Recalculate", 
-                      type: "button", 
-                      class: "px-3 py-1 border rounded-md bg-blue-100 hover:bg-blue-300 
-                              transition duration-150 ease-in-out", 
-                      data: { action: "click->cart-bulk#recalculate" } %>
+      <%#  NOTE:  Need flex in order to have icon and label on same row %>
+      <%= button_tag type: "button",
+                     class: "flex items-center space-x-2 px-3 py-1 
+                             border rounded-md bg-blue-100 hover:bg-blue-300 
+                             transition duration-150 ease-in-out", 
+                     data: { action: "click->cart-bulk#recalculate" } do %>
+        <%= render "icons/update_icon", classes: "w-5 h-5 text-blue-600 hover:text-blue-800" %>
+        <span>Recalculate</span>
+      <% end %>
                       
       <%= f.submit "Update & Close",
                     class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 

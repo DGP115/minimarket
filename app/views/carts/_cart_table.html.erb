@@ -13,7 +13,7 @@
     <% if local_assigns[:f] %>
       <%= f.fields_for :cart_items, item do |item_fields| %>
         <%= render partial: "carts/cart_item_row", 
-                  locals: { item: item, index: index, editable: editable, f: item_fields } %>
+                   locals: { item: item, index: index, editable: editable, f: item_fields } %>
       <% end %>
     <% else %>
       <%= render partial: "carts/cart_item_row", 
@@ -22,7 +22,7 @@
   <% end %>
 
   <!-- Totals Row -->
-  <%= render partial: "carts/cart_totals", locals: { cart: cart } %>
+  <%= render partial: "carts/cart_totals", locals: { cart: cart, editable: editable } %>
   
 </div>
 

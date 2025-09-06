@@ -6,7 +6,6 @@ class CartItemsController < ApplicationController
 
   # POST /cart_items or /cart_items.json
   def create
-    debugger
     @cart = Cart.find_or_create_by(user_id: current_user.id)
     @product = Product.find(params[:product_id])
     if !@cart.products.exists?(id: @product.id) && params[:quantity].to_i > 0
