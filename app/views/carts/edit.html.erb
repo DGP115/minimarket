@@ -1,20 +1,40 @@
 <div class="md:w-3/5 w-full">
+
   <h1 class="font-semibold text-base mb-4">
 		<%= current_user.name.titlecase %>:  Edit your cart's contents:
   </h1>
 
   <%= render "shared/error_msgs", obj: @cart%>
 
-  <%= render partial: "carts/cart_table", locals: { cart: @cart, editable: true } %>
+  <%= form_with model: @cart, 
+                       url: cart_path, 
+                       method: :patch, 
+                       data: { controller: "cart-bulk" } do |f| %>
 
-  <div class="text-right">
-    <%= button_to "Update & Close",
-                 cart_path,
-                 method: :patch, 
-                 class: "inline-block font-normal cursor-pointer sm:w-auto
-                         text-center border rounded-md px-2 py-1
-                         bg-gray-100 hover:scale-110 hover:bg-gray-400
-                         transition duration-200 ease-in-out" %>
-  </div>
+    <%= render partial: "carts/cart_table", locals: { cart: @cart, editable: true, f: f  } %>
+
+    <!-- Hidden fields for all items aka the "bulk" -->
+    <%= f.fields_for :cart_items do |item_fields| %>
+
+      <%= render partial: "carts/cart_item_bulk_fields",
+                 locals: { f: item_fields, 
+                           item: item_fields.object } %>
+
+    <% end %>
+
+    <div class="text-right mt-4 flex justify-end space-x-2">
+      <%= button_tag "Recalculate", 
+                      type: "button", 
+                      class: "px-3 py-1 border rounded-md bg-blue-100 hover:bg-blue-300 
+                              transition duration-150 ease-in-out", 
+                      data: { action: "click->cart-bulk#recalculate" } %>
+                      
+      <%= f.submit "Update & Close",
+                    class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
+                            transition duration-150 ease-in-out",
+                    data: { action: "click->cart-bulk#recalculateBeforeSubmit" } %>
+    </div>
+
+  <% end %>
 
 </div>

@@ -1,0 +1,5 @@
+<%# locals: f, item %>
+<%= f.hidden_field :id %>
+<%= f.hidden_field :quantity,
+                    value: item.quantity,
+                    data: { bulk_quantity_for: item.id, cart_bulk_target: "bulkQuantity" } %>

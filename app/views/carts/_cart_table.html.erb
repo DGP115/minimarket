@@ -1,4 +1,6 @@
-<div class="ml-4 mb-2 grid grid-cols-[auto_1fr_auto_auto_auto] gap-y-2 font-semibold text-base">
+<div class="ml-4 mb-2 grid grid-cols-[auto_1fr_auto_auto_auto] gap-y-2 
+            font-semibold text-base">
+
   <!-- Header Row -->
   <div class="px-2 text-center">Item</div>
   <div class="px-4">Description</div>
@@ -7,11 +9,20 @@
   <div class="px-2 text-center">Purchase</div>
 
   <!-- Data Rows -->
-  <% current_user.cart.cart_items.each_with_index do |item, index| %>
-    <%= render partial: "carts/cart_item_row", 
-              locals: { item: item, index: index, editable: editable} %>
+  <% cart.cart_items.each_with_index do |item, index| %>
+    <% if local_assigns[:f] %>
+      <%= f.fields_for :cart_items, item do |item_fields| %>
+        <%= render partial: "carts/cart_item_row", 
+                  locals: { item: item, index: index, editable: editable, f: item_fields } %>
+      <% end %>
+    <% else %>
+      <%= render partial: "carts/cart_item_row", 
+                 locals: { item: item, index: index, editable: editable } %>
+    <% end %>
   <% end %>
 
   <!-- Totals Row -->
-  <%= render partial: "carts/cart_totals", locals: { cart: @cart } %>
+  <%= render partial: "carts/cart_totals", locals: { cart: cart } %>
+  
 </div>
+
