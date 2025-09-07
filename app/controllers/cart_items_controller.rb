@@ -1,5 +1,5 @@
 class CartItemsController < ApplicationController
-  before_action :set_cart_item, only: %i[ update destroy ]
+  before_action :set_cart_item, only: %i[ destroy ]
   # Only logged-in users can add items to a cart
   before_action :authenticate_user!
 
@@ -15,21 +15,6 @@ class CartItemsController < ApplicationController
     else
       redirect_to product_path(@product)
       flash[:alert] = "Item could not be added to cart"
-    end
-  end
-
-  # PATCH/PUT /cart_items/1 or /cart_items/1.json
-  def update
-    if @cart_item.update(quantity: params[:cart_item][:quantity])
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to cart_path(@cart_item.cart) }
-      end
-    else
-      respond_to do |format|
-        format.turbo_stream
-        format.html { render :edit, status: :unprocessable_entity }
-      end
     end
   end
 

@@ -3,10 +3,10 @@
      data-price="<%= item.product.price %>">
 
   <!-- Item index -->  
-  <div class="px-2 text-center font-normal"><%= index + 1 %></div>
+  <div class="px-2 text-center font-normal text-sm"><%= index + 1 %></div>
 
   <!-- Product Title --> 
-  <div class="px-4 font-normal"><%= item.product.title %></div>
+  <div class="px-4 font-normal text-sm"><%= item.product.title %></div>
 
   <!-- Quantity cell -->
   <% if editable && local_assigns[:f] %>
@@ -14,22 +14,22 @@
       <%= f.number_field :quantity,
                           value: item.quantity,
                           min: 0,
-                          class: "w-16 text-center bg-green-100 border rounded px-1 py-0.5",
+                          class: "w-16 text-center text-sm bg-green-100 border rounded px-1 py-0.5",
                           data: { item_id: item.id, 
                                   cart_bulk_target: "rowQuantity" } %>
 
     </div>
   <% else %>
-    <div class="px-2 text-center font-normal"><%= item.quantity %></div>
+    <div class="px-2 text-center font-normal text-sm"><%= item.quantity %></div>
   <% end %>
 
   <!-- Unit price -->
-  <div class="px-2 text-right font-normal">
+  <div class="px-2 text-right font-normal text-sm">
     <%= number_to_currency(item.product.price, precision: 2, unit: "$", delimiter: ",") %>
   </div>
 
   <!-- Purchase (price * qty) -->
-  <div class="px-2 text-right font-normal"
+  <div class="px-2 text-right font-normal text-sm"
        data-cart-bulk-target="purchaseCell">
     <%= number_to_currency(item.product.price * item.quantity, 
                            precision: 2, 

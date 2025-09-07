@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+
   before_action :set_cart, only: %i[ show edit update]
   # authenticate_user! is provided by Devise
   before_action :authenticate_user!
@@ -9,11 +10,6 @@ class CartsController < ApplicationController
 
   def edit
     @cart = current_user.cart
-
-    # Force-save any unsaved cart_items
-    # @cart.cart_items.each do |item|
-    #   item.save! unless item.persisted?
-    # end
   end
 
   def update
@@ -27,14 +23,15 @@ class CartsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cart
-      @cart = current_user.cart
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cart
+    @cart = current_user.cart
+  end
 
-    def cart_params
-      # See cart model.  We ahve allowed cart model with edit cart_items.
-      # That is why we can use cart_items_attributes here.
-      params.require(:cart).permit(cart_items_attributes: [ :id, :quantity, :_destroy ])
-    end
+  def cart_params
+    # See cart model.  We have allowed cart model with edit of cart_items.
+    # That is why we can use cart_items_attributes here.
+    params.require(:cart).permit(cart_items_attributes: [ :id, :quantity, :_destroy ])
+  end
 end
