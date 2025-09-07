@@ -4,12 +4,13 @@
 		<%= current_user.name.titlecase %>:  Edit your cart's contents:
   </h1>
 
-  <%= render "shared/error_msgs", obj: @cart%>
+  <%= render "shared/error_msgs", obj: @cart %>
 
   <%= form_with model: @cart, 
                        url: cart_path, 
-                       method: :patch, 
-                       data: { controller: "cart-bulk" } do |f| %>
+                       method: :patch,
+                       local: true,
+                       data: { controller: "cart-bulk", turbo: false } do |f| %>
 
     <%= render partial: "carts/cart_table", locals: { cart: @cart, editable: true, f: f  } %>
 
@@ -33,7 +34,8 @@
         <span>Recalculate</span>
       <% end %>
                       
-      <%= f.submit "Update & Close",
+      <%= button_tag "Update & Close",
+                    type: "submit",
                     class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
                             transition duration-150 ease-in-out text-sm",
                     data: { action: "click->cart-bulk#recalculateBeforeSubmit" } %>

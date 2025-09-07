@@ -18,12 +18,15 @@ class CartItemsController < ApplicationController
     end
   end
 
+  def update
+    debugger
+  end
   # DELETE /cart_items/1 or /cart_items/1.json
   def destroy
-    if @cart_item.destroy!
-      redirect_to cart_path(current_user.cart), notice: "Item removed from cart"
+    if @cart_item.destroy
+      head :no_content  # Sends HTTP 204, no redirect or view since handled by js controller
     else
-      redirect_to cart_path(current_user.cart), alert: "Item could not be removed from cart"
+      redirect_to cart_path, alert: "Item could not be removed from cart"
     end
   end
 

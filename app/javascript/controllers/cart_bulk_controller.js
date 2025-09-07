@@ -5,6 +5,8 @@ export default class extends Controller {
 
   connect() {
     console.log("cart-bulk controller connected")
+    // Confirm targets exist
+    console.log(this.rowQuantityTargets)
     // Keep visible quantity fields in sync with hidden bulk fields
     this.rowQuantityTargets.forEach((input) => {
       input.addEventListener("input", (e) => {
@@ -19,6 +21,7 @@ export default class extends Controller {
 
   // Triggered by "Recalculate" button
   recalculate() {
+    console.log("cart-bulk controller recalculate called")
     this.rowQuantityTargets.forEach((input, idx) => {
       const row = input.closest("[id^='cart_item']")
       const price = parseFloat(row.dataset.price) || 0
@@ -33,6 +36,7 @@ export default class extends Controller {
 
   // Triggered by "Update & Close" button before form submit
   recalculateBeforeSubmit(event) {
+    console.log("cart-bulk controller recalculateBeforeSubmit called")
     this.recalculate()
     // no preventDefault so → form submits
   }
@@ -62,6 +66,34 @@ export default class extends Controller {
   // Utility for consistent formatting
   formatCurrency(amount) {
     return `$${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
+  }
+
+  deleteItem(event) {
+    console.log("cart-bulk controller deleteItem called")
+    const id = event.currentTarget.dataset.itemId;
+
+    if (!confirm("Are you sure you want to delete this item?")) return;
+
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+
+    // This instructs Rails to invoke the relevant controller's delete method
+    fetch(`/cart_items/${id}`, {
+      method: "DELETE",
+      headers: {
+        "X-CSRF-Token": token,
+        "Accept": "application/json" // ensures Rails responds appropriately
+      }
+    })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Delete failed: ${response.status}`);
+
+      // No error so remove the row from the DOM
+      const row = document.getElementById(`cart_item_${id}`);
+      if (row) row.remove();
+      // Recalculate totals
+      this.updateTotals();
+    })
+    .catch((error) => console.error(error));
   }
 
 }

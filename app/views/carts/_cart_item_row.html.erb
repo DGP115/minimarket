@@ -1,4 +1,4 @@
-<div id="<%= dom_id(item) %>" 
+<div id="cart_item_<%= item.id %>" 
      class="contents"
      data-price="<%= item.product.price %>">
 
@@ -7,6 +7,20 @@
 
   <!-- Product Title --> 
   <div class="px-4 font-normal text-sm"><%= item.product.title %></div>
+
+  <% if editable %>
+    <!-- cart_item delete button --> 
+    <div class="flex justify-center">
+      <button type="button" 
+              class="p-0 bg-transparent border-none"
+              data-action="click->cart-bulk#deleteItem"
+              data-item-id="<%= item.id %>"
+              title="Delete item">
+        <%= render "icons/trashcan_icon", classes: "w-4 h-4 text-sm hover:cursor-pointer hover:scale-110" %>
+    </div>
+  <% else %>
+    <div class="px-2 text-center">&nbsp;</div> <!--&nbsp; is a non-breaking space -->
+  <% end %>
 
   <!-- Quantity cell -->
   <% if editable && local_assigns[:f] %>
