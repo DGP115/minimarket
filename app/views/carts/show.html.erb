@@ -4,6 +4,7 @@
 		<%= current_user.name.titlecase %>:  Your cart's contents:
   </h1>
 
+	<%#  "editable" is used as a switch so that the same form is used by sho wand edit methods %>
 	<%= render partial: "carts/cart_table", locals: { cart: @cart, editable: false } %>
 
 	<!-- Button container -->
@@ -14,7 +15,8 @@
 												bg-gray-100 hover:scale-110 hover:bg-gray-400
 												transition duration-200 ease-in-out" %>
 
-		<%= button_to "Delete", @cart, method: :delete, 
+		<%= button_to "Delete", @cart,
+									method: :delete,
 									form_class: "inline-block m-0", 
 									class: "inline-block font-normal cursor-pointer sm:w-auto
 													rounded-md px-2 py-1 bg-red-300 border

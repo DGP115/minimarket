@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: %i[ show edit update]
+  before_action :set_cart, only: %i[ show edit update destroy ]
   # authenticate_user! is provided by Devise
   before_action :authenticate_user!
 
@@ -18,6 +18,15 @@ class CartsController < ApplicationController
       flash[:notice] = "Your cart was successfully updated."
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @cart.destroy
+      flash[:notice] = "Your cart was successfully deleted"
+      redirect_to root_path
+    else
+      render "show", status: :unprocessable_entity
     end
   end
 

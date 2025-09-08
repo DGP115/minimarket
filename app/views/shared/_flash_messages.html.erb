@@ -8,7 +8,7 @@
                 <%= flash_message_display_class(msg_type) %>">
 
       <div id="dismiss-this">
-        <%= message %>
+        <b><%="#{Rails.configuration.application_name}: "%></b> <%=message%>
       </div>
     
       <button data-action="click->dismiss#close" 

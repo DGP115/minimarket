@@ -7,7 +7,13 @@ export default class extends Controller {
     console.log("cart-bulk controller connected")
     // Confirm targets exist
     console.log(this.rowQuantityTargets)
-    // Keep visible quantity fields in sync with hidden bulk fields
+
+    this.updatehiddenFields()
+  }
+
+  updatehiddenFields() {
+    // The cart form has hidden fields accessed by "Update & Close"
+    // Keep the hidden quantity fields in sync with hidden bulk fields
     this.rowQuantityTargets.forEach((input) => {
       input.addEventListener("input", (e) => {
         const id = e.target.dataset.itemId
@@ -18,6 +24,7 @@ export default class extends Controller {
       })
     })
   }
+  
 
   // Triggered by "Recalculate" button
   recalculate() {
@@ -38,7 +45,7 @@ export default class extends Controller {
   recalculateBeforeSubmit(event) {
     console.log("cart-bulk controller recalculateBeforeSubmit called")
     this.recalculate()
-    // no preventDefault so → form submits
+    // no preventDefault so → form submits as usal to Rail controller given by route
   }
 
   // Compute totals across all rows of cart
