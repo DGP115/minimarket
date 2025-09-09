@@ -2,7 +2,7 @@ class ProductCategoriesController < ApplicationController
   before_action :set_product_category, only: %i[ show edit update destroy ]
 
   def index
-    @root_categories = ProductCategory.roots.order(orderindex: :asc)
+    # See application_controller.  @root_categories set there
   end
 
   def tree_left

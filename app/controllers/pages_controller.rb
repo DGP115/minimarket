@@ -9,6 +9,5 @@ class PagesController < ApplicationController
     end
   end
   def about
-    @product = Product.first
   end
 end

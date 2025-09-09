@@ -5,6 +5,8 @@ class CartsController < ApplicationController
 
   # GET /carts/1
   def show
+    # Ensure this is initalized so second row of navbar works
+    @root_categories = ProductCategory.roots.order(orderindex: :asc)
   end
 
   def edit

@@ -4,21 +4,21 @@
     <% @product_category.ancestors.each do |ancestor| %>
       <%= link_to ancestor.name, product_category_path(ancestor), 
                                  class: "hover:underline text-blue-600" %> 
-      <span class="mx-1"> › </span>
+      <span class="mx-1"><%=render_icon("chevron_double_right", classes:"w-3 h-3 inline-block align-middle")%></span>
     <% end %>
   </div>
 
   <% if user_signed_in? && current_user.admin? %>
     <div class="inline-block"
-        data-controller="context-menu"
-        data-action="contextmenu->context-menu#open"
-        data-context-menu-target="anchor">  <!-- Attach context-menu controller to parent div -->
-      <!--Product Category context menu -->
-      <!--Note: meaning of data-action phrase: -->
-      <!--      contextmenu is the DOM event name for the browser's right-click event -->
-      <!--       So, we ae telling it to launch the context-menu controller's contextmeny method-->
-      <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
-      <!--       the menu is active only when hovering on the link text vs th ewhile div -->
+         data-controller="context-menu"
+         data-action="contextmenu->context-menu#open"
+         data-context-menu-target="anchor">  <!-- Attach context-menu controller to parent div -->
+        <!--Product Category context menu -->
+        <!--Note: meaning of data-action phrase: -->
+        <!--      contextmenu is the DOM event name for the browser's right-click event -->
+        <!--       So, we are telling it to launch the context-menu controller's contextmenu method-->
+        <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
+        <!--       the menu is active only when hovering on the link text vs the whole div -->
         <div class="text-lg font-semibold 
                     rounded-md hover:bg-blue-200 cursor-pointer
                     px-2 py-1"> 
@@ -37,14 +37,14 @@
 
 
   <% if !@product_category.description.nil? &&  !@product_category.description.blank? %>
-    <div class="w-full max-w-2/3 mt-2 ml-10 p-2 text-base font-light border rounded-md shadow-lg/50">
+    <div class="w-full max-w-2/3 mt-2 ml-10 p-2 text-base font-light border rounded-md bg-stone-100">
       <%= @product_category.description %>
     </div>
   <% end %>
 
   <% if @product_categories.any? %>
     <%# Render the sub-categories in a grid layout %>
-    <ul>
+    <ul class="mt-4 pl-8">
       <%# Pass instance variable to partial as a local. %>
       <%# Because recursion is used within the partial to display sub-categories, %>
       <%# the partial loops through a local variable, which is reset during the 

@@ -9,7 +9,17 @@ class ProductCategory < ApplicationRecord
   # category association nullified.
   has_many :products, dependent: :nullify
 
+  # After any mods to product_categories, flush the cache used to populate the navbar so that
+  # a new database query is run to refresh the cache
+  after_commit :flush_root_categories_cache
+
   def has_grandchildren?
     children.where("children_count > 0").exists?
+  end
+
+  private
+
+  def flush_root_categories_cache
+    Rails.cache.delete("root_categories")
   end
 end

@@ -4,7 +4,7 @@
     <div data-controller="tree">
       <!-- Show All / Collapse All Button -->
       <% if product_category.has_grandchildren? %>
-        <div class="mb-2 mt-2">
+        <div class="mb-1 mt-2">
           <button type="button"
                   data-action="click->tree#toggleAll"
                   class="text-sm text-blue-600 hover:underline focus:outline-none">
@@ -15,7 +15,7 @@
 
       <%# Render the product sub-categories in a grid layout %>
       <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2
-                text-sm font-medium text-gray-800">
+                text-sm font-medium text-gray-800 border rounded-md border-stone-200">
         <%# Pass instance variable to partial as a local. %>
         <%# Because recursion is used within the partial to display sub-categories, %>
         <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>

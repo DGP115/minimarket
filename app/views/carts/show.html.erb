@@ -1,8 +1,8 @@
 <div class="md:w-3/5 w-full"> 
 
-  <h1 class="font-semibold text-base mb-4">
+	<h1 class="font-semibold text-base mb-4">
 		<%= current_user.name.titlecase %>:  Your cart's contents:
-  </h1>
+	</h1>
 
 	<%#  "editable" is used as a switch so that the same form is used by sho wand edit methods %>
 	<%= render partial: "carts/cart_table", locals: { cart: @cart, editable: false } %>
@@ -25,3 +25,4 @@
 									data: { turbo_confirm: "Are you sure?" } %>
 	</div>
 </div>
+

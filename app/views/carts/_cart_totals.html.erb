@@ -10,7 +10,7 @@
     <% aligner = "pr-0" %>
   <% end %>
   <div id="cart-total-quantity" class="<%=aligner%> text-center font-semibold border-t border-b">
-    <%= cart.cart_items.sum(&:quantity) %>
+    <%= cart.total_quantity %>
   </div>
 
   <!-- Placeholder for "Price" column -->
@@ -19,11 +19,10 @@
   <!-- Total of purchase(s) -->
   <div id="cart-total-price"
        class="px-2 text-right font-semibold border-t border-b">
-    <%= number_to_currency(
-          cart.cart_items.sum { |item| item.product.price * item.quantity.to_i },
-          precision: 2,
-          unit: "$",
-          delimiter: ",") %>
+    <%= number_to_currency(cart.total_purchase,
+                           precision: 2,
+                           unit: "$",
+                           delimiter: ",") %>
   </div>
 
 </div>
