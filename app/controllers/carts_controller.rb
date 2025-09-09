@@ -3,7 +3,7 @@ class CartsController < ApplicationController
   # authenticate_user! is provided by Devise
   before_action :authenticate_user!
 
-  # GET /carts/1 or /carts/1.json
+  # GET /carts/1
   def show
   end
 
@@ -32,7 +32,6 @@ class CartsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cart
     @cart = current_user.cart
   end

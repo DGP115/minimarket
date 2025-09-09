@@ -3,8 +3,7 @@ class CartItemsController < ApplicationController
   # Only logged-in users can add items to a cart
   before_action :authenticate_user!
 
-
-  # POST /cart_items or /cart_items.json
+  # POST /cart_items
   def create
     @cart = Cart.find_or_create_by(user_id: current_user.id)
     @product = Product.find(params[:product_id])
@@ -14,14 +13,11 @@ class CartItemsController < ApplicationController
       flash[:notice] = "Item added to cart"
     else
       redirect_to product_path(@product)
-      flash[:alert] = "Item could not be added to cart"
+      flash[:alert] = "Item is already on your cart."
     end
   end
 
-  def update
-    debugger
-  end
-  # DELETE /cart_items/1 or /cart_items/1.json
+  # DELETE /cart_items/1
   def destroy
     if @cart_item.destroy
       head :no_content  # Sends HTTP 204, no redirect or view since handled by js controller
@@ -31,7 +27,7 @@ class CartItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_cart_item
       @cart_item = CartItem.find(params[:id])
     end
