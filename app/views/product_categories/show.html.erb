@@ -2,7 +2,9 @@
   <div class="mt-2">
     <%#  Display breadcrumbs of the category hierarchy for the current product_category %>
     <% @product_category.ancestors.each do |ancestor| %>
-      <%= link_to ancestor.name, product_category_path(ancestor), 
+      <%= link_to ancestor.name, product_category_path(ancestor),
+                                data: {turbo_frame: "categorytree_productlist_toggle",
+                                       turbo_action: "advance" },
                                  class: "hover:underline text-blue-600" %> 
       <span class="mx-1"><%=render_icon("chevron_double_right", classes:"w-3 h-3 inline-block align-middle")%></span>
     <% end %>

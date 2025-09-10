@@ -29,9 +29,13 @@ module ApplicationHelper
     image_tag(robot_url, alt: name, class: "rounded-circle shadow")
   end
 
-  def render_icon(name, classes: nil)
+  def render_icon(name, classes: "")
     # Allow passing in classes to style the icon or use "" as default
-    classes ||= ""
-    render partial: "icons/#{name}_icon", locals: { classes: classes }
+    path = Rails.root.join("app/assets/icons/#{name}.svg")
+    svg = File.read(path).html_safe
+    # inject passed-in classes into the <svg> tag
+    svg.sub!("<svg", "<svg class=\"#{classes}\"") unless classes.blank?
+
+    svg.html_safe
   end
 end

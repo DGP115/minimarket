@@ -32,6 +32,7 @@
         <%= link_to category.name,
                     product_category_path(category),
                     data: { turbo_frame: "categorytree_productlist_toggle",
+                            turbo_action: "advance",
                             context_menu_target: "anchor" },
                     class: "text-sm font-normal 
                             cursor-pointer rounded-md hover:bg-blue-200" %>

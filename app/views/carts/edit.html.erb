@@ -1,7 +1,7 @@
-<div class="md:w-3/5 w-full">
+<div class="md:w-3/5 w-full pl-8">
 
   <h1 class="font-semibold text-base mb-4">
-		<%= current_user.name.titlecase %>:  Edit your cart's contents:
+		<em><%= current_user.name.titlecase %></em>:  Edit your cart's contents:
   </h1>
 
   <%= render "shared/error_msgs", obj: @cart %>
@@ -24,13 +24,17 @@
     <% end %>
 
     <div class="text-right mt-4 flex justify-end space-x-2">
+      <%= link_to "Cancel", cart_path, 
+                            class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
+                                    transition duration-150 ease-in-out text-sm" %>
+
       <%#  NOTE:  Need flex in order to have icon and label on same row %>
       <%= button_tag type: "button",
                      class: "flex items-center space-x-2 px-3 py-1 
                              border rounded-md bg-blue-100 hover:bg-blue-300 
                              transition duration-150 ease-in-out", 
                      data: { action: "click->cart-bulk#recalculate" } do %>
-        <%= render "icons/update_icon", classes: "w-5 h-5 text-blue-600 hover:text-blue-800 text-sm" %>
+        <%= render_icon("update", classes: "w-5 h-5 text-blue-600 hover:text-blue-800 text-sm") %>
         <span>Recalculate</span>
       <% end %>
                       
