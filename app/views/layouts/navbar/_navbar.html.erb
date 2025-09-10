@@ -59,15 +59,10 @@
           <%= render "layouts/navbar/dropdown_user_menu" %>
         </div>  
       </div>
-
-      <div>
-        <% if user_signed_in? && current_user.cart != nil %>
-          <%= link_to cart_path do %>
-            <%= render_icon("cart", classes: "ml-4 w-6 h-6 bg-indigo-100 border border-gray-400 rounded-md 
-                                              hover:cursor-pointer hover:scale-110") %>
-          <% end %>
-        <% end %>
-      </div>
+      
+      <% if user_signed_in? && current_user.cart != nil %>
+        <%= render partial: "layouts/navbar/cart_icon", locals: { cart: current_user.cart } %>
+      <% end %>
 
     </div>
 

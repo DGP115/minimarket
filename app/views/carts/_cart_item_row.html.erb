@@ -6,7 +6,9 @@
   <div class="px-2 text-center font-normal text-sm"><%= index + 1 %></div>
 
   <!-- Product Title --> 
-  <div class="px-4 font-normal text-sm"><%= item.product.title %></div>
+  <%= link_to item.product.title, 
+      product_path(item.product_id), 
+      class: "px-4 font-normal text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
 
   <% if editable %>
     <!-- cart_item delete button --> 

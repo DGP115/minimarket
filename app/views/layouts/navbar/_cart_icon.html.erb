@@ -1,0 +1,13 @@
+<div id="cart_button" class="relative">
+  <%= link_to cart_path do %>
+    <%= render_icon("cart", classes: "inline-block ml-4 w-7 h-7 bg-indigo-100 border border-gray-400 rounded-md 
+                                      stroke-purple-600 hover:cursor-pointer hover:scale-110") %>
+    <% if cart.total_quantity > 0 %>
+      <div class="inline-block absolute -top-1.5 -right-4 w-4 h-4 rounded-full
+                  text-xs text-center text-blue-800 
+                  border border-gray-400 bg-green-200">
+        <%= cart.total_quantity %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

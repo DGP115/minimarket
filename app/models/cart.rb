@@ -7,6 +7,8 @@ class Cart < ApplicationRecord
   # through the cart model.  Used in the cart update action.
   accepts_nested_attributes_for :cart_items, allow_destroy: true
 
+  after_commit :update_cart_button
+
   def total_quantity
     cart_items.sum(&:quantity)
   end
@@ -17,5 +19,11 @@ class Cart < ApplicationRecord
       total_purchase += item.quantity.to_i * item.product.price
     end
     total_purchase
+  end
+
+  private
+  # When changes to the cart occur, ensure the cart button icon is kept in synch [It displays total quanity]
+  def update_cart_button
+    broadcast_replace_to("cart_button", partial: "layouts/navbar/cart_icon", locals: { cart: self })
   end
 end
