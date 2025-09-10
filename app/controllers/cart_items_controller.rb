@@ -9,8 +9,8 @@ class CartItemsController < ApplicationController
     @product = Product.find(params[:product_id])
     if !@cart.products.exists?(id: @product.id) && params[:quantity].to_i > 0
       @cart.cart_items.create!(product: @product, quantity: params[:quantity])
-      redirect_to cart_path(@cart)
       flash[:notice] = "Item added to cart"
+      redirect_to cart_path(@cart)
     else
       redirect_to product_path(@product)
       flash[:alert] = "Item is already on your cart."
