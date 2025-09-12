@@ -14,30 +14,11 @@
 
     <%= render partial: "carts/cart_table", locals: { cart: @cart, editable: true, f: f  } %>
 
-    <!-- Hidden fields for all items aka the "bulk" -->
-    <%= f.fields_for :cart_items do |item_fields| %>
-
-      <%= render partial: "carts/cart_item_bulk_fields",
-                 locals: { f: item_fields, 
-                           item: item_fields.object } %>
-
-    <% end %>
 
     <div class="text-right mt-4 flex justify-end space-x-2">
       <%= link_to "Cancel", cart_path, 
                             class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
-                                    transition duration-150 ease-in-out text-sm" %>
-
-      <%#  NOTE:  Need flex in order to have icon and label on same row %>
-      <%= button_tag type: "button",
-                     class: "flex items-center space-x-2 px-3 py-1 
-                             border rounded-md bg-blue-100 hover:bg-blue-300 
-                             transition duration-150 ease-in-out", 
-                     data: { action: "click->cart-bulk#recalculate" } do %>
-        <%= render_icon("update", classes: "w-5 h-5 text-blue-600 hover:text-blue-800 text-sm") %>
-        <span>Recalculate</span>
-      <% end %>
-                      
+                                    transition duration-150 ease-in-out text-sm" %>            
       <%= button_tag "Update & Close",
                     type: "submit",
                     class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 

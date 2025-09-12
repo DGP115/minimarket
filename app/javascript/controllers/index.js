@@ -10,6 +10,9 @@ import { application } from "controllers/application"
 import CartBulkController from "controllers/cart_bulk_controller"
 application.register("cart-bulk", CartBulkController)
 
+import CartDrawerController from "controllers/cart_drawer_controller"
+application.register("cart-drawer", CartDrawerController)
+
 import ContextMenuController from "controllers/context_menu_controller"
 application.register("context-menu", ContextMenuController)
 

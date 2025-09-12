@@ -15,7 +15,23 @@ class CartsController < ApplicationController
 
   def update
     if @cart.update(cart_params)
+      # Delete items user has supplied a zero quantity for.
       @cart.cart_items.where(quantity: 0).destroy_all
+
+      # Reload from DB to get true persisted state
+      @cart.reload
+
+      # Broadcast navbar update with DB values
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "cart_button",
+        partial: "layouts/navbar/cart_icon",
+        locals: {
+          cart: @cart,
+          total_quantity: @cart.total_quantity,
+          total_purchase: @cart.total_purchase
+        }
+      )
+
       redirect_to @cart
       flash[:notice] = "Your cart was successfully updated."
     else

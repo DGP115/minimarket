@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "cart-drawer-container" do %>
+  <%= render partial: "shared/cart_drawer", locals: { cart: current_user.cart, editable: false } %>
+<% end %>

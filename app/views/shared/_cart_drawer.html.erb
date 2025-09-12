@@ -1,0 +1,28 @@
+<%#  Before Turbo replaces the drawer-container with new html [i.e. the drawer changed to hidden], %>
+<%#  allow time for the "old" drawer to transition out %>
+<%#   - When Turbo is about to render, it fires turbo:before-stream-render.  %>
+<%#   - With the data action below, we interupt that and run cart-drawer controller method animateOut %>
+<%#   - That method then allows the Turbo render to carry on %>
+
+<div id="cart-drawer"
+     data-controller="cart-drawer"
+     data-action="turbo:before-stream-render->cart-drawer#animateOut"
+     class="fixed inset-y-0 right-0 w-full sm:w-2/3 md:w-1/2 lg:w-2/5 bg-white border border-slate-500 shadow-md
+            transform translate-x-full transition-transform duration-500 ease-in-out z-50 flex flex-col">
+
+  <!-- Header with close button -->
+  <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+    <h2 class="text-lg font-semibold text-gray-800">Your Cart</h2>
+    <button 
+      type="button"
+      data-action="click->cart-drawer#hide"
+      class="text-gray-500 hover:text-gray-800">
+      ✕
+    </button>
+  </div>
+  
+  <!-- Cart contents -->
+  <div class="flex-1 overflow-y-auto p-4">
+    <%= render partial: "carts/cart_table", locals: { cart: cart, editable: false } %>
+  </div>
+</div>

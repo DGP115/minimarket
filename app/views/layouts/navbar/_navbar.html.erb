@@ -59,9 +59,16 @@
           <%= render "layouts/navbar/dropdown_user_menu" %>
         </div>  
       </div>
-      
+
       <% if user_signed_in? && current_user.cart != nil %>
-        <%= render partial: "layouts/navbar/cart_icon", locals: { cart: current_user.cart } %>
+
+        <%# Subscribe the cart_button to the Turbo_steam broadcast from the cart model%>
+        <%= turbo_stream_from dom_id(current_user.cart, "button") %>
+
+        <%= render partial: "layouts/navbar/cart_icon", 
+                   locals: { cart: current_user.cart, 
+                             total_quantity: current_user.cart&.total_quantity, 
+                             total_purchase: current_user.cart&.total_purchase } %>
       <% end %>
 
     </div>

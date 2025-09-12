@@ -6,14 +6,26 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   def create
     @cart = Cart.find_or_create_by(user_id: current_user.id)
-    @product = Product.find(params[:product_id])
-    if !@cart.products.exists?(id: @product.id) && params[:quantity].to_i > 0
-      @cart.cart_items.create!(product: @product, quantity: params[:quantity])
-      flash[:notice] = "Item added to cart"
-      redirect_to cart_path(@cart)
+    @product = Product.find(params[:cart_item][:product_id])
+
+    if !@cart.products.exists?(id: @product.id) && params[:cart_item][:quantity].to_i > 0
+
+      @cart.cart_items.create!(product: @product, quantity: params[:cart_item][:quantity])
+      respond_to do |format|
+        format.turbo_stream
+        format.html {
+          flash[:notice] = "Item added to cart"
+          redirect_to product_path(@product)
+        }
+      end
+
     else
-      redirect_to product_path(@product)
-      flash[:alert] = "Item is already on your cart."
+      respond_to do |format|
+        format.html {
+          flash[:alert] = "Item is already on your cart."
+          redirect_to product_path(@product)
+        }
+      end
     end
   end
 

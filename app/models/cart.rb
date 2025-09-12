@@ -7,23 +7,37 @@ class Cart < ApplicationRecord
   # through the cart model.  Used in the cart update action.
   accepts_nested_attributes_for :cart_items, allow_destroy: true
 
+  # Broadcast updates whenever the cart itself or one of its cart_items changes
   after_commit :update_cart_button
 
   def total_quantity
-    cart_items.sum(&:quantity)
+    active_items.sum { |item| item.quantity.to_i }
   end
 
   def total_purchase
-    total_purchase = 0
-    self.cart_items.each do |item|
-      total_purchase += item.quantity.to_i * item.product.price
-    end
-    total_purchase
+    active_items.sum { |item| item.quantity.to_i * item.product.price }
   end
 
-  private
-  # When changes to the cart occur, ensure the cart button icon is kept in synch [It displays total quanity]
+  def active_items
+    # NOTE:  cart_items are marked for deletion in the form, awaiting actual deletion by controller.
+    #        Filter out these soft_deletes when computing totals.
+    #        && item.persisted? ensures we are only filtering items that have persisted
+    #        vs just created in memeort by Rails when form enters edit mode,
+    cart_items.reject { |item| item.marked_for_destruction? && item.persisted? }
+  end
+
   def update_cart_button
-    broadcast_replace_to("cart_button", partial: "layouts/navbar/cart_icon", locals: { cart: self })
+    # dom_id() is a Rails view helper, not available to models, so the below replicates its function
+    # Ensure to include target: in the Turbo_stream broadcast definition
+    dom_id = "button_cart_#{self.id}"
+    broadcast_replace_to(dom_id,
+                         target: dom_id,
+                         partial: "layouts/navbar/cart_icon",
+                         locals: {
+                          cart: self,
+                          total_quantity: total_quantity,
+                          total_purchase: total_purchase
+                          }
+    )
   end
 end

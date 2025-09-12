@@ -1,29 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["rowQuantity", "bulkQuantity", "purchaseCell"]
+  static targets = ["rowQuantity", "purchaseCell"]
 
   connect() {
     console.log("cart-bulk controller connected")
-    // Confirm targets exist
-    console.log(this.rowQuantityTargets)
 
-    this.updatehiddenFields()
-  }
-
-  updatehiddenFields() {
-    // The cart form has hidden fields accessed by "Update & Close"
-    // Keep the hidden quantity fields in sync with hidden bulk fields
+    // Watch quantity inputs for recalculation
     this.rowQuantityTargets.forEach((input) => {
-      input.addEventListener("input", (e) => {
-        const id = e.target.dataset.itemId
-        const bulkInput = this.bulkQuantityTargets.find(
-          (el) => el.dataset.bulkQuantityFor === id
-        )
-        if (bulkInput) bulkInput.value = e.target.value
-      })
+      input.addEventListener("input", () => this.recalculate())
     })
+    // Run initial totals
+    this.recalculate()
   }
+
   
 
   // Triggered by "Recalculate" button
@@ -31,6 +21,11 @@ export default class extends Controller {
     console.log("cart-bulk controller recalculate called")
     this.rowQuantityTargets.forEach((input, idx) => {
       const row = input.closest("[id^='cart_item']")
+      // NOTE:  Items deleted by user are only marked with hidden _delete, 
+      //        for later deletion in the cart_itemns_controller skip deleted rows.
+      //        So, skip hidden rows when computing totals
+      if (this.isMarkedForDestroy(row)) return
+
       const price = parseFloat(row.dataset.price) || 0
       const qty = parseInt(input.value, 10) || 0
       const purchaseCell = this.purchaseCellTargets[idx]
@@ -42,10 +37,10 @@ export default class extends Controller {
   }
 
   // Triggered by "Update & Close" button before form submit
-  recalculateBeforeSubmit(event) {
+  recalculateBeforeSubmit() {
     console.log("cart-bulk controller recalculateBeforeSubmit called")
     this.recalculate()
-    // no preventDefault so → form submits as usal to Rail controller given by route
+    // no preventDefault so → form submits as usual to Rails controller given by route
   }
 
   // Compute totals across all rows of cart
@@ -55,6 +50,11 @@ export default class extends Controller {
 
     this.rowQuantityTargets.forEach((input) => {
       const row = input.closest("[id^='cart_item']")
+      // NOTE:  Items deleted by user are only marked with hidden _delete, 
+      //        for later deletion in the cart_itemns_controller skip deleted rows.
+      //        So, skip hidden rows when computing totals
+      if (this.isMarkedForDestroy(row)) return
+
       const price = parseFloat(row.dataset.price) || 0
       const qty = parseInt(input.value, 10) || 0
       
@@ -77,30 +77,25 @@ export default class extends Controller {
 
   deleteItem(event) {
     console.log("cart-bulk controller deleteItem called")
-    const id = event.currentTarget.dataset.itemId;
+    const row = event.currentTarget.closest("[id^='cart_item_']");
+
+    if (!row) return;
 
     if (!confirm("Are you sure you want to delete this item?")) return;
 
-    const token = document.querySelector('meta[name="csrf-token"]').content;
+    // mark _destroy checkbox as checked
+    const destroyField = row.querySelector("input.destroy-flag");
+    if (destroyField) destroyField.checked = true;
 
-    // This instructs Rails to invoke the relevant controller's delete method
-    fetch(`/cart_items/${id}`, {
-      method: "DELETE",
-      headers: {
-        "X-CSRF-Token": token,
-        "Accept": "application/json" // ensures Rails responds appropriately
-      }
-    })
-    .then((response) => {
-      if (!response.ok) throw new Error(`Delete failed: ${response.status}`);
+    // hide the row so the user sees it as deleted
+    row.style.display = "none";
+  }
 
-      // No error so remove the row from the DOM
-      const row = document.getElementById(`cart_item_${id}`);
-      if (row) row.remove();
-      // Recalculate totals
-      this.updateTotals();
-    })
-    .catch((error) => console.error(error));
+  // Helper: detect if a row is flagged for deletion
+  isMarkedForDestroy(row) {
+    if (!row) return false
+    const destroyField = row.querySelector("input.destroy-flag")
+    return destroyField && destroyField.checked
   }
 
 }

@@ -4,13 +4,25 @@
   <div class="px-4 text-right border-t border-b">Totals:</div>
 
   <!-- Total of quantity(s).  Margin changes in edit mode to make room for spinner buttons -->
-  <% if editable %>
+  <% if editable && local_assigns[:f] %>
+    <% total_qty = 0 %>
+    <% total_purchase = 0 %>
+    <%= f.fields_for :cart_items do |item_fields| %>
+      <% item = item_fields.object %>
+      <% next if item.marked_for_destruction? %>
+      <% total_qty += item.quantity.to_i %>
+      <% total_purchase += item.quantity.to_i * item.product.price %>
+    <% end %>
+
     <% aligner = "mr-1 pr-4" %>
   <% else %>
+    <% total_qty = cart.total_quantity %>
+    <% total_purchase = cart.total_purchase %>
     <% aligner = "pr-0" %>
   <% end %>
+
   <div id="cart-total-quantity" class="<%=aligner%> text-center font-semibold border-t border-b">
-    <%= cart.total_quantity %>
+    <%= total_qty %>
   </div>
 
   <!-- Placeholder for "Price" column -->
@@ -19,7 +31,7 @@
   <!-- Total of purchase(s) -->
   <div id="cart-total-price"
        class="px-2 text-right font-semibold border-t border-b">
-    <%= number_to_currency(cart.total_purchase,
+    <%= number_to_currency(total_purchase,
                            precision: 2,
                            unit: "$",
                            delimiter: ",") %>

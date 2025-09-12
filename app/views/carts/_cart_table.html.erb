@@ -1,28 +1,30 @@
-<div class="ml-4 mb-2 grid grid-cols-[auto_1fr_2rem_auto_auto_auto] gap-y-2 
-            font-semibold text-base">
+<div class="flex-1 overflow-y-auto p-2">
+  <div class="mb-2 grid grid-cols-[auto_1fr_2rem_auto_auto_auto] gap-y-2 
+              font-semibold text-sm bg-indigo-50 rounded-md border border-slate-200">
 
-  <!-- Header Row -->
-  <div class="px-2 text-center">Item</div>
-  <div class="px-4">Description</div>
-  <div class="px-2 text-center">&nbsp;</div> <!-- delete col -->
-  <div class="px-4 text-center">Quantity</div>
-  <div class="px-2 text-center">Price</div>
-  <div class="px-2 text-center">Purchase</div>
+    <!-- Header Row -->
+    <div class="px-2 text-center">Item</div>
+    <div class="px-4">Description</div>
+    <div class="px-2 text-center">&nbsp;</div> <!-- delete col -->
+    <div class="px-4 text-center">Quantity</div>
+    <div class="px-2 text-center">Price</div>
+    <div class="px-2 text-center">Purchase</div>
 
-  <!-- Data Rows -->
-  <% cart.cart_items.each_with_index do |item, index| %>
-    <% if local_assigns[:f] %>
-      <%= f.fields_for :cart_items, item do |item_fields| %>
+    <!-- Data Rows -->
+    <% cart.cart_items.each_with_index do |item, index| %>
+      <% if local_assigns[:f] %>
+        <%= f.fields_for :cart_items, item do |item_fields| %>
+          <%= render partial: "carts/cart_item_row", 
+                    locals: { item: item, index: index, editable: editable, f: item_fields } %>
+        <% end %>
+      <% else %>
         <%= render partial: "carts/cart_item_row", 
-                   locals: { item: item, index: index, editable: editable, f: item_fields } %>
+                  locals: { item: item, index: index, editable: editable } %>
       <% end %>
-    <% else %>
-      <%= render partial: "carts/cart_item_row", 
-                 locals: { item: item, index: index, editable: editable } %>
     <% end %>
-  <% end %>
 
-  <!-- Totals Row -->
-  <%= render partial: "carts/cart_totals", locals: { cart: cart, editable: editable } %>
-  
+    <!-- Totals Row -->
+    <%= render partial: "carts/cart_totals", locals: { cart: cart, editable: editable, f: local_assigns[:f] } %>
+    
+  </div>
 </div>

@@ -30,6 +30,13 @@
 
     <%= render "layouts/navbar/navbar" %>
 
+    <!-- Drawer target -->
+    <!-- Drawer target: must live at top-level, directly under <body> -->
+    <div id="cart-drawer-container">
+      <!-- initially empty; filled/replaced by turbo_stream -->
+    </div>
+
+    <!-- Main content wrapper -->
     <div class="mx-auto max-w-6xl py-3">
 
       <%= render "shared/flash_messages" %>
