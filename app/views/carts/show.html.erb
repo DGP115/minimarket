@@ -1,28 +1,33 @@
-<div class="md:w-2/3 w-full pl-8"> 
+<% if @cart != nil %>
+	<div class="md:w-2/3 w-full pl-8"> 
 
-	<h1 class="font-semibold text-base mb-4">
-		<em><%= current_user.name.titlecase %></em>:  Your cart's contents:
-	</h1>
+		<h1 class="font-semibold text-base mb-4">
+			<em><%= current_user&.name&.titlecase %></em>:  Your cart's contents:
+		</h1>
 
-	<%#  "editable" is used as a switch so that the same form is used by sho wand edit methods %>
-	<%= render partial: "carts/cart_table", locals: { cart: @cart, editable: false } %>
+		<%#  "editable" is used as a switch so that the same form is used by sho wand edit methods %>
+		<%= render partial: "carts/cart_table", locals: { cart: @cart, cart_items: @cart_items, editable: false } %>
 
-	<!-- Button container -->
-	<div class="flex justify-end space-x-2 mt-4">
-		<%= link_to "Edit", edit_cart_path, 
-								class: "inline-block font-normal cursor-pointer sm:w-auto
-												text-center border rounded-md px-4 py-1 ml-4 mr-2
-												bg-gray-100 hover:scale-110 hover:bg-gray-400
-												transition duration-200 ease-in-out" %>
-
-		<%= button_to "Delete", @cart,
-									method: :delete,
-									form_class: "inline-block m-0", 
+		<!-- Button container -->
+		<div class="flex justify-end space-x-2 mt-4">
+			<%= link_to "Edit", edit_cart_path, 
 									class: "inline-block font-normal cursor-pointer sm:w-auto
-													rounded-md px-2 py-1 bg-red-300 border
-													hover:bg-red-600 hover:scale-110 
-													transition duration-200 ease-in-out", 
-									data: { turbo_confirm: "Are you sure?" } %>
-	</div>
-</div>
+													text-center border rounded-md px-4 py-1 ml-4 mr-2
+													bg-gray-100 hover:scale-110 hover:bg-gray-400
+													transition duration-200 ease-in-out" %>
 
+			<%= button_to "Delete", @cart,
+										method: :delete,
+										form_class: "inline-block m-0", 
+										class: "inline-block font-normal cursor-pointer sm:w-auto
+														rounded-md px-2 py-1 bg-red-300 border
+														hover:bg-red-600 hover:scale-110 
+														transition duration-200 ease-in-out", 
+										data: { turbo_confirm: "Are you sure?" } %>
+		</div>
+	</div>
+<% else %>
+	<h1 class="font-semibold text-base mb-4">
+		There is no cart to display
+	</h1>
+<% end %>

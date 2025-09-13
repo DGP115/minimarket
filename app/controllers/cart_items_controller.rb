@@ -12,6 +12,9 @@ class CartItemsController < ApplicationController
 
       @cart.cart_items.create!(product: @product, quantity: params[:cart_item][:quantity])
 
+      # Show cart items in the order in which they were created
+      @cart_items = @cart.cart_items.order(created_at: :asc)
+
       respond_to do |format|
         format.turbo_stream
         format.html {

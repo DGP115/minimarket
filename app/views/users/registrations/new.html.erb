@@ -13,8 +13,14 @@
       <%= render "users/shared/error_messages", resource: resource %>
 
       <div class="flex flex-col gap-1">
+        <%= f.label "name:", class: "font-semibold text-sm" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "Name", 
+                          class: "border rounded px-3 py-2 w-full text-sm font-medium mb-2" %>
+      </div>
+
+      <div class="flex flex-col gap-1">
         <%= f.label "email address:", class: "font-semibold text-sm" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+        <%= f.email_field :email, autocomplete: "email", 
                           class: "border rounded px-3 py-2 w-full text-sm font-medium mb-2" %>
       </div>
 

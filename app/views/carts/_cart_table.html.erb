@@ -11,15 +11,15 @@
     <div class="px-2 text-center">Purchase</div>
 
     <!-- Data Rows -->
-    <% cart.cart_items.each_with_index do |item, index| %>
+    <% cart_items.each_with_index do |item, index| %>
       <% if local_assigns[:f] %>
         <%= f.fields_for :cart_items, item do |item_fields| %>
           <%= render partial: "carts/cart_item_row", 
-                    locals: { item: item, index: index, editable: editable, f: item_fields } %>
+                     locals: { item: item, index: index, editable: editable, f: item_fields } %>
         <% end %>
       <% else %>
         <%= render partial: "carts/cart_item_row", 
-                  locals: { item: item, index: index, editable: editable } %>
+                   locals: { item: item, index: index, editable: editable } %>
       <% end %>
     <% end %>
 

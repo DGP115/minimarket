@@ -17,12 +17,12 @@
       type="button"
       data-action="click->cart-drawer#hide"
       class="text-gray-500 hover:text-gray-800">
-      ✕
+      <%= render_icon("cancel", classes: "w-4 h-4 text-sm hover:cursor-pointer hover:scale-110") %>
     </button>
   </div>
   
   <!-- Cart contents -->
   <div class="flex-1 overflow-y-auto p-4">
-    <%= render partial: "carts/cart_table", locals: { cart: cart, editable: false } %>
+    <%= render partial: "carts/cart_table", locals: { cart: cart, cart_items: cart_items, editable: false } %>
   </div>
 </div>
