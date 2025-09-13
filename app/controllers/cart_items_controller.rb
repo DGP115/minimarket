@@ -11,6 +11,7 @@ class CartItemsController < ApplicationController
     if !@cart.products.exists?(id: @product.id) && params[:cart_item][:quantity].to_i > 0
 
       @cart.cart_items.create!(product: @product, quantity: params[:cart_item][:quantity])
+
       respond_to do |format|
         format.turbo_stream
         format.html {

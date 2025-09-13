@@ -22,15 +22,15 @@ class CartsController < ApplicationController
       @cart.reload
 
       # Broadcast navbar update with DB values
-      Turbo::StreamsChannel.broadcast_replace_to(
-        "cart_button",
-        partial: "layouts/navbar/cart_icon",
-        locals: {
-          cart: @cart,
-          total_quantity: @cart.total_quantity,
-          total_purchase: @cart.total_purchase
-        }
-      )
+      # Turbo::StreamsChannel.broadcast_replace_to(
+      #   "cart_button",
+      #   partial: "layouts/navbar/cart_icon",
+      #   locals: {
+      #     cart: @cart,
+      #     total_quantity: @cart.total_quantity,
+      #     total_purchase: @cart.total_purchase
+      #   }
+      # )
 
       redirect_to @cart
       flash[:notice] = "Your cart was successfully updated."
