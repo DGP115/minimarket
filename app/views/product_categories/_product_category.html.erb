@@ -21,9 +21,13 @@
       
       
       <!--Product Category context menu -->
-      <!--Note: meaning of data-action phrase: -->
-      <!--      contextmenu is the DOM event name for the browser's right-click event -->
-      <!--       So, we ae telling it to launch hte context-menu controller's contextmeny method-->
+      <!--Note: 1. meaning of data-action phrase: -->
+      <!--          - contextmenu is the DOM event name for the browser's right-click event -->
+      <!--          - So, we are telling it to launch the context-menu controller's contextmenu method-->
+      <!--      2. turbo_action: "advance" --> 
+      <!--         - Without this the browser's back button doesn't take the user to the "previous" page, as they woudl expect  -->
+      <!--           because Turbo is not doign full-page refeshes due to the turboframes in place.  -->
+      <!--         - "advance" tells Turbo to update teh browser's history stack -->
 
       <div data-controller="context-menu"
             data-action="contextmenu->context-menu#open" 
