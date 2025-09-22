@@ -24,6 +24,7 @@ class Product < ApplicationRecord
 
   private
 
+  # ---------------------------- Stripe-Related ----------------------------
   def create_product_in_stripe
     begin
       # Create a product in Stripe to "match" the app product
@@ -124,5 +125,26 @@ class Product < ApplicationRecord
     rescue Stripe::StripeError => e
       Rails.logger.error "Failed to archive product #{self.title} in Stripe: #{e.message}"
     end
+  end
+  # ------------------------------------------------------------------------
+  # ---------------------- Ransack (search) - Related ----------------------
+  # Ransack needs Product attributes and assoications explicitly allowlisted as searchable.
+  def self.ransackable_attributes(auth_object = nil)
+    [ "title", "price" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "product_category" ]
+  end
+
+  # This ransacker is necessary to enable search results [generated using the ransack gem] to be sorted based on
+  # product_category, which is an association to this product model.
+  # This is because PostgreSQL doesn’t allow ORDER BY "product_categories"."name" in a SELECT DISTINCT "products".* query unless
+  # "product_categories"."name" is also in the SELECT list. MySQL is more lenient, which is why people don’t always see this.
+
+  # ransacker is a Ransack method that lets you define a custom virtual attribute on your model for searching or sorting.
+
+  ransacker :product_category_name do
+    Arel.sql("product_categories.name")
   end
 end

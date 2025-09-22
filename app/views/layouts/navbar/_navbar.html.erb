@@ -12,8 +12,11 @@
 
       <!-- This div grows to take up all available space between logo and right edge -->
       <div class="ml-auto mr-4 items-center space-x-6">
+        <%= link_to search_path, class: "inline-block" do %>
+          <%= render_icon("search", classes: "size-5 inline-block mb-1 stroke-2 stroke-black hover:stroke-indigo-500 hover:scale-110") %>
+        <% end %>
         <%= link_to "About", about_path, 
-                    class:"text-lg font-sans font-semibold tracking-tight pt-1
+                    class:"inline-block text-lg font-sans font-semibold tracking-tight pt-1
                            hover:text-indigo-700" %>
       </div>
 

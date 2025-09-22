@@ -29,7 +29,7 @@
           $
         </span>
         <%= f.text_field :price,
-                          value: number_with_precision(@product.price || 0, precision: 2, 
+                          value: number_with_precision(@product.price || 0, precision: 2, delimiter:",",
                                                         strip_insignificant_zeros: false),
                           class: "focus:ring-blue-500 focus:border-blue-500 block w-full rounded-none rounded-r-md 
                                   border-1 border-gray-300 text-center" %>

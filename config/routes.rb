@@ -45,4 +45,8 @@ Rails.application.routes.draw do
   # Note singular here since there will only ever be one cart per user session
   resource :cart, only: %i[ show edit update destroy ]
   resources :reviews
+
+  # Search
+  get "search", to: "search#index"
+  get "clear", to: "search#clear"
 end

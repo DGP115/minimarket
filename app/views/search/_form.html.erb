@@ -1,0 +1,53 @@
+<%# NOTE:  search_form is a helper provided by the ransack gem %>
+<%= search_form_for(@query, url: search_path, method: :get, class: "ml-2" ) do |f| %>
+
+  <div class="mt-2 grid grid-cols-1 gap-y-2 gap-x-4 sm:grid-cols-2 max-w-2xl mx-auto border border-stone-400 bg-stone-100 rounded-md shadow-md p-2">
+    <div class="font-semibold text-base text-indigo-700">Search Criteria:</div>
+
+    <!-- Product Title -->
+    <div class="sm:col-span-2">
+      <%= f.label :title_cont, "Product name containing:", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.text_field :title_cont, label: false, 
+                        class: "border shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full 
+                                border-gray-300 bg-white rounded-md pl-2", 
+                        placeholder: "Enter a few characters" %>
+    </div>
+
+    <!-- Product Category -->
+    <div class="sm:col-span-2">
+      <%= f.label :product_category_name_cont, "Product category containing:", class: "block text-sm font-semibold text-gray-700" %>
+      <%= f.text_field :product_category_name_cont, 
+                        class: "border shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full 
+                                border-gray-300 bg-white rounded-md pl-2", 
+                        placeholder: "Enter a few characters" %>
+    </div>
+
+    <!-- Max Price -->
+    <div class="sm:col-span-1 flex justify-left">
+        <%= f.label :price_lteq, "Maximum Price:", class: "block text-sm font-semibold text-gray-700 mr-2 pt-1" %>
+        <div class="mt-1 flex rounded-md">
+          <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+            $
+          </span>
+          <%= f.number_field :price_lteq, step: 1, min: 0, value: @query.price_lteq&.to_i,
+                              class: "block w-24 focus:ring-blue-500 focus:border-blue-500 rounded-none rounded-r-md 
+                                      border-1 border-gray-300 bg-white text-left pl-1" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="sm:col-span-2 flex justify-center space-x-4 mt-2">
+      <%= f.submit class: "max-w-24 items-center justify-center font-normal cursor-pointer 
+                          border rounded-md px-4
+                          bg-indigo-200 hover:scale-110 
+                          transition duration-200 ease-in-out" %>
+      
+      <%= link_to "Clear", clear_path, class: "ml-4 max-w-24 items-center justify-center font-normal cursor-pointer
+                                                 border rounded-md px-4
+                                                 bg-gray-200 hover:scale-110 
+                                                 transition duration-200 ease-in-out" %>
+    </div>
+
+  </div>
+<% end %>

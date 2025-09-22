@@ -22,4 +22,10 @@ class ProductCategory < ApplicationRecord
   def flush_root_categories_cache
     Rails.cache.delete("root_categories")
   end
+
+  # ---------------------- Ransack (search) - Related ----------------------
+  # Ransack needs product_category attributes and associations explicitly allowlisted as searchable.
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name", "description" ]
+  end
 end

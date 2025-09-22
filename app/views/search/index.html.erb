@@ -1,0 +1,46 @@
+<%= render "search/form" %>
+
+<div class="text-base font-bold text-indigo-700 text-center mb-2">
+  <%=pluralize(@products.count, "Search Result") %>
+</div>
+
+<% if @products.any? %>
+
+  <div class="p-2 bg-indigo-50 rounded-md border border-stone-400 md:max-w-3/4 md:mx-auto overflow-x-auto">
+    <div class="mb-2 grid grid-cols-[3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] 
+                          md:grid-cols-[3rem_12rem_minmax(0,1fr)_6rem] gap-x-2 gap-y-2 font-semibold text-sm min-w-0">
+
+      <!-- Header Row -->
+      <div class="md:px-2 text-left min-w-0 truncate">Item</div>
+      <div class="md:px-6 text-left min-w-0 truncate text-blue-500 underline">
+        <%= sort_link(@query, :product_category_name, "Category", default_order: :asc) %>
+      </div>
+      <!-- Title cell: min-w-0 + truncate so ellipsis works inside grid -->
+      <div class="md:px-6 text-left min-w-0 truncate text-blue-500 underline">
+        <%= sort_link(@query, :title, "Title", default_order: :asc) %>
+      </div>
+      <div class="text-center min-w-0 truncate text-blue-500 underline">
+        <%= sort_link(@query, :price, "Price", default_order: :asc) %>
+      </div>
+
+
+      <!-- Data Rows -->
+      <% @products.each_with_index do |product, index| %>
+        <div class="md:px-2 text-center min-w-0 truncate font-normal text-sm"><%= index + 1 %></div>
+        <div class="md:px-2 text-left min-w-0 truncate font-normal text-sm">
+          <%= link_to product.product_category.name, 
+                      product_category_path(product.product_category), 
+                      class: "hover:text-violet-500 hover:font-semibold"  %>
+        </div>
+        <div class="md:px-2 font-normal min-w-0 truncate text-sm">
+          <%= link_to product.title, product_path(product), 
+                      class:"hover:text-violet-500 hover:font-semibold"  %>
+        </div>
+        <div class="md:px-2 text-right min-w-0 truncate font-normal text-sm">
+          <%= number_to_currency(product.price, precision: 2, unit: "$", delimiter: ",") %>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+<% end %>
