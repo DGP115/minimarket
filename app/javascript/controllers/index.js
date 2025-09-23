@@ -7,8 +7,8 @@
 
 import { application } from "controllers/application"
 
-import CartBulkController from "controllers/cart_bulk_controller"
-application.register("cart-bulk", CartBulkController)
+import CartContentsController from "controllers/cart_contents_controller"
+application.register("cart-contents", CartContentsController)
 
 import CartDrawerController from "controllers/cart_drawer_controller"
 application.register("cart-drawer", CartDrawerController)

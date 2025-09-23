@@ -5,6 +5,7 @@
 
   <!-- Total of quantity(s).  Margin changes in edit mode to make room for spinner buttons -->
   <% if editable && local_assigns[:f] %>
+
     <% total_qty = 0 %>
     <% total_purchase = 0 %>
     <%= f.fields_for :cart_items do |item_fields| %>
@@ -15,10 +16,13 @@
     <% end %>
 
     <% aligner = "mr-1 pr-4" %>
+
   <% else %>
+
     <% total_qty = cart.total_quantity %>
     <% total_purchase = cart.total_purchase %>
     <% aligner = "pr-0" %>
+    
   <% end %>
 
   <div id="cart-total-quantity" class="<%=aligner%> text-center font-semibold border-t border-b">

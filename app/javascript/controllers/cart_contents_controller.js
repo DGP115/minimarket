@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["rowQuantity", "purchaseCell"]
 
   connect() {
-    console.log("cart-bulk controller connected")
+    console.log("cart-contents controller connected")
 
     // Watch quantity inputs for recalculation
     this.rowQuantityTargets.forEach((input) => {
@@ -16,13 +16,13 @@ export default class extends Controller {
 
   
 
-  // Triggered by "Recalculate" button
+  // Triggered by the listener on quantity inputs defined above
   recalculate() {
-    console.log("cart-bulk controller recalculate called")
+    console.log("cart-contents controller recalculate called")
     this.rowQuantityTargets.forEach((input, idx) => {
       const row = input.closest("[id^='cart_item']")
       // NOTE:  Items deleted by user are only marked with hidden _delete, 
-      //        for later deletion in the cart_itemns_controller skip deleted rows.
+      //        for later deletion in the cart_itemns_controller.
       //        So, skip hidden rows when computing totals
       if (this.isMarkedForDestroy(row)) return
 
@@ -38,7 +38,7 @@ export default class extends Controller {
 
   // Triggered by "Update & Close" button before form submit
   recalculateBeforeSubmit() {
-    console.log("cart-bulk controller recalculateBeforeSubmit called")
+    console.log("cart-contents controller recalculateBeforeSubmit called")
     this.recalculate()
     // no preventDefault so → form submits as usual to Rails controller given by route
   }
@@ -76,7 +76,7 @@ export default class extends Controller {
   }
 
   deleteItem(event) {
-    console.log("cart-bulk controller deleteItem called")
+    console.log("cart-contents controller deleteItem called")
     const row = event.currentTarget.closest("[id^='cart_item_']");
 
     if (!row) return;

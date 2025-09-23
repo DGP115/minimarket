@@ -10,7 +10,7 @@
                        url: cart_path, 
                        method: :patch,
                        local: true,
-                       data: { controller: "cart-bulk", turbo: false } do |f| %>
+                       data: { controller: "cart-contents", turbo: false } do |f| %>
 
     <%= render partial: "carts/cart_table", locals: { cart: @cart, cart_items: @cart_items, editable: true, f: f  } %>
 
@@ -23,7 +23,7 @@
                     type: "submit",
                     class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
                             transition duration-150 ease-in-out text-sm",
-                    data: { action: "click->cart-bulk#recalculateBeforeSubmit" } %>
+                    data: { action: "click->cart-contents#recalculateBeforeSubmit" } %>
     </div>
 
   <% end %>

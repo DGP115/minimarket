@@ -20,7 +20,7 @@
 
       <button type="button" 
               class="p-0 bg-transparent border-none"
-              data-action="click->cart-bulk#deleteItem"
+              data-action="click->cart-contents#deleteItem"
               data-item-id="<%= item.id %>"
               title="Delete item">
         <%= render_icon("trashcan", classes: "w-4 h-4 text-sm hover:cursor-pointer hover:scale-110") %>
@@ -32,7 +32,7 @@
                           value: item.quantity,
                           min: 0,
                           class: "w-16 text-center text-sm bg-green-100 border rounded px-1 py-0.5",
-                          data: { item_id: item.id, cart_bulk_target: "rowQuantity" } %>
+                          data: { item_id: item.id, cart_contents_target: "rowQuantity" } %>
     </div>
   <% else %>
     <!--&nbsp; is a non-breaking space to account for trachcan button not being displayed-->
@@ -47,7 +47,7 @@
 
   <!-- Purchase (price * qty) -->
   <div class="px-2 text-right font-normal text-sm"
-       data-cart-bulk-target="purchaseCell">
+       data-cart-contents-target="purchaseCell">
     <%= number_to_currency(item.product.price * item.quantity, 
                            precision: 2, 
                            unit: "$", 
