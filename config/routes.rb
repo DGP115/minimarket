@@ -21,21 +21,17 @@ Rails.application.routes.draw do
   get "about", to: "pages#about"
   # Products
   resources :products do
-    # This adds buy_product path
-    post "buy", on: :member
     # This adds product_remove_image path
-    # delete "remove_image/:id", to: "products#remove_image", as: :remove_image
     member do
       get "remove_image/:attachment_id", to: "products#remove_image", as: :remove_image
     end
   end
   # Route for webhook from Stripe
-  post "/webhook", to: "products#webhook"
+  post "/webhooks/stripe", to: "webhooks#set_stripe_webhook"
   #
   # Product Categories
   resources :product_categories do
     member do
-      get :tree_left
       get :add_child
     end
   end
@@ -43,7 +39,11 @@ Rails.application.routes.draw do
   resources :orders
   resources :cart_items, only: %i[ show create update destroy ]
   # Note singular here since there will only ever be one cart per user session
-  resource :cart, only: %i[ show edit update destroy ]
+  resource :cart, only: %i[ show edit update destroy ] do
+    # Create checkout_cart_path, which maps to carts_controller checkout method
+    post :checkout, on: :member
+  end
+
   resources :reviews
 
   # Search

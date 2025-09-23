@@ -18,6 +18,10 @@ class Cart < ApplicationRecord
     active_items.sum { |item| item.quantity.to_i * item.product.price }
   end
 
+  def is_empty?
+    self.cart_items.empty?
+  end
+
   def active_items
     # NOTE:  cart_items are marked for deletion in the form, awaiting actual deletion by controller.
     #        Filter out these soft_deletes when computing totals.

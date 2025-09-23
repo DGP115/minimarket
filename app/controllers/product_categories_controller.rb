@@ -5,24 +5,6 @@ class ProductCategoriesController < ApplicationController
     # See application_controller.  @root_categories set there
   end
 
-  # def tree_left
-  #   @active_category = ProductCategory.find(params[:id])
-  #   @parent_category = @active_category.parent
-
-  #   if @parent_category.nil?
-  #     # If no parent [i.e. @active_category is a root], just render the root categories.
-  #     @root_categories = ProductCategory.roots.order(orderindex: :asc)
-  #     render "product_categories/index",
-  #            locals: { root_categories: @root_categories }
-  #   else
-  #     # Render the category tree one level "up" or "left"
-  #     @product_categories = @parent_category.descendants.arrange(order: :name)
-  #     render partial: "product_categories/category_tree",
-  #           locals: { root: @parent_category, product_categories: @product_categories }
-
-  #   end
-  # end
-
   def show
     @product_category = ProductCategory.find(params[:id])
     @products = @product_category.products.order(:title).includes([ :rich_text_description ]).with_attached_images.limit(10)

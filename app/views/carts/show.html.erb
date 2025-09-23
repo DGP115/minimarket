@@ -40,14 +40,23 @@
 					Continue Shopping
 				<% end %>
 
-				<%= link_to(about_path, class: "flex items-center justify-center font-normal cursor-pointer sm:w-auto
-																				border rounded-md px-4
-																				bg-green-200 hover:scale-110
-																				transition duration-200 ease-in-out") do %>
+				<%# Need button_to instead of link_to in order to get Rails to use post method.  %>
+				<%# Need data: { turbo: false } to enable Stripes checkout session window to display (otherwise turbo gets in the way) %>
+
+				<%= button_to(checkout_cart_path(@cart),
+											disabled: @cart.is_empty?,
+											method: :post, 
+											data: { turbo: false }, 
+											class: "flex items-center justify-center font-normal cursor-pointer sm:w-auto
+															border rounded-md px-4
+															bg-green-200 hover:scale-110
+															transition duration-200 ease-in-out
+															disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100") do %>
 					Checkout
 					<%= render_icon("arrow_right", classes: "inline-block ml-2 w-5 h-5 bg-gray-100 rounded-md 
 																				stroke-purple-600 hover:bg-gray-400") %>
-				<% end %>
+				<% end %>													
+
 			</div>
 		</div>
 	</div>
