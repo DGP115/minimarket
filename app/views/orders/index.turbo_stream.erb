@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "orders_list" do %>
+  <%= render partial: "orders/orders_list", locals: { orders: @orders, query: @query, num_orders: @num_orders } %>
+<% end %>

@@ -1,9 +1,28 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_order, only: %i[ show edit update destroy ]
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    # Take advantage of sortable view columns provided by ransack gem
+    @query = current_user.orders
+                         .ransack(params[:q])
+
+    @orders = @query.result(distinct: true)
+
+    # Apply default ordering only when no sort param is present
+    unless params.dig(:q, :s).present?
+      @orders = @orders.order(created_at: :desc)
+    end
+
+    # Recall:  .size is more efficient than .count here because @orders is already loaded.
+    #          .size just returns the length of the in-memory array, whereas .count would issue a new SQL COUNT query.
+    @num_orders = @orders.size
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /orders/1 or /orders/1.json
