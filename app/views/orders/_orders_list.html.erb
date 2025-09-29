@@ -16,6 +16,7 @@
             <th class="px-2 py-2"><%= sort_link(query, :status, "Status") %></th>
             <th class="px-2 py-2"><%= sort_link(query, :status_changed_at, "Status changed...") %></th>
             <th class="px-2 py-2"><%= sort_link(query, :total_amount, "Total") %></th>
+            <th class="px-2 py-2">Actions</th>
           </tr>
         </thead>
 
@@ -24,35 +25,33 @@
           <% orders.each_with_index do |order, index| %>
             <tr class="text-center">
               <!-- Data Rows -->
-              <td class="px-2 py-1"><%= num_orders - index %></td>
-              <td class="px-2 py-1"><%= order.id %></td>
-              <td class="px-2 py-1"><%= order.created_at.strftime("%e-%b-%Y:%l:%M:%S %P") %></td>
-              <td class="px-2 py-1"><%= order.status %></td>
-              <td class="px-2 py-1"><%= order.status_changed_at&.strftime("%e-%b-%Y:%l:%M:%S %P") %></td>
-              <td class="px-2 py-1"><%= number_to_currency(order.total_amount,
+              <td class="px-2"><%= num_orders - index %></td>
+              <td class="px-2"><%= order.id %></td>
+              <td class="px-2"><%= order.created_at.strftime("%e-%b-%Y:%l:%M:%S %P") %></td>
+              <td class="px-2"><%= order.status %></td>
+              <td class="px-2"><%= order.status_changed_at&.strftime("%e-%b-%Y:%l:%M:%S %P") %></td>
+              <td class="px-2"><%= number_to_currency(order.total_amount,
                                                            precision: 2,
                                                            unit: "$",
                                                            delimiter: ",") %></td>
-              <td class="px-2 py-2">
+              <td class="px-2">
                 <div class="flex flex-col sm:flex-row justify-center gap-2">
-                  <%= link_to(order_path(order),
-                      class: "rounded-md hover:bg-indigo-400")  do %>
+                  <%= link_to(order_path(order))  do %>
                       <span>
-                        <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                        <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md stroke-blue-800 hover:stroke-green-500 hover:scale-110") %>
                       </span>
                   <% end %>
-                  <%= link_to(edit_order_path(order),
-                              class:"rounded-md hover:bg-violet-400") do %>
+                  <%= link_to(edit_order_path(order)) do %>
                     <span > 
-                      <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                      <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md hover:stroke-violet-700 hover:scale-110") %>
                     </span>
                   <% end %>
                   <%= button_to(order_path(order),
                                 method: :delete, 
-                                class: "rounded-md hover:bg-red-400", 
+                                class: "", 
                                 data: { turbo_confirm: "Are you sure?" }) do %>
                     <span>
-                      <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                      <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md cursor-pointer hover:scale-110 hover:stroke-red-700") %>
                     </span>
                   <% end %>
 
@@ -93,28 +92,27 @@
               <span>Total:</span>
               <span><%= number_to_currency(order.total_amount, precision: 2, unit: "$", delimiter: ",") %></span>
             </div>
-            <div class="mt-3 flex flex-row justify-center gap-x-4 sm:flex-row gap-2">
-              <%= link_to(order_path(order),
-                          class:"rounded-md hover:bg-indigo-400") do %>
+ 
+            <div class="mt-3 flex flex-row justify-center mx-auto w-48 gap-x-6 gap-2 border rounded-sm border-stone-400">
+              <%= link_to(order_path(order)) do %>
                 <span>
-                  <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                  <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6 stroke-blue-800 rounded-md hover:stroke-green-500") %>
                 </span>
               <% end %>
-              <%= link_to(edit_order_path(order), 
-                          class:"rounded-md hover:bg-violet-400") do %>
+              <%= link_to(edit_order_path(order)) do %>
                 <span>
-                  <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                  <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md hover:stroke-violet-700") %>
                 </span>
               <% end %>
               <%= button_to(order_path(order),
                             method: :delete, 
-                            class: "rounded-md hover:bg-red-400", 
                             data: { turbo_confirm: "Are you sure?" }) do %>
                 <span>
-                  <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-6 w-6") %>
+                  <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md cursor-pointer hover:scale-110 hover:stroke-red-700") %>
                 </span>
               <% end %>
             </div>
+
           </div>
         <% end %>
       </div>

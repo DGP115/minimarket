@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   has_many :products, through: :lineitems
 
   enum :status, { pending: 0,
-                  processing: 10,
+                  accepted: 10,
                   fulfilled: 20,
                   cancelled: 30,
                   refunded: 40 },

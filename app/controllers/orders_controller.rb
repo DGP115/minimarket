@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
+    @order_lineitems = @order.lineitems.order(created_at: :asc).includes(:product)
   end
 
   # GET /orders/new

@@ -1,0 +1,40 @@
+<div class="flex-1 overflow-y-auto p-2 bg-indigo-50 rounded-md border border-stone-400">
+  <div class="mb-2 grid grid-cols-[auto_1fr_auto_auto_auto] gap-y-2 
+              font-semibold text-sm ">
+
+    <!-- Header Row -->
+    <div class="px-2 text-center">Item</div>
+    <div class="px-4">Description</div>
+    <div class="px-4 text-center">Quantity</div>
+    <div class="px-2 text-center">Price</div>
+    <div class="px-2 text-center">Purchase</div>
+
+    <!-- Data Rows -->
+    <% order_lineitems.each_with_index do |item, index| %>
+
+      <!-- Item index -->  
+      <div class="px-2 text-center font-normal text-sm"><%= index + 1 %></div>
+
+      <!-- Product Title --> 
+      <%= link_to item.product.title, 
+                  product_path(item.product_id), 
+                  class: "px-4 font-normal text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
+
+      <div class="px-2 text-center font-normal text-sm"><%= item.quantity %></div>
+
+      <!-- Unit price -->
+      <div class="px-2 text-right font-normal text-sm">
+        <%= number_to_currency(item.product.price, precision: 2, unit: "$", delimiter: ",") %>
+      </div>
+
+      <!-- Purchase (price * qty) -->
+      <div class="px-2 text-right font-normal text-sm">
+        <%= number_to_currency(item.product.price * item.quantity, 
+                              precision: 2, 
+                              unit: "$", 
+                              delimiter: ",") %>
+      </div>
+    <% end %>
+    
+  </div>
+</div>

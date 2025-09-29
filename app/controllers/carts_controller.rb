@@ -43,8 +43,8 @@ class CartsController < ApplicationController
     # Create Stripe checkout session
     # NOTE:  Upon completion of the Stripe checkout session, Stripe will call our webhook
     #        (see webhooks_controller.rb) to notify us that the payment was successful.
-    #        At that point, we will update the order status to fulfilled.
-    #        Also, at the point of successful payment, the "success_url" (below) will be invoked 
+    #        At that point, we will update the order status to accepted.
+    #        Also, at the point of successful payment, the "success_url" (below) will be invoked
     #        to redirect the user to the order's Show page.
     session = Stripe::Checkout::Session.create({
       client_reference_id: @order.id,
@@ -80,7 +80,7 @@ class CartsController < ApplicationController
   end
 
   def create_order_from_cart
-    @order = current_user.orders.build(status: :pending, total_amount: @cart.total_purchase)
+    @order = current_user.orders.build(status: :pending, status_changed_at: Time.current, total_amount: @cart.total_purchase)
 
     # Move cart items to order items
     @cart.cart_items.each do |cart_item|

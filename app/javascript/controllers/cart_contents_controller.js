@@ -89,6 +89,9 @@ export default class extends Controller {
 
     // hide the row so the user sees it as deleted
     row.style.display = "none";
+
+    // recalculate totals
+    this.updateTotals()
   }
 
   // Helper: detect if a row is flagged for deletion

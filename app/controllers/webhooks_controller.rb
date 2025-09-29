@@ -30,14 +30,14 @@ class WebhooksController < ApplicationController
     end
 
     if event["type"] == "checkout.session.completed"
-        # The checkout session was completed successfully.
+        # The checkout session was completed successfully, meaning payment was successfuly received by Stripe.
         customer_email = event.data.object.customer_email
         order_id = event.data.object.client_reference_id # Because we set it to that in the buy method
         order = Order.find_by(id: order_id, status: :pending)
         customer = order&.user
 
         if order
-          order.update!(status: :fulfilled)
+          order.update!(status: :accepted, status_changed_at: Time.current)
         end
     end
 

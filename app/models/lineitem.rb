@@ -4,5 +4,5 @@ class Lineitem < ApplicationRecord
   # the Lineitem model is associated with [normally, it would be inferred in the 'belongs_to']
   belongs_to :buyer, class_name: "User"
 
-  belongs_to :order, optional: true
+  belongs_to :order
 end

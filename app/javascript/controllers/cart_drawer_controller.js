@@ -9,11 +9,13 @@ export default class extends Controller {
 
   show() {
     // Slide in
+    console.log("cart-drawer controller show")
     this.element.classList.remove("translate-x-full")
     this.element.classList.add("translate-x-0")
   }
 
   hide() {
+    console.log("cart-drawer controller hide")
     this.element.classList.remove("translate-x-0")
     this.element.classList.add("translate-x-full")
   }
