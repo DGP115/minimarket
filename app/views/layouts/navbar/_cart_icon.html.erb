@@ -3,15 +3,20 @@
 <%# dom_id(cart, "button") will produce something like button_cart_7, which is stable and unique. Turbo can now find it correctly %>
 
 <div id="<%= dom_id(cart, "button") %>" class="relative">
-  <%= link_to cart_path do %>
-    <%= render_icon("cart", classes: "inline-block ml-4 w-8 h-8 bg-indigo-100 border border-gray-400 rounded-md 
-                                      stroke-purple-600 hover:cursor-pointer hover:scale-110") %>
-    <% if total_quantity > 0 %>
-      <div class="inline-block absolute top-1.5 right-2 w-4 h-4 rounded-full
-                  text-xs text-center text-blue-800 
-                  border border-gray-400 bg-green-300/70">
-        <%= total_quantity %>
-      </div>
+  <% if !cart.is_empty? %>
+    <%= link_to cart_path do %>
+      <%= render_icon("cart", classes: "inline-block ml-4 w-8 h-8 bg-indigo-100 border border-gray-400 rounded-md 
+                                        stroke-purple-600 hover:cursor-pointer hover:scale-110") %>
+      <% if total_quantity > 0 %>
+        <div class="inline-block absolute top-1.5 right-2 w-4 h-4 rounded-full
+                    text-xs text-center text-blue-800 
+                    border border-gray-400 bg-green-300/70">
+          <%= total_quantity %>
+        </div>
+      <% end %>
     <% end %>
+  <% else %>
+    <%= render_icon("cart", classes: "inline-block ml-4 w-8 h-8 bg-indigo-100 border border-gray-200 rounded-md 
+                                      stroke-purple-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100") %>
   <% end %>
 </div>

@@ -41,11 +41,6 @@
                         <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md stroke-blue-800 hover:stroke-green-500 hover:scale-110") %>
                       </span>
                   <% end %>
-                  <%= link_to(edit_order_path(order)) do %>
-                    <span > 
-                      <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md hover:stroke-violet-700 hover:scale-110") %>
-                    </span>
-                  <% end %>
                   <%= button_to(order_path(order),
                                 method: :delete, 
                                 class: "", 
@@ -97,11 +92,6 @@
               <%= link_to(order_path(order)) do %>
                 <span>
                   <%= render_icon("show_details", classes: "pt-1 mt-1 mb-1 h-6 w-6 stroke-blue-800 rounded-md hover:stroke-green-500") %>
-                </span>
-              <% end %>
-              <%= link_to(edit_order_path(order)) do %>
-                <span>
-                  <%= render_icon("edit", classes: "pt-1 mt-1 mb-1 h-6 w-6 rounded-md hover:stroke-violet-700") %>
                 </span>
               <% end %>
               <%= button_to(order_path(order),
