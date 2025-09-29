@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   def profile_edit
     @user = User.find(params[:id])
     render "users/profile/edit"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "User not found."
   end
 
   def profile_update

@@ -4,12 +4,4 @@ class CartItem < ApplicationRecord
   # So, in other words, if a cart_item changes, so does its cart
   belongs_to :cart, touch: true
   belongs_to :product
-
-  # after_commit :update_cart_button
-
-  private
-
-  # def update_cart_button
-  #   cart.update_cart_button
-  # end
 end

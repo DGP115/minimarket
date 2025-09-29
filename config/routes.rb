@@ -49,4 +49,10 @@ Rails.application.routes.draw do
   # Search
   get "search", to: "search#index"
   get "clear", to: "search#clear"
+
+  # Catch-all for routing errors that excludes rails/active_storage.  Must be last route.  Directs to errors_controller routing_error method
+  match "*unmatched_route",
+      to: "errors#not_found",
+      via: :all,
+      constraints: ->(req) { !req.path.start_with?("/rails/active_storage") }
 end

@@ -65,12 +65,17 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    @cart = current_user.cart
+    # Each user has only one cart.  Create it if it doesn't exist.
+    @cart = Cart.find_or_create_by(user_id: current_user.id)
   end
 
   def set_sorted_cart_items
     # Show cart items in the order in which they were created
-    @cart_items = @cart.cart_items.order(created_at: :asc)
+    if @cart.is_empty?
+      @cart_items = []
+    else
+      @cart_items = @cart.cart_items.order(created_at: :asc)
+    end
   end
 
   def cart_params
@@ -88,6 +93,7 @@ class CartsController < ApplicationController
         product_id: cart_item.product_id,
         quantity: cart_item.quantity,
         unit_price: cart_item.product.price,
+        purchase_amount: cart_item.quantity * cart_item.product.price,
         buyer_id: current_user.id
       )
     end

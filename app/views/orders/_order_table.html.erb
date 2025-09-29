@@ -17,7 +17,8 @@
 
       <!-- Product Title --> 
       <%= link_to item.product.title, 
-                  product_path(item.product_id), 
+                  product_path(item.product_id),
+                  data: { turbo: false }, 
                   class: "px-4 font-normal text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
 
       <div class="px-2 text-center font-normal text-sm"><%= item.quantity %></div>
@@ -29,7 +30,7 @@
 
       <!-- Purchase (price * qty) -->
       <div class="px-2 text-right font-normal text-sm">
-        <%= number_to_currency(item.product.price * item.quantity, 
+        <%= number_to_currency(item.purchase_amount, 
                               precision: 2, 
                               unit: "$", 
                               delimiter: ",") %>
