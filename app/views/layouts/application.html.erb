@@ -28,12 +28,14 @@
 
   <body class="mx-auto px-10 max-w-7xl">
 
+
     <%= render "layouts/navbar/navbar" %>
 
-    <!-- Drawer target -->
-    <!-- Drawer target: must live at top-level, directly under <body> -->
-    <div id="cart-drawer-container">
-      <!-- initially empty; filled/replaced by turbo_stream -->
+    <!-- i.e. the wrapper will be permanent and the container will be replaced by Turbo -->
+    <div id="cart-drawer-container-wrapper">
+      <div id="cart-drawer-container">
+        <!-- empty initially; replaced by Turbo -->
+      </div>
     </div>
 
     <!-- Main content wrapper -->
@@ -44,6 +46,11 @@
       <%= yield %>
       
     </div>
+
+    <%# Subscribe the cart_icon_button to the Turbo_steam broadcast from the cart model%>
+    <% if current_user != nil && current_user.cart != nil %>
+      <%= turbo_stream_from dom_id(current_user.cart, "button") %>
+    <% end %>
 
   </body>
 </html>

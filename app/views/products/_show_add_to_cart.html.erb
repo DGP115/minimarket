@@ -1,0 +1,21 @@
+<div id="<%= dom_id(product, :add_to_cart_button) %>">
+  <%# Form for entry of quantity and "add to cart" button %>
+  <%# NOTE:  scope: and method: specify to Rails this form sends params under params[:cart_item] to the create action. %>`
+  <%= form_with(scope: :cart_item, url: cart_items_path, method: :post, data: { turbo: true, turbo_frame: "_top" }) do |f| %>
+
+    <%= f.hidden_field :product_id, value: product.id %>
+
+    <%= f.label "Quantity:", class: "display-inline text-sm font-bold text-indigo-700" %>
+    <%= f.number_field :quantity, in: 1..100, step: 1, value: 1, 
+                        class: "ml-2 border text-center display-inline 
+                                text-sm font-normal text-indigo-700 rounded-md max-w-10" %>
+
+    <%= f.submit current_user&.cart&.products&.include?(product) ? "Added to cart" : "Add to cart", 
+                  disabled: current_user&.cart&.products&.include?(product),
+                  class: "ml-2 display-inline button button-sm bg-indigo-500 text-amber-300
+                          hover:scale-110 hover:invert
+                          disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+                  data: { turbo: true } %>
+
+  <% end %>
+</div>

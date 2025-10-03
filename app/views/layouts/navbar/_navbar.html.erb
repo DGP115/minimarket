@@ -8,8 +8,8 @@
         <%= link_to "Minishop", root_path, 
                     class:"text-xl font-sans font-semibold tracking-tight pt-1" %>
       </div>
-      <!-- Right side of navbar -->
 
+      <!-- Right side of navbar -->
       <!-- This div grows to take up all available space between logo and right edge -->
       <div class="ml-auto mr-4 items-center space-x-6">
         <%= link_to search_path, class: "inline-block" do %>
@@ -63,15 +63,12 @@
         </div>  
       </div>
 
-      <% if user_signed_in? && current_user.cart != nil %>
-
-        <%# Subscribe the cart_button to the Turbo_steam broadcast from the cart model%>
-        <%= turbo_stream_from dom_id(current_user.cart, "button") %>
+      <% if user_signed_in? %>
 
         <%= render partial: "layouts/navbar/cart_icon", 
-                   locals: { cart: current_user.cart, 
-                             total_quantity: current_user.cart&.total_quantity, 
-                             total_purchase: current_user.cart&.total_purchase } %>
+                   locals: { cart: current_user&.cart || Cart.create!(user: current_user),
+                             total_quantity: current_user&.cart&.total_quantity || 0, 
+                             total_purchase: current_user&.cart&.total_purchase || 0 } %>
       <% end %>
 
     </div>
