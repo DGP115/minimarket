@@ -38,6 +38,9 @@ class WebhooksController < ApplicationController
 
         if order
           order.update!(status: :accepted, status_changed_at: Time.current)
+          # Send the user an email confirming the order was received and is being processed
+          # User .deliver_later so that this app does not pause while waiting for the email to be sent.
+          OrderMailer.with(order_id: order_id).order_confirmation.deliver_later
         end
     end
 
