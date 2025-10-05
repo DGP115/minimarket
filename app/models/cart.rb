@@ -34,14 +34,14 @@ class Cart < ApplicationRecord
     # dom_id() is a Rails view helper, not available to models, so the below replicates its function
     dom_id = "button_cart_#{self.id}"
     # Ensure to include target: in the Turbo_stream broadcast definition
-    broadcast_replace_later_to(dom_id,
-                               target: dom_id,
-                               partial: "layouts/navbar/cart_icon",
-                               locals: {
-                                 cart: self,
-                                 total_quantity: total_quantity,
-                                 total_purchase: total_purchase
-                               }
+    broadcast_replace_to(dom_id,
+                         target: dom_id,
+                         partial: "layouts/navbar/cart_icon",
+                         locals: {
+                           cart: self,
+                           total_quantity: total_quantity,
+                           total_purchase: total_purchase
+                          }
     )
   end
 end

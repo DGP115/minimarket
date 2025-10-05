@@ -41,7 +41,8 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # DGP:  Changed to true to debug email error
+  config.action_mailer.raise_delivery_errors = true
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
@@ -85,4 +86,17 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   # Commented this line out since solid_queue database is not in a separate database
   # config.solid_queue.connects_to = { database: { writing: :queue } }
+  #
+  # Configure mailer to use SMTP through gmail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:         "smtp.gmail.com",
+    port:            587,
+    domain:          "gmail.com",
+    user_name:       Rails.application.credentials.dig(:smtp, :user_name),
+    password:        Rails.application.credentials.dig(:smtp, :password),
+    authentication:  "plain",
+    enable_starttls_auto: true,
+    open_timeout:    15,
+    read_timeout:    15 }
 end
