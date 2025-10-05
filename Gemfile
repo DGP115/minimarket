@@ -73,3 +73,4 @@ gem "image_processing", "~> 1.2"
 gem "ruby-vips", "~> 2.2", ">= 2.2.5"
 gem "ancestry"   # To support hierarchical product categories
 gem "ransack" # To support search
+gem "mission_control-jobs" #"~> 1.1"le a dashboard of background jobs

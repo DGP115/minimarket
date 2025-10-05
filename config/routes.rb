@@ -50,6 +50,9 @@ Rails.application.routes.draw do
   get "search", to: "search#index"
   get "clear", to: "search#clear"
 
+  # for gem mission_control-jobs
+  mount MissionControl::Jobs::Engine, at: "/jobs"
+
   # Catch-all for routing errors that excludes rails/active_storage.  Must be last route.  Directs to errors_controller routing_error method
   match "*unmatched_route",
       to: "errors#not_found",

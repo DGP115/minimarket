@@ -81,4 +81,8 @@ Rails.application.configure do
 
   #  DGP additions
   Rails.application.routes.default_url_options[:host] = "minimarket.local"
+  # Set solid_queue as the Active Job queue adapter, even in this development environment
+  config.active_job.queue_adapter = :solid_queue
+  # Commented this line out since solid_queue database is not in a separate database
+  # config.solid_queue.connects_to = { database: { writing: :queue } }
 end
