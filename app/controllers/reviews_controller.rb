@@ -21,6 +21,9 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         format.html do
+          # Create a notification for the seller of the product being reviewed
+          ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
+
           flash[:notice] = "Review was successfully created."
           redirect_to product_path(@review.product)
         end
@@ -43,6 +46,8 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
     if @review.update(review_params)
+      # Create a notification for the seller of the product being reviewed
+      ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
       flash[:notice] = "Review was successfully updated."
       # Normally would have an instance of @product, but for reviews have a product_id in params
       redirect_to product_path(params[:review][:product_id])
@@ -73,6 +78,6 @@ class ReviewsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def review_params
-      params.expect(review: [ :body, :product_id ])
+      params.expect(review: [ :body, :product_id, :read ])
     end
 end

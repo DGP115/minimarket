@@ -11,20 +11,31 @@
 
       <!-- Right side of navbar -->
       <!-- This div grows to take up all available space between logo and right edge -->
-      <div class="ml-auto mr-4 items-center space-x-6">
-        <%= link_to search_path, class: "inline-block" do %>
-          <%= render_icon("search", classes: "size-5 inline-block mb-1 stroke-2 stroke-black hover:stroke-indigo-500 hover:scale-110") %>
+      <div class="ml-auto flex items-center space-x-5 pl-4">
+        <!-- Search icon -->
+        <%= link_to search_path, class: "inline-flex items-center mt-1" do %>
+          <%= render_icon("search", classes: "size-5 stroke-2 stroke-black hover:stroke-indigo-500 hover:scale-110") %>
         <% end %>
+        <!-- About link -->
         <%= link_to "About", about_path, 
-                    class:"inline-block text-lg font-sans font-semibold tracking-tight pt-1
+                    class:"inline-flex items-center text-lg font-sans font-semibold tracking-tight pt-1
                            hover:text-indigo-700" %>
+        <!-- Seller notifications -->
+        <% if user_signed_in? %>
+          <%= turbo_stream_from "seller_#{current_user.id}_notifications" %>
+
+          <div id="seller_notifications" class="flex items-center">
+            <!-- new notifications will be prepended here by turbo.  See review.rb -->
+          </div>
+          
+        <% end %>
       </div>
 
       <!--The rightmost side of the navbar adapts between desktop and mobile screen sizes.  
           Dropdowns for both are included here and a combination of Tailwind classes and stimulus controllers
           toggle to hide/unhide the appropriate dropdown menus -->
           
-      <!-- Desktop dropdown -->
+      <!-- Desktop User Dropdown Menu Wrapper-->
       <div class="hidden sm:flex sm:items-center">
         <!-- User Menu -->
         <div class="hidden sm:flex sm:items-center sm:space-x-6">
@@ -32,7 +43,7 @@
         </div>
       </div>
 
-      <!-- Mobile Menu Dropdown Wrapper -->
+      <!-- Mobile User Dropdown Menu Wrapper -->
       <div data-controller="mobilenav" class="relative sm:hidden">
         <!-- Hamburger Button (mobile only, fixed position in header row) -->
         <div class="flex justify-end">

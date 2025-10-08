@@ -1,0 +1,13 @@
+<%# locals: { review: self, product }%>
+
+<%# dom_id(cart, "button") will produce something like button_cart_7, which is stable and unique. Turbo can now find it correctly %>
+
+
+<div id="<%= dom_id(review, :notification) %>">
+  
+  <%= link_to review_notifications_path do %>
+    <%= render_icon("notification", classes: "inline-block mr-4 w-6 h-6 bg-indigo-100 border border-gray-400 rounded-md 
+                                              stroke-purple-600 hover:cursor-pointer hover:scale-110") %>
+  <% end %>
+  
+</div>

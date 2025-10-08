@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   root "pages#home"
   #
   devise_for :users
+  get "users/:id/profile", to: "users#profile_show", as: :user_profile
   get "users/:id/profile", to: "users#profile_edit", as: :edit_user_profile
   patch "users/:id/profile", to: "users#profile_update", as: :update_user_profile
 
@@ -45,6 +46,8 @@ Rails.application.routes.draw do
   end
 
   resources :reviews
+
+  resources :review_notifications, only: %i[ index show update destroy ]
 
   # Search
   get "search", to: "search#index"

@@ -18,6 +18,8 @@ class User < ApplicationRecord
   has_one :cart
   has_many :orders
 
+  has_many :review_notifications, dependent: :destroy
+
   enum :role, %i[ user admin ], default: :user
 
   def has_purchased?(product)

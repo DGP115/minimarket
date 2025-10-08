@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_05_153306) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_07_175807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -117,6 +117,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_153306) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["seller_id"], name: "index_products_on_seller_id"
     t.index ["stripe_id"], name: "index_products_on_stripe_id", unique: true
+  end
+
+  create_table "review_notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "review_id", null: false
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_review_notifications_on_review_id"
+    t.index ["user_id"], name: "index_review_notifications_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -273,6 +283,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_153306) do
   add_foreign_key "lineitems", "users", column: "buyer_id"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "users", column: "seller_id"
+  add_foreign_key "review_notifications", "reviews"
+  add_foreign_key "review_notifications", "users"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
