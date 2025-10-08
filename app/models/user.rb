@@ -26,4 +26,10 @@ class User < ApplicationRecord
     # Check if the user has purchased the product
     self.lineitems.exists?(product_id: product.id)
   end
+
+  # ---------------------- Ransack (search) - Related ----------------------
+  # Ransack needs product_category attributes and associations explicitly allowlisted as searchable.
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name", "email" ]
+  end
 end

@@ -134,7 +134,7 @@ class Product < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "product_category" ]
+    [ "product_category", "review" ]
   end
 
   # This ransacker is necessary to enable search results [generated using the ransack gem] to be sorted based on

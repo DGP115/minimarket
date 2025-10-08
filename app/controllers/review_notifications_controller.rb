@@ -3,7 +3,21 @@ class ReviewNotificationsController < ApplicationController
   before_action :set_review_notification, only: %i[ show update destroy ]
 
   def index
-    @review_notifications = current_user.review_notifications.order(created_at: :desc)
+    # Take advantage of sortable view columns provided by ransack gem
+    @query = current_user.review_notifications.ransack(params[:q])
+    # The ".includes" eager includes the assocaitions to review and review's association to product
+    # to avoid N+1 queries in the view
+    @review_notifications = @query.result.includes(review: [ :product, :user ])
+
+    # Apply default ordering only when no sort param is present
+    unless params.dig(:q, :s).present?
+      @review_notifications = @review_notifications.order(created_at: :desc)
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show

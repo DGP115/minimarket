@@ -1,6 +1,6 @@
 <%# Only on mobile screeens, include a compressed sort capability versus ransack sortable columns %>
 <div class="md:hidden mb-4 ml-4 py-1 border max-w-40 rounded-md border-slate-600 bg-indigo-300">
-  <!-- Example mobile sort dropdown -->
+  <!-- Mobile sort dropdown -->
   <%= form_with url: orders_path, method: :get, local: false do |f| %>
     <%= select_tag "q[s]",
           options_for_select([

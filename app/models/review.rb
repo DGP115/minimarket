@@ -36,4 +36,14 @@ class Review < ApplicationRecord
   after_destroy_commit do
     broadcast_remove_to product
   end
+
+  # ---------------------- Ransack (search) - Related ----------------------
+  # Ransack needs product_category attributes and associations explicitly allowlisted as searchable.
+  def self.ransackable_attributes(auth_object = nil)
+    [ "body" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "product" ]
+  end
 end

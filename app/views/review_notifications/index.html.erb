@@ -1,133 +1,22 @@
-<div class="ml-6 self-center mt-4 mb-4">
-  <div class="mt-1 mb-1 text-base font-semibold">
-    Product Review Notifications for <%=current_user&.name || current_user.email %>
-  </div>
-  <div class="overflow-hidden">
-    <table class="hidden md:table md:table-auto md:min-w-3/4 border border-stone-400 border-collapse divide-y divide-stone-300 bg-indigo-50">
-      <thead class="bg-indigo-100">
-        <tr class="text-sm font-semibold text-center">
-          <!-- Header Row -->
-          <th class="px-2 py-1">Index</th>
-          <th colspan=2 class="px-2 py-1">User</th>
-          <th class="px-2 py-1">Product</th>
-          <th class="px-2 py-1">Review</th>
-          <th class="px-2 py-1">Created</th>
-          <th class="px-2 py-1">Read</th>
-          <th class="px-2 py-1">Actions</th>
-        </tr>
-      </thead>
-
-      <tbody class="text-sm font-normal divide-y divide-stone-200">
-
-        <%  @review_notifications.each_with_index do |notification, index| %>
-          <%= form_with(model: notification) do |f| %>
-            <tr class="text-center">
-              <!-- Data Rows -->
-              <td class="px-2"><%= index + 1 %></td>
-              <td class="px-2">
-                <% if notification.review.user&.name %>
-                  <%= link_to notification.review.user.name, user_profile_path(notification.review.user_id) %>
-                <% end %>
-              </td>
-              <td class="px-2">
-                <%= link_to notification.review.user.email, user_profile_path(notification.review.user_id) %>
-              </td>
-              <td class="px-2">
-                <%= link_to notification.review.product.title, product_path(notification.review.product.id) %>
-              </td>
-              <td class="px-2 italic">
-                <%= link_to truncate(notification.review.body, length: 50), review_path(notification.review.id) %>
-              </td>
-              <td class="px-2"><%= notification.review.created_at.strftime("%e-%b-%Y:%l:%M:%S %P") %></td>
-              <td class="px-2 text-center">
-                <%= f.checkbox :read, class: "accent-blue-500" %>
-              </td>
-
-              <td class="px-2">
-                <div class="flex flex-col sm:flex-row justify-center gap-2">
-                  <%= button_to(review_notification_path(notification)) do %>
-                    <span>
-                      <%= render_icon("update", classes: "pt-1 mb-1 h-5 w-5 rounded-md stroke-blue-500 cursor-pointer hover:scale-110") %>
-                    </span>
-                  <% end %>
-
-                  <%= button_to(review_notification_path(notification),
-                                method: :delete, 
-                                class: "", 
-                                data: { turbo_confirm: "Are you sure?" }) do %>
-                    <span>
-                      <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-5 w-5 rounded-md cursor-pointer hover:scale-110 hover:stroke-red-700") %>
-                    </span>
-                  <% end %>
-
-                </div>
-              </td>
-            </tr>
-
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Mobile stacked view -->
-  <div class="space-y-4 md:hidden">
-
-    <% @review_notifications.each_with_index do |notification, index| %>
-      <%= form_with(model: notification) do |f| %>
-        <div class="border border-stone-300 rounded-md p-4 bg-indigo-50 shadow-sm">
-          <div class="flex justify-between mb-2 text-sm font-semibold">
-            <span>Index:</span>
-            <span><%= index + 1 %></span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span>User:</span>
-            <span>                
-              <% if notification.review.user&.name %>
-                <%= link_to notification.review.user.name, user_profile_path(notification.review.user_id), class: "font-semibold" %>
-              <% end %>
-              <%= link_to notification.review.user.email, user_profile_path(notification.review.user_id), class: "ml-6" %>
-            </span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span>Product:</span>
-            <span><%= link_to notification.review.product.title, product_path(notification.review.product.id) %></span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span>Review:</span>
-            <span class="italic">
-              <%= link_to truncate(notification.review.body, length: 50), review_path(notification.review.id) %>
-            </span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span>Created:</span>
-            <span><%= notification.review.created_at.strftime("%e-%b-%Y:%l:%M:%S %P") %></span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span>Read</span>
-            <span><%= f.checkbox :read, class: "accent-blue-500" %></span>
-          </div>
-
-          <div class="mt-3 flex flex-row justify-center mx-auto w-48 gap-x-6 gap-2 border rounded-sm border-stone-400">
-            <%= button_to(review_notification_path(notification)) do %>
-              <span>
-                <%= render_icon("update", classes: "mt-1 mb-1 h-4 w-4 rounded-md stroke-blue-500 cursor-pointer hover:scale-110") %>
-              </span>
-            <% end %>
-
-            <%= button_to(review_notification_path(notification),
-                          method: :delete, 
-                          class: "", 
-                          data: { turbo_confirm: "Are you sure?" }) do %>
-              <span>
-                <%= render_icon("trashcan", classes: "pt-1 mt-1 mb-1 h-5 w-5 rounded-md cursor-pointer hover:scale-110 hover:stroke-red-700") %>
-              </span>
-            <% end %>
-          </div>
-
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-
+<%# Only on mobile screeens, include a compressed sort capability versus ransack sortable columns %>
+<div class="md:hidden mb-4 ml-4 py-1 border max-w-40 rounded-md border-slate-600 bg-indigo-300">
+  <!-- Mobile sort dropdown -->
+  <%= form_with url: review_notifications_path, method: :get, local: false do |f| %>
+    <%= select_tag "q[s]",
+          options_for_select([
+            ["Newest First", "created_at desc"],
+            ["Oldest First", "created_at asc"],
+            ["User name (a-z)", "review_user_name asc"],
+            ["User name (z-a)", "review_user_name desc"],
+            ["Product (a-z)", "review_product_title asc"],
+            ["Product (z-a)", "review_product_title desc"],
+            ["Read", "read asc"]
+          ], params.dig(:q, :s)),
+          class: "text-sm border-slate-600 bg-indigo-300" %>
+    <%= submit_tag "Sort", class: "ml-2 px-1 text-sm bg-indigo-500 text-white rounded-md hover:scale-110" %>
+  <% end %>
 </div>
+
+<turbo-frame id="review_notifications_list">
+  <%= render partial: "notifications_list", locals: { review_notifications: @review_notifications, query: @query } %>
+</turbo-frame>
