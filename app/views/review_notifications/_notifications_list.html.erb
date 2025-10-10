@@ -7,10 +7,10 @@
       <thead class="bg-indigo-100">
         <tr class="text-sm font-semibold text-center">
           <!-- Header Row -->
+          <%# Note:  Need to provide ransack with the full association path to get sort_link to work from review_notification %>
           <th class="px-2 py-1">Index</th>
-          <th colspan=2 class="px-2 py-1 text-blue-600"><%= sort_link(query, :name, "User") %></th>
+          <th colspan=2 class="px-2 py-1 text-blue-600"><%= sort_link(query, "review_user_name", "User") %></th>
           <th class="px-2 py-1 text-blue-600">
-            <%# Note:  Need to provide ransack with the full association path to get to product title from review_notification %>
             <%= sort_link(query, "review_product_title", "Product") %> 
           </th>
           <th class="px-2 py-1">Review</th>

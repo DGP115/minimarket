@@ -29,6 +29,10 @@ class User < ApplicationRecord
 
   # ---------------------- Ransack (search) - Related ----------------------
   # Ransack needs product_category attributes and associations explicitly allowlisted as searchable.
+  def self.ransackable_associations(auth_object = nil)
+    [ "review" ]
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     [ "name", "email" ]
   end

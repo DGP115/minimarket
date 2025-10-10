@@ -44,6 +44,6 @@ class Review < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "product" ]
+    [ "product", "user" ]
   end
 end

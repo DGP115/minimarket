@@ -5,7 +5,7 @@ class ReviewNotificationsController < ApplicationController
   def index
     # Take advantage of sortable view columns provided by ransack gem
     @query = current_user.review_notifications.ransack(params[:q])
-    # The ".includes" eager includes the assocaitions to review and review's association to product
+    # The ".includes" eager includes the associations to review and review's association to product
     # to avoid N+1 queries in the view
     @review_notifications = @query.result.includes(review: [ :product, :user ])
 
