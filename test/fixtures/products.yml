@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# NOTE:  product.description, used my the Product model, is a rich_text filed, so is stored i nan action_text table.
+#        Therefore, it is not included in this fixture file.
+#        The fixture file test/fixtures/action_text/rich_texts.yml contains the description text
+product_one:
+  title: MyString1
+  price: 9.99
+  seller_id: one
+  stripe_id: stripe_1
 
-one:
-  title: MyString
-  description: MyText
-  proce: 9.99
-  seller: one
-
-two:
-  title: MyString
-  description: MyText
-  proce: 9.99
-  seller: two
+product_two:
+  title: MyString2
+  price: 9.99
+  seller_id: two
+  stripe_id: stripe_2

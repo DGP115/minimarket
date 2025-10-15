@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+review_one:
   body: MyText
-  user: one
-  product: one
+  user: user_one
+  product: product_one
 
-two:
+review_two:
   body: MyText
-  user: two
-  product: two
+  user: user_two
+  product: product_two

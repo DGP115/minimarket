@@ -1,4 +1,10 @@
 class Product < ApplicationRecord
+  # Validations
+  validates :title, presence: true
+  validates :price, presence: true, numericality: { greater_than: 0 }
+
+  # Associations
+  #
   # Because sellers and buyers are both users, we are telling rails the class
   # the product model is associated with [normally, it would be inferred in the 'belongs_to']
   belongs_to :seller, class_name: "User"

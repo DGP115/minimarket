@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+category_one:
+  name: MyString1
   description: MyString
+  ancestry: /
 
-two:
-  name: MyString
+category_two:
+  name: MyString2
   description: MyString
+  ancestry: /
