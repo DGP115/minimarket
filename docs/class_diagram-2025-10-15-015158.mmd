@@ -1,0 +1,149 @@
+classDiagram
+%% === CONTROLLERS ===
+    class ApplicationController {
+      <<abstract>>
+      - current_user
+      + authenticate_user!
+      + render_error_page()
+    }
+
+    class PagesController {
+      + home()
+      + about()
+    }
+
+    class ProductsController {
+      + index()
+      + show()
+    }
+
+    class ProductCategoriesController {
+      + index()
+      + show()
+    }
+
+    class SearchController {
+      + index(query)
+    }
+
+    class CartsController {
+      + show()
+      + update()
+    }
+
+    class CartItemsController {
+      + create()
+      + destroy()
+    }
+
+    class OrdersController {
+      + new()
+      + create()
+      + index()
+    }
+
+    class ReviewsController {
+      + create()
+      + index()
+    }
+
+    class ReviewNotificationsController {
+      + index()
+      + mark_as_read()
+    }
+
+    class UsersController {
+      + show()
+      + update()
+    }
+
+    class WebhooksController {
+      + stripe()
+      + handle_event(event)
+    }
+
+    class ErrorsController {
+      + not_found()
+      + internal_server_error()
+    }
+
+    %% === MODELS ===
+    class User {
+      + name : string
+      + email : string
+      + has_many : orders, reviews
+      + has_one : cart
+    }
+
+    class Product {
+      + name : string
+      + price : decimal
+      + belongs_to : product_category
+      + has_many : reviews
+    }
+
+    class ProductCategory {
+      + name : string
+      + has_many : products
+    }
+
+    class Cart {
+      + belongs_to : user
+      + has_many : cart_items
+    }
+
+    class CartItem {
+      + quantity : integer
+      + belongs_to : cart
+      + belongs_to : product
+      + after_create_commit : broadcast_replace_to("cart_drawer")
+    }
+
+    class LineItem {
+      + belongs_to : product
+      + belongs_to : buyer, class_name: "User"
+      + belongs_to : order
+    }
+
+    class Order {
+      + total_amount : decimal
+      + belongs_to : user
+      + has_many : line_items
+      + after_commit : broadcast_replace_to("orders_list")
+    }
+
+    class Review {
+      + rating : integer
+      + comment : text
+      + belongs_to : user
+      + belongs_to : product
+      + after_create_commit : broadcast_replace_to("seller_notifications")
+    }
+
+    %% === RELATIONSHIPS ===
+    ApplicationController <|-- PagesController
+    ApplicationController <|-- ProductsController
+    ApplicationController <|-- ProductCategoriesController
+    ApplicationController <|-- SearchController
+    ApplicationController <|-- CartsController
+    ApplicationController <|-- CartItemsController
+    ApplicationController <|-- OrdersController
+    ApplicationController <|-- ReviewsController
+    ApplicationController <|-- ReviewNotificationsController
+    ApplicationController <|-- UsersController
+    ApplicationController <|-- WebhooksController
+    ApplicationController <|-- ErrorsController
+
+    User "1" --> "1" Cart
+    User "1" --> "*" Order
+    User "1" --> "*" Review
+    ProductCategory "1" --> "*" Product
+    Product "1" --> "*" Review
+    Cart "1" --> "*" CartItem
+    CartItem "*" --> "1" Product
+    Order "1" --> "*" LineItem
+    ReviewNotificationsController --> Review : uses broadcast
+    CartItemsController --> CartItem : creates
+    OrdersController --> Order : creates
+    ReviewsController --> Review : creates
+    WebhooksController --> Order : updates status

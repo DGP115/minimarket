@@ -1,0 +1,30 @@
+<%= form_with(model: @product_category, local: true) do |f| %>
+  <div class="grid grid-cols-1 mt-2 mb-4 md:w-1/2">
+
+    <%= f.hidden_field :parent_id, value: nil %>
+
+    <div class="w-full row-start-2 block 
+                border rounded-md border-gray-500 p-2  bg-indigo-50 shadow-lg/50">
+      <div class="text-base font-normal">
+        Category: <span class="font-semibold"><%=@product_category.name%></span>
+      </div>
+
+      <%= f.label :description, class: "mt-2 block text-sm font-semibold text-indigo-700" %>
+      <%= f.text_area :description, class: "w-full mt-1 px-2 block 
+                                            border border-gray-300 rounded-md shadow-lg/50 
+                                            focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                                            bg-white" %>
+    </div>
+
+    <div class="row-start-3 mt-2">
+      <%= f.submit class: "button button-sm bg-blue-500 text-yellow-400 
+                           hover:scale-110 hover:invert" %>
+                           
+      <%= button_to "Back", product_category_path(@product_category), 
+                          data: { turbo_frame: "categorytree_productlist_toggle" },
+                          class: "button button-sm bg-gray-500 text-yellow-400 
+                                  hover:scale-110 hover:invert ml-2" %>
+    </div>
+
+  </div>
+<% end %>

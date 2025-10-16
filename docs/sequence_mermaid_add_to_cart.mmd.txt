@@ -1,0 +1,19 @@
+sequenceDiagram
+    actor User
+    participant Browser as Browser (Turbo + Tailwind)
+    participant CartItemsController
+    participant CartItem as CartItem Model
+    participant TurboStream as Turbo Stream (ActionCable)
+    participant View as Cart Drawer Partial
+    participant Stimulus as Stimulus Controller
+
+    User->>Browser: Clicks "Add to Cart" button
+    Browser->>CartItemsController: POST /cart_items (Turbo request)
+    CartItemsController->>CartItem: CartItem.create(product_id, user_id)
+    CartItem->>CartItem: after_create_commit → broadcast_replace_to "cart_drawer"
+    CartItem-->>TurboStream: broadcast message with updated cart partial
+    TurboStream-->>Browser: Push Turbo Stream update
+    Browser->>View: Replace #cart_drawer DOM element
+    View-->>Stimulus: dispatch "cart:updated" event
+    Stimulus->>Stimulus: Runs animation (e.g., slide-in or shake)
+    Stimulus-->>User: Shows updated cart count visually

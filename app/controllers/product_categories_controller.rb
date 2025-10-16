@@ -2,7 +2,6 @@ class ProductCategoriesController < ApplicationController
   before_action :set_product_category, only: %i[ show edit update destroy ]
 
   def index
-    # See application_controller.  @root_categories set there
   end
 
   def show
@@ -11,9 +10,6 @@ class ProductCategoriesController < ApplicationController
     @product_categories = @product_category.descendants.arrange(order: :name)
   end
 
-  def new
-    @product_category = ProductCategory.new
-  end
 
   def create
     @product_category = ProductCategory.new(product_category_params)
@@ -39,9 +35,10 @@ class ProductCategoriesController < ApplicationController
   end
 
   def add_child
+    # This method takes on the role of the usual "new" method, except that new root categories are not alllowed
     @parent_category = ProductCategory.find(params[:id])
     @product_category = ProductCategory.new(parent: @parent_category)
-    render "new"
+    render "add_child"
   end
 
   def destroy

@@ -85,22 +85,8 @@
     </div>
 
     <!-- Second Row -->
-    <% if @root_categories.any? %>
-      <div class="grid grid-cols-6 gap-x-4 py-0 mb-1 
-                  text-center
-                  border rounded-md border-indigo-200
-                  bg-indigo-100">
-        <% @root_categories.each do |root| %>
-          <div>
-            <%= link_to root.name, product_category_path(root), 
-                                   data: { turbo_frame: "categorytree_productlist_toggle" },
-                                   class: "text-blue-600 hover:font-bold hover:cursor-pointer text-sm" %>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <p class="text-gray-500">No product categories available.</p>
-    <% end %>
+    <%= render partial: "layouts/navbar/navbar_root_categories", 
+                locals: { root_categories: ProductCategory.roots.order(orderindex: :asc) } %>
 
   </div>
 </header>

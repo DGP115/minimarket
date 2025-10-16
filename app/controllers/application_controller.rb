@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   # @root_categories is needed for row 2 of the navbar, so set it on each invocation of a controller.
-  before_action :set_root_categories
+  # before_action :set_root_categories
 
   # Added "name" attribute to Devise user sign-up, so as per instructions:
   #     [https://github.com/heartcombo/devise?tab=readme-ov-file#configuring-models]
@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
   private
 
   # Since root categories won't change much, cache them in the Rails cache.
-  def set_root_categories
-    @root_categories = Rails.cache.fetch("root_categories", expires_in: 12.hours) do
-      ProductCategory.roots.order(orderindex: :asc).to_a
-    end
-  end
+  # def set_root_categories
+  #   @root_categories = Rails.cache.fetch("root_categories", expires_in: 12.hours) do
+  #     ProductCategory.roots.order(orderindex: :asc).to_a
+  #   end
+  # end
 end

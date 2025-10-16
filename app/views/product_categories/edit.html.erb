@@ -1,5 +1,12 @@
 <turbo-frame id="categorytree_productlist_toggle"> 
   <%= render "shared/error_msgs", obj: @product_category %>
 
-  <%= render "product_categories/form" %>
+  <% if @product_category.is_root? %>
+    <%# For root categories, currently do not allow a change of name as I ran into all sorts of problems with getting %>
+    <%# the portion of the navbar that displays root categories to update %>
+    <%= render "product_categories/edit_root_form" %>
+  <% else %>
+    <%= render "product_categories/edit_nonroot_form" %>
+  <% end %>
+
 </turbo-frame>
