@@ -1,7 +1,6 @@
 <div id="cart-drawer"
      data-controller="cart-drawer"
-     class="fixed inset-y-0 right-0 w-full sm:w-2/3 md:w-1/2 lg:w-2/5 bg-white border border-slate-500 shadow-md
-            transform translate-x-full transition-transform duration-500 ease-in-out z-50 flex flex-col">
+     class="fixed inset-y-0 right-0 z-50 flex flex-col w-full transition-transform duration-500 ease-in-out transform translate-x-full bg-white border shadow-md sm:w-2/3 md:w-1/2 lg:w-2/5 border-slate-500">
 
   <!-- Header with close button -->
   <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
@@ -15,7 +14,7 @@
   </div>
   
   <!-- Cart contents -->
-  <div class="flex-1 overflow-y-auto p-4">
+  <div class="flex-1 p-4 overflow-y-auto">
     <%= render partial: "carts/cart_table", locals: { cart: cart, cart_items: cart_items, editable: false } %>
   </div>
 </div>

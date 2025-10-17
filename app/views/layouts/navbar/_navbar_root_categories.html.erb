@@ -1,8 +1,5 @@
 <% if root_categories.any? %>
-  <div class="grid grid-cols-6 gap-x-4 py-0 mb-1 
-              text-center
-              border rounded-md border-indigo-200
-              bg-indigo-100">
+  <div class="grid grid-cols-6 py-0 mb-1 text-center bg-indigo-100 border border-indigo-200 rounded-md gap-x-4">
     <% root_categories.each do |root| %>
       <div>
         <%= link_to root.name, product_category_path(root), 

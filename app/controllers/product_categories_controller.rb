@@ -5,7 +5,8 @@ class ProductCategoriesController < ApplicationController
   end
 
   def show
-    @product_category = ProductCategory.find(params[:id])
+    # In addition to @product_category, the followoing are needed to draw the hierarchy of this product category
+    # and show products in this category
     @products = @product_category.products.order(:title).includes([ :rich_text_description ]).with_attached_images.limit(10)
     @product_categories = @product_category.descendants.arrange(order: :name)
   end

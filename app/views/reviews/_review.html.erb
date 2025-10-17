@@ -4,11 +4,11 @@
 <%#   Thus a unique turboframe id is created per review object, creating a specific target for %>
 <%#   the review model's broadcast (of a change) %>
 <%= turbo_frame_tag dom_id(review) do %>
-  <blockquote class="pl-4 mt-4 mb-1 font-normal italic text-gray-700">
+  <blockquote class="pl-4 mt-4 mb-1 italic font-normal text-gray-700">
     <%# simple_format is a Rails helper that displays textare content while maintaining line breaks etc. %>
     <%= simple_format(review.body) %>
   </blockquote>
-  <blockquote class="pl-4 block font-normal text-sm mb-1 ml-8">
+  <blockquote class="block pl-4 mb-1 ml-8 text-sm font-normal">
     <% if review.user.name != nil %>
       <%= review.user.name %>
     <% else %>

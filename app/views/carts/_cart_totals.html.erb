@@ -1,4 +1,4 @@
-<div class="contents font-semibold border-t border-gray-300 pt-2 mt-2 text-sm">
+<div class="pt-2 mt-2 text-sm font-semibold border-t border-gray-300 contents">
   <div class="px-2 text-center"></div>
   <div></div>  <!--spacer for delete icon -->
   <div class="px-4 text-right border-t border-b">Totals:</div>
@@ -30,11 +30,11 @@
   </div>
 
   <!-- Placeholder for "Price" column -->
-  <div class="px-2 text-right font-normal"></div>
+  <div class="px-2 font-normal text-right"></div>
 
   <!-- Total of purchase(s) -->
   <div id="cart-total-price"
-       class="px-2 text-right font-semibold border-t border-b">
+       class="px-2 font-semibold text-right border-t border-b">
     <%= number_to_currency(total_purchase,
                            precision: 2,
                            unit: "$",

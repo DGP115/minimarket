@@ -5,7 +5,7 @@
 
 <% product_categories.each do |category, nested_categories| %>
 
-  <li class="ml-1 mt-1" data-category-id="<%= category.id %>">
+  <li class="mt-1 ml-1" data-category-id="<%= category.id %>">
     <div class="flex items-center space-x-1">
       <% if nested_categories.present? %>
         <button type="button"
@@ -20,18 +20,21 @@
       <% end %>
       
       
-      <!--Product Category context menu -->
-      <!--Note: 1. meaning of data-action phrase: -->
-      <!--          - contextmenu is the DOM event name for the browser's right-click event -->
-      <!--          - So, we are telling it to launch the context-menu controller's contextmenu method-->
-      <!--      2. turbo_action: "advance" --> 
-      <!--         - Without this the browser's back button doesn't take the user to the "previous" page, as they woudl expect  -->
-      <!--           because Turbo is not doign full-page refeshes due to the turboframes in place.  -->
-      <!--         - "advance" tells Turbo to update teh browser's history stack -->
+      <%# Product Category context menu %>
+      <%# Note: 1. meaning of data-action phrase: %>
+      <%#           - contextmenu is the DOM event name for the browser's right-click event %>
+      <%#           - So, we are telling it to launch the context-menu controller's open method%>
+      <%#       2. turbo_action: "advance" %> 
+      <%#          - Without this the browser's back button doesn't take the user to the "previous" page, as they would expect  %>
+      <%#            because Turbo is not doing full-page refeshes due to the turboframes in place.  %>
+      <%#          - "advance" tells Turbo to update the browser's history stack %>
+      <%#       3. context_menu_target: "anchor" %>
+      <%#          - is declaring that this <div> is the anchor target for the context-menu controller %>
+      <%#          - In other ewords, it is telling the stimulus controller the basis for positioning the pop-up menu %>
 
       <div data-controller="context-menu"
             data-action="contextmenu->context-menu#open" 
-            class="hover:bg-gray-50 cursor-pointer">
+            class="cursor-pointer hover:bg-gray-50">
 
         <%= link_to category.name,
                     product_category_path(category),
@@ -61,8 +64,7 @@
     </div>
     <% if nested_categories.present? %>
       <ul data-tree-target="children" 
-          class="hidden 
-                 ml-4 border-l border-gray-300 pl-1">
+          class="hidden pl-1 ml-4 border-l border-gray-300">
 
         <%= render partial: "product_categories/product_category", 
                    locals: { product_categories: nested_categories } %>

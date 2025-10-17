@@ -1,0 +1,5 @@
+
+  {
+  "stimulus-lsp.controllerGlobs": ["app/javascript/controllers/**/*_controller.js"]
+}
+

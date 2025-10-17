@@ -1,11 +1,11 @@
 <turbo-frame id="orders_list">
 	<% if @order!= nil %>
-		<div class="md:w-2/3 w-full pl-8"> 
+		<div class="w-full pl-8 md:w-2/3"> 
 
-			<h1 class="font-semibold text-base mb-4">
+			<h1 class="mb-4 text-base font-semibold">
 				<em><%= current_user&.name&.titlecase %></em>
 			
-				<div class="font-normal text-sm">
+				<div class="text-sm font-normal">
 					Order #<%= @order.id %> - Placed on <%= @order.created_at.strftime("%B %d, %Y")%> at: <%= @order.created_at.strftime("%I:%M %P") %>
 				</div>
 			</h1>
@@ -15,7 +15,7 @@
 			<%= render partial: "orders/order_table", locals: {order: @order, order_lineitems: @order_lineitems, editable: false } %>
 
 			<!-- Button container -->
-			<div class="flex space-x-4 mt-4 md:flex md:justify-end md:space-x-2 md:flex-row">
+			<div class="flex mt-4 space-x-4 md:flex md:justify-end md:space-x-2 md:flex-row">
 				<!-- Left column stack (on mobile) -->
 				<div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
 					<%= link_to "Back", orders_path,
@@ -34,7 +34,7 @@
 				</div>
 
 				<!-- Right column stack (on mobile) -->
-				<div class="flex flex-col space-y-2 pl-6 md:flex-row md:space-y-0 md:space-x-2">
+				<div class="flex flex-col pl-6 space-y-2 md:flex-row md:space-y-0 md:space-x-2">
 					<%= link_to(product_categories_path,
 											data: {turbo: false},
 											class: "flex items-center justify-center font-normal cursor-pointer sm:w-auto
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 	<% else %>
-		<h1 class="font-semibold text-base mb-4">
+		<h1 class="mb-4 text-base font-semibold">
 			There is no order to display
 		</h1>
 	<% end %>

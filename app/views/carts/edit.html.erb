@@ -1,6 +1,6 @@
-<div class="md:w-2/3 w-full pl-8">
+<div class="w-full pl-8 md:w-2/3">
 
-  <h1 class="font-semibold text-base mb-4">
+  <h1 class="mb-4 text-base font-semibold">
 		<em><%= current_user.name.titlecase %></em>:  Edit your cart's contents:
   </h1>
 
@@ -15,7 +15,7 @@
     <%= render partial: "carts/cart_table", locals: { cart: @cart, cart_items: @cart_items, editable: true, f: f  } %>
 
 
-    <div class="text-right mt-4 flex justify-end space-x-2">
+    <div class="flex justify-end mt-4 space-x-2 text-right">
       <%= link_to "Cancel", cart_path, 
                             class: "px-3 py-1 border rounded-md bg-gray-100 hover:bg-gray-400 
                                     transition duration-150 ease-in-out text-sm" %>            

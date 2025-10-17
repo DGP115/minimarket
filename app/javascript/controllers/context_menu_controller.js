@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["menu", "anchor"] // anchor is optional
+  static targets = ["menu", "anchor"] // anchor is optional.  Recall it is the <div> to be used as basis for menu position
 
   connect() {
     console.log("context-menu connected")
@@ -19,6 +19,8 @@ export default class extends Controller {
     document.querySelectorAll("[data-context-menu-target='menu']")
       .forEach(m => m.classList.add("hidden"))
 
+    //  ------  Menu positioning ------
+    // If provided, used "anchor" to set the position of the pop-up menu
     const anchor = this.hasAnchorTarget ? this.anchorTarget : this.element
     const rect = anchor.getBoundingClientRect()
     const menu = this.menuTarget
@@ -28,7 +30,7 @@ export default class extends Controller {
     menu.style.top = `${rect.bottom}px`
     menu.style.left = `${rect.left + 20}px`
 
-    // Show it, then clamp to viewport
+    // Show the menu, then clamp to viewport
     menu.classList.remove("hidden")
 
     const vw = window.innerWidth
@@ -42,6 +44,7 @@ export default class extends Controller {
     if (mr.bottom > vh) {
       menu.style.top = `${Math.max(pad, vh - mr.height - pad)}px`
     }
+    //  ------  Menu positioning end ------
 
     // Close on outside click / scroll / resize
     window.addEventListener("click", this.onOutsideClick, { once: true })

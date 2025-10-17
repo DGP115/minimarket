@@ -1,8 +1,8 @@
-<header class="sticky top-0 z-20 bg-indigo-50 shadow-lg border rounded-md border-stone-400">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+<header class="sticky top-0 z-20 border rounded-md shadow-lg bg-indigo-50 border-stone-400">
+  <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <!-- Top Row -->
     <!--  All children in one flex row, left-to-right -->
-    <div class="flex items-center h-14 w-full">
+    <div class="flex items-center w-full h-14">
       <!-- Logo -->
       <div class="flex-shrink-0">
         <%= link_to "Minishop", root_path, 
@@ -11,7 +11,7 @@
 
       <!-- Right side of navbar -->
       <!-- This div grows to take up all available space between logo and right edge -->
-      <div class="ml-auto flex items-center space-x-5 pl-4">
+      <div class="flex items-center pl-4 ml-auto space-x-5">
         <!-- Search icon -->
         <%= link_to search_path, class: "inline-flex items-center mt-1" do %>
           <%= render_icon("search", classes: "size-5 stroke-2 stroke-black hover:stroke-indigo-500 hover:scale-110") %>
@@ -50,11 +50,10 @@
           <button type="button"
                   aria-expanded="false"
                   data-action="click->mobilenav#toggle"
-                  class="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100
-                        focus:outline-none"
+                  class="p-2 text-gray-500 rounded-md hover:text-gray-700 hover:bg-gray-100 focus:outline-none"
                   aria-label="Toggle menu">
                   <!-- Hamburger Button icon -->
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M4 6h16M4 12h16M4 18h16" />

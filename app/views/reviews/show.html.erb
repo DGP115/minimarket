@@ -1,6 +1,6 @@
 <div class="flex justify-center">
-  <div class="max-w-md w-full overflow-x-auto p-2 bg-indigo-50 rounded-md border border-stone-400">
-    <div class="text-base font-semibold border-b border-stone-400 pb-1 mb-1">
+  <div class="w-full max-w-md p-2 overflow-x-auto border rounded-md bg-indigo-50 border-stone-400">
+    <div class="pb-1 mb-1 text-base font-semibold border-b border-stone-400">
       Product Review Details
     </div>
     <!-- Define 2 columns: left for labels, right for values -->
@@ -30,7 +30,7 @@
 
       <!-- Row 4 -->
       <div class="px-2 text-right">Review:</div>
-      <div class="px-2 font-normal italic">
+      <div class="px-2 italic font-normal">
         <%# simple_format is a Rails helper that displays textare content while maintaining line breaks etc. %>
         <%= simple_format(@review.body) %>
       </div>

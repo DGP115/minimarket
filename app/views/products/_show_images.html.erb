@@ -1,6 +1,5 @@
 <!-- Primary image -->
-<div class="relative h-96 mt-2 flex overflow-hidden justify-center 
-          bg-white border-r border-stone-400">
+<div class="relative flex justify-center mt-2 overflow-hidden bg-white border-r h-96 border-stone-400">
 
   <% if product.primary_image.attached? %>
     <%= image_tag product.primary_image.variant(resize_to_limit: [800, 800]), loading: "lazy",
@@ -14,8 +13,7 @@
     <!-- Reset button -->
   <button type="button"
           data-action="click->gallery#reset"
-          class="absolute top-2 right-1 bg-white/80 px-3 border border-stone-400 
-                 py-1 rounded-md shadow text-sm hover:bg-slate-300">
+          class="absolute px-3 py-1 text-sm border rounded-md shadow top-2 right-1 bg-white/80 border-stone-400 hover:bg-slate-300">
     Reset
   </button>
 
@@ -23,11 +21,11 @@
 
 <%# Thumbnail strip %>
 <div class="relative flex">
-  <div class="flex space-x-1 w-full overflow-auto" 
+  <div class="flex w-full space-x-1 overflow-auto" 
       style="scroll-behavior: smooth;">
     <% if product.images.attached? %>
       <% product.images.each do |image| %>
-        <button class="relative w-40 h-40 flex-shrink-0 rounded-sm overflow-hidden">
+        <button class="relative flex-shrink-0 w-40 h-40 overflow-hidden rounded-sm">
 
           <%= image_tag image.variant(resize_to_limit: [150, 150]), loading: "lazy", 
                         class: "w-24 h-24 object-cover rounded-lg shadow hover:opacity-80 transition cursor-pointer", 

@@ -10,6 +10,7 @@
     <% end %>
   </div>
 
+  <%# For Admin users, there is a right-click pop-up menu for a category %>
   <% if user_signed_in? && current_user.admin? %>
     <div class="inline-block"
          data-controller="context-menu"
@@ -21,9 +22,7 @@
         <!--       So, we are telling it to launch the context-menu controller's contextmenu method-->
         <!--NOTE:  By attaching the controller and action to the link, instead of the parent div, -->
         <!--       the menu is active only when hovering on the link text vs the whole div -->
-        <div class="text-lg font-semibold 
-                    rounded-md hover:bg-blue-200 cursor-pointer
-                    px-2 py-1"> 
+        <div class="px-2 py-1 text-lg font-semibold rounded-md cursor-pointer hover:bg-blue-200"> 
           <%= @product_category.name %>
         </div>
 
@@ -32,21 +31,21 @@
     </div>
   <% else %>
     <%# Don't show cursor change or context menu for non-admin users %>
-    <div class="text-lg font-semibold rounded-md px-2 py-1"> 
+    <div class="px-2 py-1 text-lg font-semibold rounded-md"> 
       <%= @product_category.name %>
     </div>
   <% end %>
 
 
   <% if !@product_category.description.nil? &&  !@product_category.description.blank? %>
-    <div class="w-full max-w-2/3 mt-2 ml-10 p-2 text-base font-light border rounded-md bg-stone-100">
+    <div class="w-full p-2 mt-2 ml-10 text-base font-light border rounded-md max-w-2/3 bg-stone-100">
       <%= @product_category.description %>
     </div>
   <% end %>
 
   <% if @product_categories.any? %>
     <%# Render the sub-categories in a grid layout %>
-    <ul class="mt-4 pl-8">
+    <ul class="pl-8 mt-4">
       <%# Pass instance variable to partial as a local. %>
       <%# Because recursion is used within the partial to display sub-categories, %>
       <%# the partial loops through a local variable, which is reset during the 

@@ -4,7 +4,7 @@
      data-price="<%= item.product.price %>">
 
   <!-- Item index -->  
-  <div class="px-2 text-center font-normal text-sm"><%= index + 1 %></div>
+  <div class="px-2 text-sm font-normal text-center"><%= index + 1 %></div>
 
   <!-- Product Title --> 
   <%= link_to item.product.title, 
@@ -37,16 +37,16 @@
   <% else %>
     <!--&nbsp; is a non-breaking space to account for trachcan button not being displayed-->
     <div class="px-2 text-center">&nbsp;</div>
-    <div class="px-2 text-center font-normal text-sm"><%= item.quantity %></div>
+    <div class="px-2 text-sm font-normal text-center"><%= item.quantity %></div>
   <% end %>
 
   <!-- Unit price -->
-  <div class="px-2 text-right font-normal text-sm">
+  <div class="px-2 text-sm font-normal text-right">
     <%= number_to_currency(item.product.price, precision: 2, unit: "$", delimiter: ",") %>
   </div>
 
   <!-- Purchase (price * qty) -->
-  <div class="px-2 text-right font-normal text-sm"
+  <div class="px-2 text-sm font-normal text-right"
        data-cart-contents-target="purchaseCell">
     <%= number_to_currency(item.product.price * item.quantity, 
                            precision: 2, 

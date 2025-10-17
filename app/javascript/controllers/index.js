@@ -7,7 +7,12 @@
 
 import { application } from "controllers/application"
 
-import CartContentsController from "controllers/cart_contents_controller"
+// Eagerly load all Stimulus controllers in this directory.
+// No longer need to register them individually, like is comented out below
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+eagerLoadControllersFrom("controllers", application)
+
+/* import CartContentsController from "controllers/cart_contents_controller"
 application.register("cart-contents", CartContentsController)
 
 import CartDrawerController from "controllers/cart_drawer_controller"
@@ -31,5 +36,5 @@ application.register("hello", HelloController)
 import mobilenavController from "controllers/mobilenav_controller"
 application.register("mobilenav", mobilenavController)
 
-import treeController from "controllers/tree_controller"
-application.register("tree", treeController)
+import TreeController from "controllers/tree_controller"
+application.register("tree", TreeController) */

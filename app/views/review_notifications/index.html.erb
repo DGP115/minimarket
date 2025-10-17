@@ -1,5 +1,5 @@
 <%# Only on mobile screeens, include a compressed sort capability versus ransack sortable columns %>
-<div class="md:hidden mb-4 ml-4 py-1 border max-w-40 rounded-md border-slate-600 bg-indigo-300">
+<div class="py-1 mb-4 ml-4 bg-indigo-300 border rounded-md md:hidden max-w-40 border-slate-600">
   <!-- Mobile sort dropdown -->
   <%= form_with url: review_notifications_path, method: :get, local: false do |f| %>
     <%= select_tag "q[s]",
