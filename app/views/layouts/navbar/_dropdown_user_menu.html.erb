@@ -18,15 +18,11 @@
       </div>
 
       <!-- 1.3  Downward pointing arrow -->
-      <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7" />
-      </svg>
+      <%= render_icon("dropdownmenu_down_arrow", classes: "w-5 h-5 ml-2 -mr-1") %>
 
     </button>
 
-    <!-- 2 Dropdown Menu -->
+    <!-- 2 Dropdown Menu Contents -->
     <!-- 2.1 Dropdown Menu container -->
     <div data-dropdown-target="menu"
          class="absolute left-0 right-0 z-50 hidden px-4 mt-2 transition duration-200 ease-out scale-95 bg-white rounded-md shadow-lg opacity-0 w-28 sm:left-auto sm:right-0 sm:w-40 sm:px-0 ring-1 ring-black ring-opacity-5 justify-items-center">

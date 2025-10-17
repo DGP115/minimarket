@@ -10,7 +10,14 @@ export default class extends Controller {
 
   }
 
-  // Bind this in markup: data-action="contextmenu->context-menu#open"
+  // Bind the "open" method below to a button in a view by including this in the CSS markup for teh button: 
+  //  data-action="contextmenu->context-menu#open"
+  //  In the above:
+  //    - 'contextmenu' refers to the method name used by any browser to invoke a pop-up menu
+  //                    By referring to it [in the view's butotn code], we are intercepting the browser's
+  //                    default handling of that method and repalcing it with the below
+  //    - 'context-menu' refers to this stimulus controller
+  //    - #open refers to the method below
   open(event) {
     // Prevent the browser's default context menu
     event.preventDefault()
@@ -20,7 +27,7 @@ export default class extends Controller {
       .forEach(m => m.classList.add("hidden"))
 
     //  ------  Menu positioning ------
-    // If provided, used "anchor" to set the position of the pop-up menu
+    // If provided, use "anchor" to set the position of the pop-up menu
     const anchor = this.hasAnchorTarget ? this.anchorTarget : this.element
     const rect = anchor.getBoundingClientRect()
     const menu = this.menuTarget
