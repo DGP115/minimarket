@@ -20,7 +20,7 @@
         <%= link_to "About", about_path, 
                     class:"inline-flex items-center text-lg font-sans font-semibold tracking-tight pt-1
                            hover:text-indigo-700" %>
-        <!-- Seller notifications -->
+        <!-- Seller notifications of product reviews -->
         <% if user_signed_in? %>
           <%= turbo_stream_from "seller_#{current_user.id}_notifications" %>
 
@@ -31,9 +31,10 @@
         <% end %>
       </div>
 
-      <!--The rightmost side of the navbar adapts between desktop and mobile screen sizes.  
-          Dropdowns for both are included here and a combination of Tailwind classes and stimulus controllers
-          toggle to hide/unhide the appropriate dropdown menus -->
+      <!--The rightmost side of the navbar adapts between desktop and mobile screen sizes.
+          When in nmobile-mode, a hamburger menu button is used to launch the dropdown
+          A combination of Tailwind classes and stimulus controllers toggle to hide/unhide the appropriate 
+          starter-button for the dropdown menu -->
           
       <!-- Desktop User Dropdown Menu Wrapper-->
       <div class="hidden sm:flex sm:items-center">
@@ -81,6 +82,7 @@
     </div>
 
     <!-- Second Row -->
+    <!--  The root product categories form the main menu of the app -->
     <%= render partial: "layouts/navbar/navbar_root_categories", 
                 locals: { root_categories: ProductCategory.roots.order(orderindex: :asc) } %>
 

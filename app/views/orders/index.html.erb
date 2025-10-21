@@ -1,20 +1,3 @@
-<%# Only on mobile screeens, include a compressed sort capability versus ransack sortable columns %>
-<div class="py-1 mb-4 ml-4 bg-indigo-300 border rounded-md md:hidden max-w-40 border-slate-600">
-  <!-- Mobile sort dropdown -->
-  <%= form_with url: orders_path, method: :get, local: false do |f| %>
-    <%= select_tag "q[s]",
-          options_for_select([
-            ["Newest First", "created_at desc"],
-            ["Oldest First", "created_at asc"],
-            ["Highest Total", "total_amount desc"],
-            ["Lowest Total", "total_amount asc"],
-            ["Status", "status asc"]
-          ], params.dig(:q, :s)),
-          class: "text-sm border-slate-600 bg-indigo-300" %>
-    <%= submit_tag "Sort", class: "ml-2 px-1 text-sm bg-indigo-500 text-white rounded-md hover:scale-110" %>
-  <% end %>
-</div>
-
 <turbo-frame id="orders_list">
-  <%= render partial: "orders_list", locals: { orders: @orders, query: @query, num_orders: @num_orders } %>
+  <%= render partial: "orders/orders_list", locals: { orders: @orders, query: @query, num_orders: @num_orders } %>
 </turbo-frame>

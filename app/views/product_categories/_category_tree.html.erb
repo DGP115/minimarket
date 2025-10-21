@@ -15,10 +15,12 @@
 
       <%# Render the product sub-categories in a grid layout %>
       <ul class="grid grid-cols-1 text-sm font-medium text-gray-800 border rounded-md sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2 border-stone-200">
-        <%# Pass instance variable to partial as a local. %>
-        <%# Because recursion is used within the partial to display sub-categories, %>
-        <%# the partial loops through a local variable, which is resets during the hierarchical recursion. %>
-        <%# Otherwise an endless loop results because @product_categories doesn't change  %>
+        <%# For the parent product_category clciked on by the user, given by product_category, loop through is descendants to %>
+        <%# display its category tree %>
+        <%#   Pass instance variables to the partial as a local. %>
+        <%#   Because recursion is used within the partial to display sub-categories, %>
+        <%#   the partial loops through a local variable, which is reset during the hierarchical recursion. %>
+        <%#   Otherwise an endless loop results because @product_categories doesn't change  %>
         <%= render partial: "product_categories/product_category", 
                    locals: { product_categories: product_categories } %>
       </ul>

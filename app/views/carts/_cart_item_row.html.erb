@@ -4,12 +4,12 @@
      data-price="<%= item.product.price %>">
 
   <!-- Item index -->  
-  <div class="px-2 text-sm font-normal text-center"><%= index + 1 %></div>
+  <div class="px-2 text-xs font-normal text-center md:text-sm"><%= index + 1 %></div>
 
   <!-- Product Title --> 
   <%= link_to item.product.title, 
               product_path(item.product_id), 
-              class: "px-4 font-normal text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
+              class: "px-4 font-normal text-xs md:text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
 
   <% if editable && local_assigns[:f] %>
     <!-- cart_item delete button --> 
@@ -31,22 +31,22 @@
       <%= f.number_field :quantity,
                           value: item.quantity,
                           min: 0,
-                          class: "w-16 text-center text-sm bg-green-100 border rounded px-1 py-0.5",
+                          class: "w-16 text-center text-xs md:text-sm bg-green-100 border rounded px-1 py-0.5",
                           data: { item_id: item.id, cart_contents_target: "rowQuantity" } %>
     </div>
   <% else %>
     <!--&nbsp; is a non-breaking space to account for trachcan button not being displayed-->
     <div class="px-2 text-center">&nbsp;</div>
-    <div class="px-2 text-sm font-normal text-center"><%= item.quantity %></div>
+    <div class="px-2 text-xs font-normal text-center md:text-sm"><%= item.quantity %></div>
   <% end %>
 
   <!-- Unit price -->
-  <div class="px-2 text-sm font-normal text-right">
+  <div class="px-2 text-xs font-normal text-right md:text-sm">
     <%= number_to_currency(item.product.price, precision: 2, unit: "$", delimiter: ",") %>
   </div>
 
   <!-- Purchase (price * qty) -->
-  <div class="px-2 text-sm font-normal text-right"
+  <div class="px-2 text-xs font-normal text-right md:text-sm"
        data-cart-contents-target="purchaseCell">
     <%= number_to_currency(item.product.price * item.quantity, 
                            precision: 2, 

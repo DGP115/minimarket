@@ -1,6 +1,6 @@
 <turbo-frame id="categorytree_productlist_toggle">
 
-  <!-- Category / product navigation -->
+  <!-- Breadcrumb link back to product's category -->
   <div class="self-center mt-4 mb-4 ml-6">
     <%= link_to(product_category_path(@product.product_category_id), 
                 class: "px-1 py-1") do %>
@@ -8,11 +8,10 @@
     <% end %> 
   </div>
 
+  <%# The below creates in the DOM "turbo-frame id="product_67""," for example.   %>
+  <%#   This product-specific turbo-frame is used refreshed by the review model to update the  %>
+  <%#   specific product page after a user review of the product has been cereated to updated. %>
   <%= turbo_frame_tag @product do %>
-
-    <!-- "target" here is the dom_id to be updated.  See _flash_messages.html.erb for 
-          the setting on that dom_id -->
-    <%# <%= turbo_stream.update target="flash_messages", partial: "shared/flash_messages" %> 
 
     <!-- Product main content -->
     <div class="flex flex-col items-center justify-center w-11/12 max-w-6xl mx-auto mt-3 space-y-2 md:flex-row md:items-start md:space-y-0 md:space-x-4 lg:space-x-4">
@@ -83,6 +82,7 @@
 
     <%# This turbo_frame_tag is a marker to enable turbo to prepend new reviews here %>
     <%= turbo_frame_tag "reviews" do %>
+      <%# Recall this is some Rails magic whereby the partial below is called for each review object in collection @reviews %>
       <%= render partial: "reviews/review", collection: @reviews, as: :review %>
     <% end %>
 

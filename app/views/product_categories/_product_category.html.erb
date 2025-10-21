@@ -59,9 +59,11 @@
           {<%= category.products_count %>}
         </span>
       <% end %>
-      
 
     </div>
+
+    <%#  If this product_category has children, loop through them %>
+    <%#   The indentation of each sub-level of the hierarchy is a result of: pl-1 ml-4 border-l below %>
     <% if nested_categories.present? %>
       <ul data-tree-target="children" 
           class="hidden pl-1 ml-4 border-l border-gray-300">

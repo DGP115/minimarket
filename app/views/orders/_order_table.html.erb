@@ -1,6 +1,6 @@
 <div class="flex-1 p-2 overflow-y-auto border rounded-md bg-indigo-50 border-stone-400">
   <div class="mb-2 grid grid-cols-[auto_1fr_auto_auto_auto] gap-y-2 
-              font-semibold text-sm ">
+              font-semibold text-xs md:text-sm">
 
     <!-- Header Row -->
     <div class="px-2 text-center">Item</div>
@@ -13,29 +13,48 @@
     <% order_lineitems.each_with_index do |item, index| %>
 
       <!-- Item index -->  
-      <div class="px-2 text-sm font-normal text-center"><%= index + 1 %></div>
+      <div class="px-2 text-xs font-normal text-center md:text-sm"><%= index + 1 %></div>
 
       <!-- Product Title --> 
       <%= link_to item.product.title, 
                   product_path(item.product_id),
                   data: { turbo: false }, 
-                  class: "px-4 font-normal text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
+                  class: "px-4 font-normal text-xs md:text-sm text-blue-600 hover:font-semibold hover:cursor-pointer" %>
 
-      <div class="px-2 text-sm font-normal text-center"><%= item.quantity %></div>
+      <div class="px-2 text-xs font-normal text-center md:text-sm"><%= item.quantity %></div>
 
       <!-- Unit price -->
-      <div class="px-2 text-sm font-normal text-right">
+      <div class="px-2 text-xs font-normal text-right md:text-sm">
         <%= number_to_currency(item.product.price, precision: 2, unit: "$", delimiter: ",") %>
       </div>
 
       <!-- Purchase (price * qty) -->
-      <div class="px-2 text-sm font-normal text-right">
+      <div class="px-2 text-xs font-normal text-right md:text-sm">
         <%= number_to_currency(item.purchase_amount, 
                               precision: 2, 
                               unit: "$", 
                               delimiter: ",") %>
       </div>
     <% end %>
+
+    <%# Totals row %>
+    <div class="col-span-2"></div>  <!--spacer for Item and Description columns-->
+    <div class="border-t"></div>
+    <div></div>  <!--spacer for price column -->
+    <div class="border-t"></div>
+
+    <div class="col-span-2 text-xs font-semibold text-right md:text-sm">
+      Totals:
+    </div>
+
+    <div class="text-xs font-semibold text-center md:text-sm">
+      <%= order.lineitems.sum(:quantity) %>
+    </div>
+    
+    <div></div>  <!--spacer for price column -->
+    <div class="px-2 text-xs font-semibold text-right md:text-sm">
+      <%= number_to_currency(order.total_amount, unit: "$", delimiter: ",", precision: 2) %> 
+    </div>
     
   </div>
 </div>

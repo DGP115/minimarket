@@ -1,7 +1,10 @@
 <div id="products" class="grid max-w-6xl grid-cols-1 py-1 mx-auto mt-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-4">
+
   <% products.each do |product| %>
 
-    <%= link_to product,
+    <%#  For each product in this product_category, display a card showing main image, title, truncated description, and price %>
+    <%#   The entire card also serves as a button to the products show page %>
+    <%= link_to product_path(product),
                 data: { turbo_frame: "categorytree_productlist_toggle" },
                 class: "h-90 w-72 overflow-hidden rounded-lg mx-auto border shadow-lg/50" do %>
 
@@ -40,4 +43,5 @@
     <% end %>
     
   <% end %>
+
 </div>

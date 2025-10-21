@@ -10,9 +10,7 @@
 				</div>
 			</h1>
 			
-
-			<%#  "editable" is used as a switch so that the same form is used by show and edit methods %>
-			<%= render partial: "orders/order_table", locals: {order: @order, order_lineitems: @order_lineitems, editable: false } %>
+			<%= render partial: "orders/order_table", locals: {order: @order, order_lineitems: @order_lineitems } %>
 
 			<!-- Button container -->
 			<div class="flex mt-4 space-x-4 md:flex md:justify-end md:space-x-2 md:flex-row">
@@ -33,20 +31,6 @@
 												data: { turbo_confirm: "Are you sure?" } %>
 				</div>
 
-				<!-- Right column stack (on mobile) -->
-				<div class="flex flex-col pl-6 space-y-2 md:flex-row md:space-y-0 md:space-x-2">
-					<%= link_to(product_categories_path,
-											data: {turbo: false},
-											class: "flex items-center justify-center font-normal cursor-pointer sm:w-auto
-															border rounded-md px-4
-															bg-indigo-200 hover:scale-110 
-															transition duration-200 ease-in-out") do %>
-						
-						<%= render_icon("arrow_left", classes: "inline-block mr-2 w-5 h-5 bg-gray-100 rounded-md 
-																					stroke-purple-600 hover:bg-gray-400") %>
-						Continue Shopping
-					<% end %>								
-				</div>
 			</div>
 		</div>
 	<% else %>

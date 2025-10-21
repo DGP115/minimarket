@@ -47,14 +47,14 @@
     <%# Render the sub-categories in a grid layout %>
     <ul class="pl-8 mt-4">
       <%# Pass instance variable to partial as a local. %>
-      <%# Because recursion is used within the partial to display sub-categories, %>
+      <%# Because recursion is used within the partial structure to display sub-categories, %>
       <%# the partial loops through a local variable, which is reset during the 
       <%# hierarchical recursion. %>
       <%# Otherwise an endless loop results because @product_categories doesn't change  %>
       
       <%= render partial: "product_categories/category_tree", 
-                 locals: { product_categories: @product_categories, 
-                           product_category: @product_category } %>
+                 locals: { product_category: @product_category,
+                           product_categories: @product_categories } %>
       
     </ul>
   <% end %>
