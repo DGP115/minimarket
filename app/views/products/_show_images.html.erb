@@ -2,15 +2,19 @@
 <div class="relative flex justify-center mt-2 overflow-hidden bg-white border-r h-96 border-stone-400">
 
   <% if product.primary_image.attached? %>
-    <%= image_tag product.primary_image.variant(resize_to_limit: [800, 800]), loading: "lazy",
-        class: "max-h-full max-w-full object-contai rounded-xl shadow-lg", 
 
-        data: { "gallery-target": "thumbnailEnlarge" }   %>
+    <%= image_tag product.primary_image.variant(resize_to_limit: [800, 800]), loading: "lazy",
+        class: "max-h-full max-w-full object-contain rounded-xl shadow-lg", 
+        data: { "gallery-target": "thumbnailEnlarge" }   %> <!-- becomes: data-gallery-target="thumbnailEnlarge" -->
+        <!-- It tells Stimulus: “Inside the gallery controller, this element is the thumbnailEnlargeTarget.” -->
+
   <% else %>
+    <!-- Placeholder image if no primary image is attached -->
     <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1362px-Placeholder_view_vector.svg.png?20220519031949", class: "thumbnail" %>
+
   <% end %>
 
-    <!-- Reset button -->
+  <!-- Reset button -->
   <button type="button"
           data-action="click->gallery#reset"
           class="absolute px-3 py-1 text-sm border rounded-md shadow top-2 right-1 bg-white/80 border-stone-400 hover:bg-slate-300">
@@ -22,7 +26,7 @@
 <%# Thumbnail strip %>
 <div class="relative flex">
   <div class="flex w-full space-x-1 overflow-auto" 
-      style="scroll-behavior: smooth;">
+       style="scroll-behavior: smooth;">
     <% if product.images.attached? %>
       <% product.images.each do |image| %>
         <button class="relative flex-shrink-0 w-40 h-40 overflow-hidden rounded-sm">

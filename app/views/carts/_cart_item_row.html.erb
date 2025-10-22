@@ -1,4 +1,8 @@
 <%# locals: { item: item, index: index, editable: editable, f: item_fields %>
+<!--NOTE: Stimulus controller cart-contents was "attached" in the edit view, which begets this partial -->
+<!--NOTE: data-price="<%= item.product.price %> defines a custom HTML data attribute named data-price on the row’s <div>.
+          yielding something like: <div id="cart_item_245" class="contents" data-price="63.5">
+          When the Stimulus controller runs, it can access that value through the dataset API in JavaScript -->
 <div id="cart_item_<%= item.id %>" 
      class="contents"
      data-price="<%= item.product.price %>">
@@ -27,6 +31,8 @@
     </div>
 
     <!-- Quantity cell -->
+    <!-- NOTE:  cart_contents_target: "rowQuantity" tells stimulus controller cart-contents that 
+                this is a quantity and whould be watched for changes -->
     <div class="px-3">
       <%= f.number_field :quantity,
                           value: item.quantity,
@@ -35,9 +41,11 @@
                           data: { item_id: item.id, cart_contents_target: "rowQuantity" } %>
     </div>
   <% else %>
-    <!--&nbsp; is a non-breaking space to account for trachcan button not being displayed-->
+
+    <!--non-edit mode.  &nbsp; is a non-breaking space to account for trachcan button not being displayed-->
     <div class="px-2 text-center">&nbsp;</div>
     <div class="px-2 text-xs font-normal text-center md:text-sm"><%= item.quantity %></div>
+
   <% end %>
 
   <!-- Unit price -->
@@ -46,6 +54,8 @@
   </div>
 
   <!-- Purchase (price * qty) -->
+  <!-- NOTE:  data-cart-contents-target: "purchaseCell" tells stimulus controller cart-contents that 
+              this is the purchase cell that should be updated when quantity changes -->
   <div class="px-2 text-xs font-normal text-right md:text-sm"
        data-cart-contents-target="purchaseCell">
     <%= number_to_currency(item.product.price * item.quantity, 

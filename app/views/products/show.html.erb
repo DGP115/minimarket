@@ -8,9 +8,9 @@
     <% end %> 
   </div>
 
-  <%# The below creates in the DOM "turbo-frame id="product_67""," for example.   %>
-  <%#   This product-specific turbo-frame is used refreshed by the review model to update the  %>
-  <%#   specific product page after a user review of the product has been cereated to updated. %>
+  <%# The below creates in the DOM "turbo-frame id=product_67", for example.   %>
+  <%#   This product-specific turbo-frame is refreshed by the review model to update the  %>
+  <%#   specific product page after a user review of the product has been created or updated. %>
   <%= turbo_frame_tag @product do %>
 
     <!-- Product main content -->
@@ -77,7 +77,8 @@
     <% end %>
 
     <%# Since we are broadcasting refreshes of product reviews (See review model), %>
-    <%# this turbo_stream_from identifies the Turbo subscription for real-time updates --> %>
+    <%# this turbo_stream_from identifies the Turbo subscription for real-time updates  %>
+    <%# In this case, we are listening for a broadcast from the specific product being shown, given by @product %>
     <%= turbo_stream_from @product %>
 
     <%# This turbo_frame_tag is a marker to enable turbo to prepend new reviews here %>

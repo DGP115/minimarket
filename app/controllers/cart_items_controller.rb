@@ -33,14 +33,14 @@ class CartItemsController < ApplicationController
     end
   end
 
-  # DELETE /cart_items/1
-  def destroy
-    if @cart_item.destroy
-      head :no_content  # Sends HTTP 204, no redirect or view since handled by js controller
-    else
-      redirect_to cart_path, alert: "Item could not be removed from cart"
-    end
-  end
+  # Not needed since deltes handled with _delete flags and the cart controller
+  # def destroy
+  #   if @cart_item.destroy
+  #     head :no_content  # Sends HTTP 204, no redirect or view
+  #   else
+  #     redirect_to cart_path, alert: "Item could not be removed from cart"
+  #   end
+  # end
 
   private
 

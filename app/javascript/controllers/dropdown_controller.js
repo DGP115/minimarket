@@ -5,8 +5,18 @@ import { Controller } from "@hotwired/stimulus"
 //  2.  Click-away is managed individually.
 
 // Connects to data-controller="dropdown"
+
 export default class extends Controller {
   static targets = ["menu", "hidden"]
+
+// re:   static targets = ["menu", "hidden"]
+//  This tells Stimulus:
+// 	- “Inside any element with data-controller="dropdown", I expect to find data-dropdown-target="menu" 
+//    and optionally data-dropdown-target="hidden".”
+//  - That means in the controller code:
+// 	    - this.menuTarget → the <ul> dropdown list
+// 	    - this.hiddenTarget → the hidden field to write the selection to
+//      - this.hasHiddenTarget → a boolean Stimulus gives you automatically
 
   connect() {
     console.log("Dropdown controller connected")

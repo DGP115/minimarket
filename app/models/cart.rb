@@ -26,7 +26,7 @@ class Cart < ApplicationRecord
     # NOTE:  cart_items are marked for deletion in the form, awaiting actual deletion by controller.
     #        Filter out these soft_deletes when computing totals.
     #        && item.persisted? ensures we are only filtering items that have persisted
-    #        vs just created in memeort by Rails when form enters edit mode,
+    #        vs just created in memory by Rails when form enters edit mode,
     cart_items.reject { |item| item.marked_for_destruction? && item.persisted? }
   end
 

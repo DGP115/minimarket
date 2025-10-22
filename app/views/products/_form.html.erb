@@ -127,7 +127,7 @@
       <div class="sm:col-span-6">
         
         <div class="mt-1">
-          <%# To make the user-selected files an addendum to what had geen attached previously, %>
+          <%# To make the user-selected files an addendum to what had been attached previously, %>
           <%# include previous images here as hidden items %>
           <% @product.images.each do |image| %>
             <%= f.hidden_field :images, multiple: true, value: image.signed_id %>

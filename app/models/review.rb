@@ -6,7 +6,7 @@ class Review < ApplicationRecord
   #  aka a streamable.
   #  broadcasts_prepend_to:
   #   - configures the model to broadcast a “page refresh”
-  #   - :product is the streamable, so we are telling teh server to broadcast to product pages showing the reviewed product
+  #   - :product is the streamable, so we are telling the server to broadcast to product pages showing the reviewed product
   after_create_commit do
     # Broadcast to the product (show page) of the product receiving the review
     broadcast_prepend_to product,

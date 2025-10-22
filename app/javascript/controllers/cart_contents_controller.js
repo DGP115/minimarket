@@ -14,20 +14,23 @@ export default class extends Controller {
     this.recalculate()
   }
 
-  
-
   // Triggered by the listener on quantity inputs defined above
   recalculate() {
     console.log("cart-contents controller recalculate called")
     this.rowQuantityTargets.forEach((input, idx) => {
       const row = input.closest("[id^='cart_item']")
       // NOTE:  Items deleted by user are only marked with hidden _delete, 
-      //        for later deletion in the cart_itemns_controller.
+      //        for later deletion in the cart_items_controller.
       //        So, skip hidden rows when computing totals
       if (this.isMarkedForDestroy(row)) return
 
+      // Get item proice from <div id="cart_item_245" class="contents" data-price="63.5">
       const price = parseFloat(row.dataset.price) || 0
+
+      // Get quantity from input field that connect listens to
       const qty = parseInt(input.value, 10) || 0
+
+      // Get purchaseCell from data-cart-contents-target="purchaseCell" [provided in cart_item_row.html.erb]
       const purchaseCell = this.purchaseCellTargets[idx]
 
       purchaseCell.textContent = this.formatCurrency(price * qty)

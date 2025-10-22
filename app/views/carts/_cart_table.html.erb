@@ -12,15 +12,24 @@
 
     <!-- Data Rows -->
     <% cart_items.each_with_index do |item, index| %>
+
+      <!--If local form_fields were provided, this partial was called by Edit action.
+          So, render each cart item row in a form where cart contents are initialized with the form fields passed in -->
       <% if local_assigns[:f] %>
+
         <%= f.fields_for :cart_items, item do |item_fields| %>
           <%= render partial: "carts/cart_item_row", 
-                     locals: { item: item, index: index, editable: editable, f: item_fields } %>
+                     locals: { item: item, index: index, editable: editable, f: item_fields } %>        
         <% end %>
+
       <% else %>
+      
+        <!-- Otherwise, this partial was invoked by Show action, so just render each cart item row normally --> 
         <%= render partial: "carts/cart_item_row", 
                    locals: { item: item, index: index, editable: editable } %>
+
       <% end %>
+
     <% end %>
 
     <!-- Totals Row -->

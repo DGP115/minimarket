@@ -18,28 +18,14 @@ class ReviewsController < ApplicationController
   # POST /reviews or /reviews.json
   def create
     @review = current_user.reviews.new(review_params)
-    respond_to do |format|
-      if @review.save
-        format.html do
-          # Create a notification for the seller of the product being reviewed
-          ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
+    if @review.save
+      # Create a notification for the seller of the product being reviewed
+      ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
 
-          flash[:notice] = "Review was successfully created."
-          redirect_to product_path(@review.product)
-        end
-        # format.turbo_stream do
-        #   # In the case of a turbo_stream, we tell turbo to:
-        #   #   - prepend the new review
-        #   #   - to the "reviews" section of the dom
-        #   render turbo_stream: turbo_stream.prepend("reviews", @review)
-        # end
-      else
-        # Error trapping
-        #   Re-render the "new" product page.
-        #   Because the save returned false, the error trapping on the "new" page
-        #   will display the errors
-        render "new", status: :unprocessable_entity
-      end
+      flash[:notice] = "Review was successfully created."
+      redirect_to product_path(@review.product)
+    else
+      render "new", status: :unprocessable_entity
     end
   end
 

@@ -13,6 +13,24 @@ class CartsController < ApplicationController
   end
 
   def update
+    # NOTE:  A typical params payload when a deletion of a cart_item has occurred.
+    #        NOTE:  The cart edit form submits cart_items_attributes with _destroy flags and as usual
+    #               initates the controller's update action
+    #        [Because the cart model contains
+    #           accepts_nested_attributes_for :cart_items, allow_destroy: true]
+    # params
+    # <ActionController::Parameters
+    #   {"_method" => "patch",
+    #   "cart" => {"cart_items_attributes" =>
+    #       {"0" => {"_destroy" => "1", "quantity" => "1", "id" => "245"},
+    #        "1" => {"_destroy" => "0", "quantity" => "1", "id" => "246"},
+    #        "2" => {"id" => "245"},
+    #        "3" => {"id" => "246"}}}, "button" => "", "controller" => "carts", "action" => "update"} permitted: false>
+    # Rails interprets _destroy: "true" as “delete this nested cart_item.”
+    # So during CartsController#update, Rails:
+    #   - Updates any existing cart_items whose _destroy is false.
+    #   - Deletes any cart_items whose _destroy is true.
+
     if @cart.update(cart_params)
       # Delete items user has supplied a zero quantity for.
       @cart.cart_items.where(quantity: 0).destroy_all
@@ -27,6 +45,7 @@ class CartsController < ApplicationController
     end
   end
 
+  # This destroy action invoked by Delete button on cart edit page
   def destroy
     if @cart.destroy
       flash[:notice] = "Your cart was successfully deleted"

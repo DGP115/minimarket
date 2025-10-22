@@ -8,11 +8,14 @@
 
     <% total_qty = 0 %>
     <% total_purchase = 0 %>
+
     <%= f.fields_for :cart_items do |item_fields| %>
+
       <% item = item_fields.object %>
       <% next if item.marked_for_destruction? %>
       <% total_qty += item.quantity.to_i %>
       <% total_purchase += item.quantity.to_i * item.product.price %>
+      
     <% end %>
 
     <% aligner = "mr-1 pr-4" %>
