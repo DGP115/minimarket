@@ -1,6 +1,6 @@
 <%# locals: { review: self, product }%>
 
-<%# dom_id(cart, "button") will produce something like button_cart_7, which is stable and unique. Turbo can find it %>
+<%# dom_id(review, :notification) will produce something like notification_review_7, which is stable and unique. Turbo can find it %>
 
 <div id="<%= dom_id(review, :notification) %>">
   

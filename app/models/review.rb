@@ -1,6 +1,7 @@
 class Review < ApplicationRecord
   belongs_to :user
   belongs_to :product
+  has_many :review_notifications, dependent: :destroy
 
   #  Broadcast changes in reviews to "subscribers" of the related turbo_stream -
   #  aka a streamable.
@@ -26,7 +27,7 @@ class Review < ApplicationRecord
     broadcast_replace_to product
 
     # Broadcast to seller’s notifications
-    broadcast_prepend_to "seller_#{product.seller_id}_notifications",
+    broadcast_update_to "seller_#{product.seller_id}_notifications",
       target: "seller_notifications",
       partial: "layouts/navbar/seller_notification",
       formats: [ :html ],        # <-- This is the missing key

@@ -15,6 +15,10 @@ class ReviewsController < ApplicationController
   def edit
   end
 
+  def index
+    @reviews = Review.where(user_id: current_user.id).order(created_at: :desc)
+  end
+
   # POST /reviews or /reviews.json
   def create
     @review = current_user.reviews.new(review_params)
@@ -32,9 +36,18 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
     if @review.update(review_params)
-      # Create a notification for the seller of the product being reviewed
-      ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
+
+      # If an existing review notification exists for the seller of the product being reviewed
+      # update it to unread, otherwise create a new notification
+      notification = ReviewNotification.find_by(review: @review, user_id: @review.product.seller_id)
+      if notification == nil
+        notification = ReviewNotification.create!(review: @review, user_id: @review.product.seller_id)
+      else
+        notification.update(read: false)
+      end
+
       flash[:notice] = "Review was successfully updated."
+
       # Normally would have an instance of @product, but for reviews have a product_id in params
       redirect_to product_path(params[:review][:product_id])
     else
@@ -50,8 +63,12 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy!
 
+    # NOTE:  status: :see_other (HTTP 303 See Other) is the proper redirect code after a DELETE request
+    #         — it tells browsers:  “The deletion worked — now go look at this other page.
     respond_to do |format|
-      format.html { redirect_to reviews_path, status: :see_other, notice: "Review was successfully destroyed." }
+      format.html { redirect_to reviews_path,
+                    status: :see_other,
+                    notice: "Review was successfully destroyed." }
       format.json { head :no_content }
     end
   end

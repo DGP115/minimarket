@@ -1,0 +1,61 @@
+
+  <div class="flex justify-center">
+    <div class="w-full p-2 overflow-x-auto border rounded-md bg-indigo-50 border-stone-400">
+      <div class="pb-1 mb-1 text-base font-semibold border-b border-stone-400">
+        Product Reviews for User <%= current_user&.name || current_user.email %>
+      </div>
+
+      <% if @reviews.any? %>
+
+        <!-- Define a grid of 4 columns -->
+        <div class="grid grid-cols-[1fr_auto_1fr_auto] gap-y-1 text-sm">
+
+          <!-- Columns Headers -->
+          <div class="font-semibold text-center">Product</div>
+          <div class="font-semibold text-center">Date</div>
+          <div class="font-semibold text-center">Review</div>
+          <div class="font-semibold text-center">Actions</div>
+        
+          <!-- Because 4 columns have been defined, each div will denote a column's entry.  
+               Each review will bne one row -->
+
+          <% @reviews.each do |review| %>
+
+            <!-- Data row, column 1 -->
+            <div class="text-sm">
+              <%= link_to review.product.title, product_path(review.product.id), class: "text-blue-600" %>
+            </div>
+
+            <!-- Data row, column 2 -->
+            <div class="px-2 text-sm">
+              <%= review.created_at.strftime("%e-%b-%Y:%l:%M %P") %>
+            </div>
+
+            <!-- Data row, column 2 -->
+            <div class="px-3 text-sm italic">
+              <%# simple_format is a Rails helper that displays textarea content while maintaining line breaks etc. %>
+              <%= simple_format(review.body) %>
+            </div>
+
+            <!-- Data row, column 4: Actions -->
+            <div class="text-center">
+              <%= button_to(review_path(review), 
+                            method: :delete, 
+                            data: { turbo_confirm: "Are you sure?" }) do %>
+                <span>
+                  <%= render_icon("trashcan", classes: "w-5 h-5 cursor-pointer hover:scale-110 hover:stroke-red-700") %>
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+
+      <% else %>
+        <div class="px-2 italic font-normal text-center">
+          You have not submitted any product reviews yet.
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
