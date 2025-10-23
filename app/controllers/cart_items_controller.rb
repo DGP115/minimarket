@@ -1,5 +1,4 @@
 class CartItemsController < ApplicationController
-  before_action :set_cart_item, only: %i[ destroy ]
   # Only logged-in users can add items to a cart
   before_action :authenticate_user!
 

@@ -8,7 +8,7 @@
   </div>
 <% end %>
 
-<%# Refresh the Add to Cart button so that it is now disabled %>
+<%# Refresh the Add to Cart button %>
 <%= turbo_stream.replace dom_id(@product, :add_to_cart_button) do %>
   <%= render partial: "products/show_add_to_cart", locals: { product: @product } %>
 <% end %>

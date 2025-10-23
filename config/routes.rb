@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   end
 
   resources :orders
-  resources :cart_items, only: %i[ show create update destroy ]
+  resources :cart_items, only: %i[ show create update ]
   # Note singular here since there will only ever be one cart per user session
   resource :cart, only: %i[ show edit update destroy ] do
     # Create checkout_cart_path, which maps to carts_controller checkout method
