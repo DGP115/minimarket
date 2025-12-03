@@ -20,7 +20,8 @@
         <!-- Row 2 -->
         <div class="px-2 text-right">Product:</div>
         <div class="px-2 font-normal">
-          <%= link_to @review.product.title, product_path(@review.product.id), class: "text-blue-600" %>
+          <%= link_to @review.product.title, product_path(@review.product.id), 
+                      class: "text-blue-600", data: { turbo_frame: "_top" } %>
         </div>
 
         <!-- Row 3 -->
@@ -32,7 +33,7 @@
         <!-- Row 4 -->
         <div class="px-2 text-right">Review:</div>
         <div class="px-2 italic font-normal">
-          <%# simple_format is a Rails helper that displays textare content while maintaining line breaks etc. %>
+          <%# simple_format is a Rails helper that displays textarea content while maintaining line breaks etc. %>
           <%= simple_format(@review.body) %>
         </div>
       </div>

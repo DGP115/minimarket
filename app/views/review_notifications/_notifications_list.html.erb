@@ -29,14 +29,20 @@
               <td class="px-2"><%= index + 1 %></td>
               <td class="px-2">
                 <% if notification.review.user&.name %>
-                  <%= link_to notification.review.user.name, user_profile_path(notification.review.user_id) %>
+                  <%= link_to notification.review.user.name, 
+                              user_profile_path(notification.review.user_id), 
+                              data: { turbo_frame: "_top" } %>
                 <% end %>
               </td>
               <td class="px-2">
-                <%= link_to notification.review.user.email, user_profile_path(notification.review.user_id) %>
+                <%= link_to notification.review.user.email, 
+                            user_profile_path(notification.review.user_id), 
+                            data: { turbo_frame: "_top" } %>
               </td>
               <td class="px-2">
-                <%= link_to notification.review.product.title, product_path(notification.review.product.id) %>
+                <%= link_to notification.review.product.title, 
+                            product_path(notification.review.product.id), 
+                            data: { turbo_frame: "_top" } %>
               </td>
               <td class="px-2 italic">
                 <%= link_to truncate(notification.review.body, length: 50), review_path(notification.review.id) %>

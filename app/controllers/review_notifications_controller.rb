@@ -5,7 +5,7 @@ class ReviewNotificationsController < ApplicationController
   def index
     # Take advantage of sortable view columns provided by ransack gem
     @query = current_user.review_notifications.ransack(params[:q])
-    # The ".includes" eager includes the associations to review and review's association to product
+    # The ".includes" eager load includes the associations to review and review's association to product
     # to avoid N+1 queries in the view
     @review_notifications = @query.result.includes(review: [ :product, :user ])
 
@@ -14,6 +14,9 @@ class ReviewNotificationsController < ApplicationController
       @review_notifications = @review_notifications.order(created_at: :desc)
     end
 
+    # format.html → handles initial page visit and full reloads
+    # format.turbo_stream → handles incremental Turbo updates inside the notifications list
+    # Note:  Only one of these formats will be used per request
     respond_to do |format|
       format.html
       format.turbo_stream
