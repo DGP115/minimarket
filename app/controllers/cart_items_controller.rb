@@ -32,7 +32,7 @@ class CartItemsController < ApplicationController
     end
   end
 
-  # Not needed since deltes handled with _delete flags and the cart controller
+  # Not needed since deletes handled with _delete flags and the cart controller
   # def destroy
   #   if @cart_item.destroy
   #     head :no_content  # Sends HTTP 204, no redirect or view
